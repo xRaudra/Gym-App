@@ -1,6 +1,5 @@
-import { useState, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Search, UserPlus, Trash2, ShieldCheck, ShieldOff, Eye, X, ChevronDown, ChevronUp } from 'lucide-react'
+import { useState, useMemo, useEffect } from 'react'
+import { Search, UserPlus, Trash2, ShieldCheck, ShieldOff, Eye, X } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { getUsers, deleteUser as deleteUserFromStore, upsertUser } from '../utils/storage'
 import { calcNutrition, bmiCategory, formatDate } from '../utils/calculations'
@@ -168,6 +167,14 @@ export default function AdminPage() {
   const [confirmDelete, setConfirmDelete] = useState(null)
 
   const refresh = () => setUsers(getUsers())
+
+  // Reload users whenever the page becomes visible (handles registrations from other tabs)
+  useEffect(() => {
+    refresh()
+    const onFocus = () => refresh()
+    window.addEventListener('focus', onFocus)
+    return () => window.removeEventListener('focus', onFocus)
+  }, [])
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase()
