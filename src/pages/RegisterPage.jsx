@@ -37,12 +37,12 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex flex-col px-6 pt-10 pb-10 animate-fade-in">
+    <div className="min-h-screen flex flex-col px-6 pt-10 pb-10 animate-fade-in" style={{ backgroundColor: 'var(--bg)' }}>
       <Link to="/login" className="text-gray-400 text-sm mb-8 flex items-center gap-1 w-fit">← Back</Link>
 
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-white">Create Account</h2>
-        <p className="text-gray-400 mt-1">Join GymPro and start your fitness journey.</p>
+        <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Create Account</h2>
+        <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Join GymPro and start your fitness journey.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">

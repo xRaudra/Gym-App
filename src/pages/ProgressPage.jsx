@@ -37,7 +37,7 @@ function WeeklyBars({ data, label, color }) {
                 className={`w-full rounded-t-md transition-all duration-500 ${d.isToday ? 'opacity-100' : 'opacity-60'} ${color}`}
                 style={{ height: h }}
               />
-              <span className={`text-[10px] ${d.isToday ? 'text-white' : 'text-gray-600'}`}>{d.label}</span>
+              <span className="text-[10px]" style={{ color: d.isToday ? 'var(--text)' : 'var(--text-subtle)' }}>{d.label}</span>
             </div>
           )
         })}
@@ -116,7 +116,7 @@ export default function ProgressPage() {
     <div className="page">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white">Your Progress</h1>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Your Progress</h1>
         <p className="text-gray-400 text-sm mt-0.5">30-day activity overview</p>
       </div>
 
@@ -125,12 +125,12 @@ export default function ProgressPage() {
         <div className="card mb-4 flex items-center gap-4">
           <div className="flex-1">
             <p className="text-gray-400 text-xs uppercase tracking-wider font-medium">Current BMI</p>
-            <p className="text-4xl font-bold text-white mt-1">{bmi}</p>
+            <p className="text-4xl font-bold mt-1" style={{ color: 'var(--text)' }}>{bmi}</p>
             <p className={`text-sm font-semibold mt-0.5 ${bmiCat?.color}`}>{bmiCat?.label}</p>
           </div>
           <div className="flex-1 text-right">
             <p className="text-gray-400 text-xs">Goal</p>
-            <p className="text-white font-medium text-sm">{GOAL_LABEL[profile.goal]}</p>
+            <p className="font-medium text-sm" style={{ color: 'var(--text)' }}>{GOAL_LABEL[profile.goal]}</p>
             <p className="text-gray-500 text-xs mt-1">{profile.weight}kg · {profile.height}cm</p>
             <div className="mt-2">
               <div className="text-xs text-gray-400 text-right">BMI range</div>
@@ -179,14 +179,13 @@ export default function ProgressPage() {
             const isToday = day.dayIndex === new Date().getDay()
             return (
               <div key={day.dayIndex} className="flex flex-col items-center gap-1.5 flex-1">
-                <div className={`w-full aspect-square rounded-xl flex items-center justify-center border text-xs font-bold ${
-                  done ? 'bg-brand/20 border-brand/40 text-brand' :
-                  isToday ? 'bg-[#1E1E1E] border-brand text-white' :
-                  'bg-[#1A1A1A] border-[#2A2A2A] text-gray-600'
-                }`}>
+                <div
+                  className={`w-full aspect-square rounded-xl flex items-center justify-center border text-xs font-bold ${done ? 'bg-brand/20 border-brand/40 text-brand' : isToday ? 'border-brand' : ''}`}
+                  style={!done ? { backgroundColor: 'var(--bg-raised)', borderColor: isToday ? undefined : 'var(--border)', color: 'var(--text-subtle)' } : {}}
+                >
                   {done ? '✓' : day.day[0]}
                 </div>
-                <span className={`text-[10px] ${isToday ? 'text-white' : 'text-gray-600'}`}>{day.day}</span>
+                <span className="text-[10px]" style={{ color: isToday ? 'var(--text)' : 'var(--text-subtle)' }}>{day.day}</span>
               </div>
             )
           })}
@@ -196,7 +195,7 @@ export default function ProgressPage() {
       {/* Motivation block */}
       <div className="mt-5 bg-gradient-to-br from-brand/10 to-transparent rounded-2xl p-5 border border-brand/20">
         <p className="text-brand text-sm font-bold mb-1">Keep going!</p>
-        <p className="text-gray-300 text-sm">
+        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
           {streak === 0
             ? "Every champion was once a beginner. Start today and your future self will thank you."
             : streak < 7

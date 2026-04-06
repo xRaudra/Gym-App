@@ -19,7 +19,7 @@ function MemberRow({ member, currentUserId, onView, onToggleAdmin, onDelete }) {
       <div className="flex items-start justify-between">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-white font-semibold">{member.name}</span>
+            <span className="font-semibold" style={{ color: 'var(--text)' }}>{member.name}</span>
             {member.role === 'admin' && (
               <span className="px-2 py-0.5 bg-accent/10 text-accent text-[10px] font-bold rounded-full border border-accent/20">ADMIN</span>
             )}
@@ -52,9 +52,9 @@ function MemberRow({ member, currentUserId, onView, onToggleAdmin, onDelete }) {
         <div className="flex gap-3 mt-3 pt-3 border-t border-border">
           <div className="text-xs text-gray-400">BMI: <span className={`font-semibold ${bmiCat?.color}`}>{nut.bmi} ({bmiCat?.label})</span></div>
           <div className="text-xs text-gray-400">·</div>
-          <div className="text-xs text-gray-400">Goal: <span className="text-gray-300">{GOAL_LABELS[p.goal] || '—'}</span></div>
-          <div className="text-xs text-gray-400">·</div>
-          <div className="text-xs text-gray-400">Diet: <span className="text-gray-300">{PREF_LABELS[p.dietaryPreference] || '—'}</span></div>
+          <div className="text-xs" style={{ color: 'var(--text-muted)' }}>Goal: <span style={{ color: 'var(--text)' }}>{GOAL_LABELS[p.goal] || '—'}</span></div>
+          <div className="text-xs" style={{ color: 'var(--text-muted)' }}>·</div>
+          <div className="text-xs" style={{ color: 'var(--text-muted)' }}>Diet: <span style={{ color: 'var(--text)' }}>{PREF_LABELS[p.dietaryPreference] || '—'}</span></div>
         </div>
       )}
     </div>
@@ -85,9 +85,9 @@ function AddMemberModal({ onClose, onAdd }) {
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-end z-50" onClick={onClose}>
-      <div className="bg-[#141414] rounded-t-3xl p-6 w-full border-t border-border animate-slide-up" onClick={e => e.stopPropagation()}>
+      <div className="rounded-t-3xl p-6 w-full border-t border-border animate-slide-up" style={{ backgroundColor: 'var(--bg-surface)' }} onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-white font-bold text-lg">Add Member</h3>
+          <h3 className="font-bold text-lg" style={{ color: 'var(--text)' }}>Add Member</h3>
           <button onClick={onClose} className="text-gray-400 active:scale-90"><X size={20} /></button>
         </div>
         <div className="space-y-3">
@@ -111,9 +111,9 @@ function MemberDetailModal({ member, onClose }) {
   if (!member) return null
   return (
     <div className="fixed inset-0 bg-black/70 flex items-end z-50" onClick={onClose}>
-      <div className="bg-[#141414] rounded-t-3xl p-6 w-full border-t border-border animate-slide-up max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+      <div className="rounded-t-3xl p-6 w-full border-t border-border animate-slide-up max-h-[80vh] overflow-y-auto" style={{ backgroundColor: 'var(--bg-surface)' }} onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-white font-bold text-lg">{member.name}</h3>
+          <h3 className="font-bold text-lg" style={{ color: 'var(--text)' }}>{member.name}</h3>
           <button onClick={onClose} className="text-gray-400 active:scale-90"><X size={20} /></button>
         </div>
         <div className="space-y-2 text-sm">
@@ -131,20 +131,20 @@ function MemberDetailModal({ member, onClose }) {
             ['Sunday workout', p.workOnSunday ? 'Yes' : 'No'],
             ['Onboarding', p.completedOnboarding ? 'Complete' : 'Pending'],
           ].map(([label, val]) => (
-            <div key={label} className="flex justify-between py-2 border-b border-[#2A2A2A]">
-              <span className="text-gray-400">{label}</span>
-              <span className="text-white font-medium">{val || '—'}</span>
+            <div key={label} className="flex justify-between py-2 border-b" style={{ borderColor: 'var(--border)' }}>
+              <span style={{ color: 'var(--text-muted)' }}>{label}</span>
+              <span className="font-medium" style={{ color: 'var(--text)' }}>{val || '—'}</span>
             </div>
           ))}
           {nut && (
             <>
-              <div className="flex justify-between py-2 border-b border-[#2A2A2A]">
+              <div className="flex justify-between py-2 border-b" style={{ borderColor: 'var(--border)' }}>
                 <span className="text-gray-400">BMI</span>
                 <span className={`font-semibold ${bmiCat?.color}`}>{nut.bmi} — {bmiCat?.label}</span>
               </div>
-              <div className="flex justify-between py-2 border-b border-[#2A2A2A]">
+              <div className="flex justify-between py-2 border-b" style={{ borderColor: 'var(--border)' }}>
                 <span className="text-gray-400">Daily Calories</span>
-                <span className="text-white font-medium">{nut.calories} kcal</span>
+                <span className="font-medium" style={{ color: 'var(--text)' }}>{nut.calories} kcal</span>
               </div>
               <div className="flex justify-between py-2">
                 <span className="text-gray-400">Daily Protein</span>
@@ -199,19 +199,19 @@ export default function AdminPage() {
     <div className="page">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white">Admin Panel</h1>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Admin Panel</h1>
         <p className="text-gray-400 text-sm mt-0.5">Manage members & roles</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3 mb-5">
         {[
-          { label: 'Total Users', value: totalAll, color: 'text-white' },
+          { label: 'Total Users', value: totalAll, color: '' },
           { label: 'Members',     value: totalMem, color: 'text-brand' },
           { label: 'Admins',      value: totalAdm, color: 'text-accent' },
         ].map(s => (
           <div key={s.label} className="card text-center">
-            <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
+            <p className={`text-2xl font-bold ${s.color}`} style={!s.color ? { color: 'var(--text)' } : {}}>{s.value}</p>
             <p className="text-gray-400 text-xs mt-0.5">{s.label}</p>
           </div>
         ))}
@@ -269,10 +269,10 @@ export default function AdminPage() {
       {/* Delete confirmation */}
       {confirmDelete && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-6">
-          <div className="bg-[#141414] rounded-2xl p-6 w-full max-w-sm border border-border animate-fade-in">
-            <h3 className="text-white font-bold text-lg mb-2">Remove Member?</h3>
-            <p className="text-gray-400 text-sm mb-5">
-              Are you sure you want to remove <span className="text-white font-medium">{confirmDelete.name}</span> (@{confirmDelete.username})? This cannot be undone.
+          <div className="rounded-2xl p-6 w-full max-w-sm border border-border animate-fade-in" style={{ backgroundColor: 'var(--bg-surface)' }}>
+            <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--text)' }}>Remove Member?</h3>
+            <p className="text-sm mb-5" style={{ color: 'var(--text-muted)' }}>
+              Are you sure you want to remove <span className="font-medium" style={{ color: 'var(--text)' }}>{confirmDelete.name}</span> (@{confirmDelete.username})? This cannot be undone.
             </p>
             <div className="flex gap-3">
               <button onClick={() => setConfirmDelete(null)} className="btn-secondary flex-1 py-3">Cancel</button>

@@ -30,13 +30,13 @@ export default function LoginPage() {
   // ── Role selector ──────────────────────────────────────────────────────────
   if (!role) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center px-6 animate-fade-in">
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 animate-fade-in" style={{ backgroundColor: 'var(--bg)' }}>
         <div className="mb-10 text-center">
           <div className="w-20 h-20 bg-brand/10 rounded-3xl flex items-center justify-center mx-auto mb-4 border border-brand/20">
             <Dumbbell size={40} className="text-brand" />
           </div>
-          <h1 className="text-3xl font-bold text-white">GymPro</h1>
-          <p className="text-gray-400 mt-1">Your digital personal trainer</p>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--text)' }}>GymPro</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Your digital personal trainer</p>
         </div>
 
         <p className="text-gray-400 mb-6 text-sm tracking-wide uppercase font-medium">Sign in as</p>
@@ -50,8 +50,8 @@ export default function LoginPage() {
               <User size={24} className="text-brand" />
             </div>
             <div className="text-left">
-              <div className="text-white font-semibold text-lg">Member</div>
-              <div className="text-gray-400 text-sm">Access your workout & diet plans</div>
+              <div className="font-semibold text-lg" style={{ color: 'var(--text)' }}>Member</div>
+              <div className="text-sm" style={{ color: 'var(--text-muted)' }}>Access your workout & diet plans</div>
             </div>
           </button>
 
@@ -63,8 +63,8 @@ export default function LoginPage() {
               <ShieldCheck size={24} className="text-accent" />
             </div>
             <div className="text-left">
-              <div className="text-white font-semibold text-lg">Admin</div>
-              <div className="text-gray-400 text-sm">Manage members & gym data</div>
+              <div className="font-semibold text-lg" style={{ color: 'var(--text)' }}>Admin</div>
+              <div className="text-sm" style={{ color: 'var(--text-muted)' }}>Manage members & gym data</div>
             </div>
           </button>
         </div>
@@ -79,7 +79,7 @@ export default function LoginPage() {
 
   // ── Login form ─────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex flex-col px-6 pt-12 animate-fade-in">
+    <div className="min-h-screen flex flex-col px-6 pt-12 animate-fade-in" style={{ backgroundColor: 'var(--bg)' }}>
       {/* Back */}
       <button onClick={() => { setRole(null); setError('') }} className="text-gray-400 text-sm mb-8 flex items-center gap-1 w-fit">
         ← Back
@@ -90,8 +90,8 @@ export default function LoginPage() {
         <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-4 border ${role === 'admin' ? 'bg-accent/10 border-accent/20' : 'bg-brand/10 border-brand/20'}`}>
           {role === 'admin' ? <ShieldCheck size={28} className="text-accent" /> : <User size={28} className="text-brand" />}
         </div>
-        <h2 className="text-2xl font-bold text-white">{role === 'admin' ? 'Admin Login' : 'Member Login'}</h2>
-        <p className="text-gray-400 mt-1">Welcome back — let's crush it today.</p>
+        <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>{role === 'admin' ? 'Admin Login' : 'Member Login'}</h2>
+        <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Welcome back — let's crush it today.</p>
       </div>
 
       {/* Form */}

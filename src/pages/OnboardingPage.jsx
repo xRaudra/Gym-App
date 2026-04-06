@@ -105,7 +105,7 @@ export default function OnboardingPage() {
   }).filter(Boolean)
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex flex-col px-6 pt-10 pb-8 animate-fade-in">
+    <div className="min-h-screen flex flex-col px-6 pt-10 pb-8 animate-fade-in" style={{ backgroundColor: 'var(--bg)' }}>
       {/* Header */}
       <div className="mb-8">
         <p className="text-gray-400 text-sm mb-3">Step {step + 1} of {TOTAL_STEPS}</p>
@@ -116,7 +116,7 @@ export default function OnboardingPage() {
       {step === 0 && (
         <div className="animate-slide-up space-y-6">
           <div>
-            <h2 className="text-2xl font-bold text-white">Tell us about you</h2>
+            <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Tell us about you</h2>
             <p className="text-gray-400 mt-1">We'll personalise everything for you.</p>
           </div>
           <div>
@@ -143,7 +143,7 @@ export default function OnboardingPage() {
       {step === 1 && (
         <div className="animate-slide-up space-y-6">
           <div>
-            <h2 className="text-2xl font-bold text-white">Your body metrics</h2>
+            <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Your body metrics</h2>
             <p className="text-gray-400 mt-1">Used to calculate your calorie & protein needs.</p>
           </div>
           <div>
@@ -161,7 +161,7 @@ export default function OnboardingPage() {
       {step === 2 && (
         <div className="animate-slide-up space-y-6">
           <div>
-            <h2 className="text-2xl font-bold text-white">Dietary Preference</h2>
+            <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Dietary Preference</h2>
             <p className="text-gray-400 mt-1">Your meal plans will be tailored to this.</p>
           </div>
           <div>
@@ -196,7 +196,7 @@ export default function OnboardingPage() {
       {step === 3 && (
         <div className="animate-slide-up space-y-6">
           <div>
-            <h2 className="text-2xl font-bold text-white">Your Goal & Schedule</h2>
+            <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Your Goal & Schedule</h2>
             <p className="text-gray-400 mt-1">This shapes your workout intensity and calories.</p>
           </div>
           <div>
@@ -279,6 +279,6 @@ const capitalize = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : ''
 const Row = ({ label, value }) => (
   <div className="flex justify-between text-sm">
     <span className="text-gray-400">{label}</span>
-    <span className="text-white font-medium">{value || '—'}</span>
+    <span className="font-medium" style={{ color: 'var(--text)' }}>{value || '—'}</span>
   </div>
 )

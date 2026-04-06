@@ -48,7 +48,7 @@ function MealCard({ meal, completed, onToggle }) {
                 <Clock size={10} />{meal.time}
               </span>
             </div>
-            <p className={`font-semibold text-base ${completed ? 'text-gray-400 line-through' : 'text-white'}`}>
+            <p className={`font-semibold text-base ${completed ? 'line-through' : ''}`} style={{ color: completed ? 'var(--text-subtle)' : 'var(--text)' }}>
               {meal.name}
             </p>
           </div>
@@ -72,8 +72,8 @@ function MealCard({ meal, completed, onToggle }) {
         {meal.items && meal.items.length > 0 && (
           <div className="mt-3 pl-9 flex flex-wrap gap-1.5">
             {meal.items.map(item => (
-              <span key={item.id} className="px-2.5 py-1 bg-[#1E1E1E] rounded-lg text-xs text-gray-400 border border-[#2A2A2A]">
-                {item.name} <span className="text-gray-600">({item.unit})</span>
+              <span key={item.id} className="px-2.5 py-1 rounded-lg text-xs border" style={{ backgroundColor: 'var(--bg-raised)', color: 'var(--text-muted)', borderColor: 'var(--border)' }}>
+                {item.name} <span style={{ color: 'var(--text-subtle)' }}>({item.unit})</span>
               </span>
             ))}
           </div>
@@ -111,7 +111,7 @@ export default function DietPage() {
     <div className="page">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white">Diet Plan</h1>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Diet Plan</h1>
         <div className="flex gap-2 mt-1.5">
           {profile.dietaryPreference && (
             <span className="text-xs px-2.5 py-1 bg-brand/10 text-brand rounded-full border border-brand/20 font-medium">
@@ -146,7 +146,7 @@ export default function DietPage() {
           </div>
           <div className="mt-4 pt-4 border-t border-border grid grid-cols-3 gap-2 text-center text-xs text-gray-400">
             <div>
-              <div className="text-white font-semibold">{planTotal.calories}</div>
+              <div className="font-semibold" style={{ color: 'var(--text)' }}>{planTotal.calories}</div>
               <div>Plan kcal</div>
             </div>
             <div>
@@ -154,7 +154,7 @@ export default function DietPage() {
               <div>Plan protein</div>
             </div>
             <div>
-              <div className="text-white font-semibold">{mealsCompleted.length}/{meals.length}</div>
+              <div className="font-semibold" style={{ color: 'var(--text)' }}>{mealsCompleted.length}/{meals.length}</div>
               <div>Meals done</div>
             </div>
           </div>
@@ -183,9 +183,9 @@ export default function DietPage() {
       )}
 
       {/* Nutrition note */}
-      <div className="mt-6 bg-[#1A1A1A] rounded-2xl p-4 border border-border">
+      <div className="mt-6 rounded-2xl p-4 border border-border" style={{ backgroundColor: 'var(--bg-raised)' }}>
         <p className="text-brand text-xs font-semibold uppercase tracking-wider mb-2">Nutrition Tip</p>
-        <p className="text-gray-300 text-sm">
+        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
           Spread your protein evenly across meals — aim for {nutrition ? Math.round(nutrition.protein / 5) : '25–30'}g per meal for optimal muscle protein synthesis. Pre-workout and post-workout meals are most important.
         </p>
       </div>

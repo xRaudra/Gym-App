@@ -23,11 +23,11 @@ function ExerciseCard({ ex, completed, onToggle }) {
           }
         </button>
         <div className="flex-1 min-w-0">
-          <p className={`font-semibold text-base ${completed ? 'text-gray-400 line-through' : 'text-white'}`}>{ex.name}</p>
+          <p className={`font-semibold text-base ${completed ? 'line-through' : ''}`} style={{ color: completed ? 'var(--text-subtle)' : 'var(--text)' }}>{ex.name}</p>
           <p className="text-gray-500 text-xs mt-0.5">{ex.muscles}</p>
         </div>
         <div className="text-right flex-shrink-0">
-          <p className="text-white font-bold text-sm">{ex.sets}×{ex.reps}</p>
+          <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>{ex.sets}×{ex.reps}</p>
           <p className="text-gray-500 text-xs">Rest: {ex.rest}</p>
         </div>
         <button
@@ -41,9 +41,9 @@ function ExerciseCard({ ex, completed, onToggle }) {
       {/* Expandable tip */}
       {expanded && (
         <div className="px-4 pb-4 pt-0">
-          <div className="bg-[#1E1E1E] rounded-xl p-3 flex gap-2">
+          <div className="rounded-xl p-3 flex gap-2" style={{ backgroundColor: 'var(--bg-raised)' }}>
             <Info size={14} className="text-brand flex-shrink-0 mt-0.5" />
-            <p className="text-gray-300 text-sm">{ex.tip}</p>
+            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{ex.tip}</p>
           </div>
         </div>
       )}
@@ -90,12 +90,12 @@ export default function WorkoutPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">Workout Plan</h1>
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Workout Plan</h1>
           <p className="text-gray-400 text-sm mt-0.5">Push/Pull/Legs — Beginner</p>
         </div>
         <div className="text-right">
           <p className="text-gray-400 text-xs">This week</p>
-          <p className="text-white font-bold text-base">
+          <p className="font-bold text-base" style={{ color: 'var(--text)' }}>
             {weeklyOverview.filter((_, i) => i !== 0 || profile.workOnSunday).filter(d => d.type !== 'rest').length} sessions
           </p>
         </div>
@@ -126,7 +126,7 @@ export default function WorkoutPage() {
           </div>
           {currentDayPlan?.type !== 'rest' && isToday && (
             <div className="text-right">
-              <p className="text-white font-bold text-2xl">{doneCount}/{exercises.length}</p>
+              <p className="font-bold text-2xl" style={{ color: 'var(--text)' }}>{doneCount}/{exercises.length}</p>
               <p className="text-gray-400 text-xs">completed</p>
             </div>
           )}
@@ -145,14 +145,14 @@ export default function WorkoutPage() {
       {currentDayPlan?.type === 'rest' ? (
         <div className="text-center py-12">
           <div className="text-5xl mb-4">😴</div>
-          <p className="text-white font-semibold text-lg">Rest & Recover</p>
+          <p className="font-semibold text-lg" style={{ color: 'var(--text)' }}>Rest & Recover</p>
           <p className="text-gray-400 mt-2 max-w-xs mx-auto text-sm">
             Recovery is where muscles grow. Light activity below is optional but beneficial.
           </p>
           <div className="mt-6 space-y-3">
             {exercises.map(ex => (
               <div key={ex.id} className="card text-left">
-                <p className="text-white font-medium">{ex.name}</p>
+                <p className="font-medium" style={{ color: 'var(--text)' }}>{ex.name}</p>
                 <p className="text-gray-400 text-sm mt-0.5">{ex.reps}</p>
                 <p className="text-gray-500 text-xs mt-1 italic">{ex.tip}</p>
               </div>
@@ -188,9 +188,9 @@ export default function WorkoutPage() {
       )}
 
       {/* Coach tip */}
-      <div className="mt-6 bg-[#1A1A1A] rounded-2xl p-4 border border-border">
+      <div className="mt-6 rounded-2xl p-4 border border-border" style={{ backgroundColor: 'var(--bg-raised)' }}>
         <p className="text-brand text-xs font-semibold uppercase tracking-wider mb-2">Coach's Tip</p>
-        <p className="text-gray-300 text-sm">
+        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
           {currentDayPlan?.type === 'push' && "Focus on the mind-muscle connection. Slow the negative (lowering) phase to 3 seconds for maximum chest activation."}
           {currentDayPlan?.type === 'pull' && "Pull with your elbows, not your hands. Visualise your hands as hooks and drive your elbows into your pockets on every pull."}
           {currentDayPlan?.type === 'legs' && "Never skip the warm-up squat set. Light squats before heavy ones protect your knees and improve depth."}

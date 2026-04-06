@@ -77,6 +77,24 @@ html.light {
   select option { background-color: var(--input-bg); }
 }
 
+/* ── Light Mode Overrides ───────────────────────────────────────────────────── */
+html.light .text-white    { color: var(--text)        !important; }
+html.light .text-gray-300 { color: var(--text-muted)  !important; }
+
+html.light .bg-surface         { background-color: var(--bg-surface) !important; }
+html.light .bg-surface-raised  { background-color: var(--bg-raised)  !important; }
+html.light .bg-\[#0A0A0A\]    { background-color: var(--bg)         !important; }
+html.light .bg-\[#0D0D0D\]    { background-color: var(--nav-bg)     !important; }
+html.light .bg-\[#141414\]    { background-color: var(--bg-surface) !important; }
+html.light .bg-\[#1A1A1A\]    { background-color: var(--bg-raised)  !important; }
+html.light .bg-\[#1E1E1E\]    { background-color: var(--bg-raised)  !important; }
+html.light .bg-\[#2A2A2A\]    { background-color: var(--border)     !important; }
+html.light .bg-\[#252525\]    { background-color: var(--bg-overlay) !important; }
+
+html.light .border-border       { border-color: var(--border)       !important; }
+html.light .border-border-light { border-color: var(--border-light) !important; }
+html.light .border-\[#2A2A2A\] { border-color: var(--border)       !important; }
+
 @layer components {
   .btn-primary {
     @apply w-full bg-brand text-black font-semibold py-4 rounded-2xl text-base active:scale-95 transition-transform touch-manipulation;

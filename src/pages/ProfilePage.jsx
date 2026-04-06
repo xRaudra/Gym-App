@@ -9,7 +9,7 @@ function InfoRow({ label, value }) {
   return (
     <div className="flex justify-between items-center py-3 border-b border-border last:border-0">
       <span className="text-gray-400 text-sm">{label}</span>
-      <span className="text-white text-sm font-medium">{value || '—'}</span>
+      <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>{value || '—'}</span>
     </div>
   )
 }
@@ -39,7 +39,7 @@ function EditableField({ label, value, type = 'text', onChange, min, max, placeh
           <button onClick={cancel} className="text-gray-500 active:scale-90"><X size={18} /></button>
         </div>
       ) : (
-        <button onClick={() => setEditing(true)} className="flex items-center gap-1.5 text-white text-sm font-medium active:scale-95">
+        <button onClick={() => setEditing(true)} className="flex items-center gap-1.5 text-sm font-medium active:scale-95" style={{ color: 'var(--text)' }}>
           {value || '—'} <Pencil size={12} className="text-gray-500" />
         </button>
       )}
@@ -105,7 +105,7 @@ export default function ProfilePage() {
           <User size={32} className="text-brand" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-white">{user?.name}</h2>
+          <h2 className="text-xl font-bold" style={{ color: 'var(--text)' }}>{user?.name}</h2>
           <p className="text-gray-400 text-sm">@{user?.username}</p>
           <p className="text-gray-500 text-xs">{user?.email}</p>
         </div>
@@ -120,7 +120,8 @@ export default function ProfilePage() {
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === t ? 'bg-[#2A2A2A] text-white' : 'text-gray-500'}`}
+            className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === t ? 'text-white' : 'text-gray-500'}`}
+            style={tab === t ? { backgroundColor: 'var(--bg-raised)', color: 'var(--text)' } : {}}
           >
             {t === 'profile' ? 'My Profile' : 'Change Password'}
           </button>
@@ -134,24 +135,24 @@ export default function ProfilePage() {
             <div className="card">
               <p className="text-gray-400 text-xs uppercase tracking-wider font-medium mb-3">Calculated Targets</p>
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-[#1E1E1E] rounded-xl p-3 text-center">
+                <div className="rounded-xl p-3 text-center" style={{ backgroundColor: 'var(--bg-raised)' }}>
                   <p className="text-gray-500 text-xs">BMI</p>
-                  <p className="text-white font-bold text-xl">{nutrition.bmi}</p>
+                  <p className="font-bold text-xl" style={{ color: 'var(--text)' }}>{nutrition.bmi}</p>
                   <p className={`text-xs font-medium ${bmiCat?.color}`}>{bmiCat?.label}</p>
                 </div>
-                <div className="bg-[#1E1E1E] rounded-xl p-3 text-center">
+                <div className="rounded-xl p-3 text-center" style={{ backgroundColor: 'var(--bg-raised)' }}>
                   <p className="text-gray-500 text-xs">Daily Calories</p>
-                  <p className="text-white font-bold text-xl">{nutrition.calories}</p>
+                  <p className="font-bold text-xl" style={{ color: 'var(--text)' }}>{nutrition.calories}</p>
                   <p className="text-gray-500 text-xs">kcal/day</p>
                 </div>
-                <div className="bg-[#1E1E1E] rounded-xl p-3 text-center">
+                <div className="rounded-xl p-3 text-center" style={{ backgroundColor: 'var(--bg-raised)' }}>
                   <p className="text-gray-500 text-xs">Daily Protein</p>
                   <p className="text-brand font-bold text-xl">{nutrition.protein}g</p>
                   <p className="text-gray-500 text-xs">protein/day</p>
                 </div>
-                <div className="bg-[#1E1E1E] rounded-xl p-3 text-center">
+                <div className="rounded-xl p-3 text-center" style={{ backgroundColor: 'var(--bg-raised)' }}>
                   <p className="text-gray-500 text-xs">TDEE</p>
-                  <p className="text-white font-bold text-xl">{nutrition.tdee}</p>
+                  <p className="font-bold text-xl" style={{ color: 'var(--text)' }}>{nutrition.tdee}</p>
                   <p className="text-gray-500 text-xs">maintenance</p>
                 </div>
               </div>
@@ -257,9 +258,9 @@ export default function ProfilePage() {
         </div>
         <button
           onClick={toggleTheme}
-          className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${theme === 'dark' ? 'bg-brand' : 'bg-gray-300'}`}
+          className={`relative w-12 h-6 rounded-full transition-colors duration-300 overflow-hidden ${theme === 'dark' ? 'bg-brand' : 'bg-gray-300'}`}
         >
-          <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${theme === 'dark' ? 'translate-x-6' : 'translate-x-0.5'}`} />
+          <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all duration-300 ${theme === 'dark' ? 'left-[26px]' : 'left-0.5'}`} />
         </button>
       </div>
 

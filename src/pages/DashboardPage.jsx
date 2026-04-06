@@ -17,7 +17,7 @@ function Ring({ pct: p, label, consumed, target, unit, color, size = 120 }) {
     <div className="flex flex-col items-center">
       <div style={{ width: size, height: size }} className="relative">
         <svg width={size} height={size} className="rotate-[-90deg]">
-          <circle cx={size / 2} cy={size / 2} r={r} stroke="#2A2A2A" strokeWidth={10} fill="none" />
+          <circle cx={size / 2} cy={size / 2} r={r} stroke="var(--border)" strokeWidth={10} fill="none" />
           <circle
             cx={size / 2} cy={size / 2} r={r}
             stroke={color}
@@ -30,11 +30,11 @@ function Ring({ pct: p, label, consumed, target, unit, color, size = 120 }) {
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-white font-bold text-lg leading-tight">{consumed}</span>
-          <span className="text-gray-400 text-[10px]">/{target}{unit}</span>
+          <span className="font-bold text-lg leading-tight" style={{ color: 'var(--text)' }}>{consumed}</span>
+          <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>/{target}{unit}</span>
         </div>
       </div>
-      <span className="text-gray-400 text-xs mt-1.5 font-medium">{label}</span>
+      <span className="text-xs mt-1.5 font-medium" style={{ color: 'var(--text-muted)' }}>{label}</span>
       <span className={`text-xs font-semibold mt-0.5 ${p >= 100 ? 'text-brand' : 'text-gray-500'}`}>{fill}%</span>
     </div>
   )
@@ -94,13 +94,13 @@ export default function DashboardPage() {
       {/* Greeting */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <p className="text-gray-400 text-sm">{getDayName()}, {new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</p>
-          <h1 className="text-2xl font-bold text-white">{greeting}, {firstName}! 💪</h1>
+          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{getDayName()}, {new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</p>
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>{greeting}, {firstName}! 💪</h1>
         </div>
         {bmi && (
           <div className="text-right">
             <p className="text-gray-400 text-xs">BMI</p>
-            <p className="text-white font-bold text-xl">{bmi}</p>
+            <p className="font-bold text-xl" style={{ color: 'var(--text)' }}>{bmi}</p>
             <p className={`text-xs font-medium ${bmiCat?.color}`}>{bmiCat?.label}</p>
           </div>
         )}
@@ -164,7 +164,7 @@ export default function DashboardPage() {
                   ? <CheckCircle2 size={14} className="text-brand flex-shrink-0" />
                   : <Circle size={14} className="text-gray-600 flex-shrink-0" />
                 }
-                <span className="text-gray-300 truncate">{ex.name}</span>
+                <span className="truncate" style={{ color: 'var(--text-muted)' }}>{ex.name}</span>
                 <span className="text-gray-500 text-xs ml-auto flex-shrink-0">{ex.sets}×{ex.reps}</span>
               </div>
             ))}
@@ -179,7 +179,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between mb-3">
             <div>
               <p className="text-gray-400 text-xs uppercase tracking-widest font-medium">Today's Meals</p>
-              <p className="font-bold text-base mt-0.5 text-white">{mealsCompleted}/{meals.length} meals logged</p>
+              <p className="font-bold text-base mt-0.5" style={{ color: 'var(--text)' }}>{mealsCompleted}/{meals.length} meals logged</p>
             </div>
             <ChevronRight size={20} className="text-gray-500" />
           </div>
@@ -198,7 +198,7 @@ export default function DashboardPage() {
                   ? <CheckCircle2 size={14} className="text-brand flex-shrink-0" />
                   : <Circle size={14} className="text-gray-600 flex-shrink-0" />
                 }
-                <span className="text-gray-300 truncate">{m.label}</span>
+                <span className="truncate" style={{ color: 'var(--text-muted)' }}>{m.label}</span>
                 <div className="ml-auto flex items-center gap-2 flex-shrink-0">
                   <span className="text-orange-400 text-xs flex items-center gap-0.5"><Flame size={10} />{m.calories}</span>
                   <span className="text-brand text-xs flex items-center gap-0.5"><Zap size={10} />{m.protein}g</span>
@@ -215,7 +215,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-2 gap-3 mb-4">
           <div className="card text-center">
             <p className="text-gray-400 text-xs mb-1">Daily Calories</p>
-            <p className="text-white text-2xl font-bold">{nutrition.calories}</p>
+            <p className="text-2xl font-bold" style={{ color: 'var(--text)' }}>{nutrition.calories}</p>
             <p className="text-gray-500 text-xs">kcal target</p>
           </div>
           <div className="card text-center">
