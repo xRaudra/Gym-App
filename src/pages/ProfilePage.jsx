@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Eye, EyeOff, LogOut, User, Pencil, Check, X } from 'lucide-react'
+import { Eye, EyeOff, LogOut, User, Pencil, Check, X, Sun, Moon } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { useTheme } from '../contexts/ThemeContext'
 import { calcNutrition, bmiCategory } from '../utils/calculations'
 
 function InfoRow({ label, value }) {
@@ -49,6 +50,7 @@ function EditableField({ label, value, type = 'text', onChange, min, max, placeh
 
 export default function ProfilePage() {
   const { user, updateProfile, updateUser, logout } = useAuth()
+  const { theme, toggle: toggleTheme } = useTheme()
   const navigate = useNavigate()
   const profile = user?.profile || {}
 
@@ -244,10 +246,27 @@ export default function ProfilePage() {
         </form>
       )}
 
+      {/* Theme toggle */}
+      <div className="mt-6 flex items-center justify-between py-4 px-4 rounded-2xl border" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-raised)' }}>
+        <div className="flex items-center gap-3">
+          {theme === 'dark' ? <Moon size={18} className="text-brand" /> : <Sun size={18} className="text-accent" />}
+          <div>
+            <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>Appearance</p>
+            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{theme === 'dark' ? 'Dark mode' : 'Light mode'}</p>
+          </div>
+        </div>
+        <button
+          onClick={toggleTheme}
+          className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${theme === 'dark' ? 'bg-brand' : 'bg-gray-300'}`}
+        >
+          <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${theme === 'dark' ? 'translate-x-6' : 'translate-x-0.5'}`} />
+        </button>
+      </div>
+
       {/* Logout */}
       <button
         onClick={handleLogout}
-        className="w-full mt-8 flex items-center justify-center gap-2 py-4 rounded-2xl border border-red-500/30 text-red-400 font-semibold text-sm active:scale-95 transition-transform"
+        className="w-full mt-3 flex items-center justify-center gap-2 py-4 rounded-2xl border border-red-500/30 text-red-400 font-semibold text-sm active:scale-95 transition-transform"
       >
         <LogOut size={18} /> Sign Out
       </button>

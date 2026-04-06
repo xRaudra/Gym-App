@@ -23,13 +23,13 @@ export default function Layout() {
   const nav = user?.role === 'admin' ? ADMIN_NAV : MEMBER_NAV
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#0A0A0A]">
+    <div className="flex flex-col min-h-screen" style={{ backgroundColor: 'var(--bg)' }}>
       <main className="flex-1 overflow-y-auto pb-20">
         <Outlet />
       </main>
 
       {/* Bottom navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-[#0D0D0D] border-t border-[#2A2A2A] flex justify-around items-center h-16 px-2 z-50 safe-area-inset-bottom">
+      <nav className="fixed bottom-0 left-0 right-0 flex justify-around items-center h-16 px-2 z-50 safe-area-inset-bottom border-t" style={{ backgroundColor: 'var(--nav-bg)', borderColor: 'var(--border)' }}>
         {nav.map(({ to, icon: Icon, label }) => (
           <NavLink
             key={to}
