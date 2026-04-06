@@ -18,7 +18,7 @@ export default function LoginPage() {
     setError('')
     if (!username.trim() || !password) return setError('Please enter both fields.')
     setLoading(true)
-    const res = login(username.trim(), password)
+    const res = await login(username.trim(), password)
     setLoading(false)
     if (!res.ok) return setError(res.error)
     if (role === 'admin' && res.user.role !== 'admin')

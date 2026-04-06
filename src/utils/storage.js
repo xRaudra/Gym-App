@@ -1,123 +1,110 @@
-// Keys
-export const KEYS = {
-  USERS: 'gp_users',
-  CURRENT_USER: 'gp_current_user',
-  TRACKING: 'gp_tracking',
-}
+import { supabase } from './supabase'
 
-// --- Users ---
-export function getUsers() {
-  try {
-    return JSON.parse(localStorage.getItem(KEYS.USERS) || '[]')
-  } catch {
-    return []
-  }
-}
-
-export function saveUsers(users) {
-  localStorage.setItem(KEYS.USERS, JSON.stringify(users))
-}
-
-export function getUserById(id) {
-  return getUsers().find(u => u.id === id) || null
-}
-
-export function getUserByUsername(username) {
-  return getUsers().find(u => u.username.toLowerCase() === username.toLowerCase()) || null
-}
-
-export function getUserByEmail(email) {
-  return getUsers().find(u => u.email.toLowerCase() === email.toLowerCase()) || null
-}
-
-export function upsertUser(user) {
-  const users = getUsers()
-  const idx = users.findIndex(u => u.id === user.id)
-  if (idx >= 0) users[idx] = user
-  else users.push(user)
-  saveUsers(users)
-}
-
-export function deleteUser(id) {
-  saveUsers(getUsers().filter(u => u.id !== id))
-}
-
-// --- Current session ---
+// ─── Session (device-local only) ─────────────────────────────────────────────
 export function getCurrentUserId() {
-  return localStorage.getItem(KEYS.CURRENT_USER) || null
+  return localStorage.getItem('gp_current_user') || null
 }
-
 export function setCurrentUserId(id) {
-  if (id) localStorage.setItem(KEYS.CURRENT_USER, id)
-  else localStorage.removeItem(KEYS.CURRENT_USER)
+  if (id) localStorage.setItem('gp_current_user', id)
+  else localStorage.removeItem('gp_current_user')
 }
 
-export function getCurrentUser() {
+// ─── User helpers ─────────────────────────────────────────────────────────────
+function toAppUser(row) {
+  if (!row) return null
+  return { ...row, createdAt: row.created_at }
+}
+
+export async function getUsers() {
+  const { data } = await supabase.from('users').select('*').order('created_at')
+  return (data || []).map(toAppUser)
+}
+
+export async function getUserById(id) {
+  const { data } = await supabase.from('users').select('*').eq('id', id).maybeSingle()
+  return toAppUser(data)
+}
+
+export async function getUserByUsername(username) {
+  const { data } = await supabase.from('users').select('*').ilike('username', username).maybeSingle()
+  return toAppUser(data)
+}
+
+export async function getUserByEmail(email) {
+  const { data } = await supabase.from('users').select('*').ilike('email', email).maybeSingle()
+  return toAppUser(data)
+}
+
+export async function upsertUser(user) {
+  const { createdAt, ...rest } = user
+  await supabase.from('users').upsert({ ...rest, created_at: createdAt || user.created_at || new Date().toISOString() })
+}
+
+export async function deleteUser(id) {
+  await supabase.from('users').delete().eq('id', id)
+}
+
+export async function getCurrentUser() {
   const id = getCurrentUserId()
   return id ? getUserById(id) : null
 }
 
-// --- Daily Tracking ---
-export function getTodayKey(userId) {
-  const today = new Date().toISOString().split('T')[0]
-  return `${userId}_${today}`
-}
-
-export function getDateKey(userId, date) {
-  return `${userId}_${date}`
-}
-
-export function getAllTracking() {
-  try {
-    return JSON.parse(localStorage.getItem(KEYS.TRACKING) || '{}')
-  } catch {
-    return {}
-  }
-}
-
-export function getTracking(key) {
-  return getAllTracking()[key] || null
-}
-
-export function getTodayTracking(userId) {
-  return getTracking(getTodayKey(userId)) || {
-    userId,
-    date: new Date().toISOString().split('T')[0],
+// ─── Tracking ─────────────────────────────────────────────────────────────────
+function toAppTracking(row, userId, date) {
+  if (!row) return {
+    userId, date,
     exercisesCompleted: [],
     mealsCompleted: [],
     proteinConsumed: 0,
     caloriesConsumed: 0,
   }
+  return {
+    userId: row.user_id,
+    date: row.date,
+    exercisesCompleted: row.exercises_completed || [],
+    mealsCompleted: row.meals_completed || [],
+    proteinConsumed: row.protein_consumed || 0,
+    caloriesConsumed: row.calories_consumed || 0,
+  }
 }
 
-export function saveTracking(key, data) {
-  const all = getAllTracking()
-  all[key] = data
-  localStorage.setItem(KEYS.TRACKING, JSON.stringify(all))
+export async function getTodayTracking(userId) {
+  const date = new Date().toISOString().split('T')[0]
+  const { data } = await supabase.from('tracking').select('*').eq('user_id', userId).eq('date', date).maybeSingle()
+  return toAppTracking(data, userId, date)
 }
 
-export function saveTodayTracking(userId, data) {
-  saveTracking(getTodayKey(userId), data)
+export async function saveTodayTracking(userId, tracking) {
+  const date = new Date().toISOString().split('T')[0]
+  await supabase.from('tracking').upsert({
+    id: `${userId}_${date}`,
+    user_id: userId,
+    date,
+    exercises_completed: tracking.exercisesCompleted || [],
+    meals_completed: tracking.mealsCompleted || [],
+    protein_consumed: tracking.proteinConsumed || 0,
+    calories_consumed: tracking.caloriesConsumed || 0,
+  })
 }
 
-export function getUserTrackingHistory(userId, days = 30) {
-  const all = getAllTracking()
-  const result = []
+export async function getUserTrackingHistory(userId, days = 30) {
+  const dates = []
   for (let i = 0; i < days; i++) {
     const d = new Date()
     d.setDate(d.getDate() - i)
-    const date = d.toISOString().split('T')[0]
-    const key = getDateKey(userId, date)
-    result.push({ date, ...(all[key] || { exercisesCompleted: [], mealsCompleted: [], proteinConsumed: 0, caloriesConsumed: 0 }) })
+    dates.push(d.toISOString().split('T')[0])
   }
-  return result.reverse()
+  const { data } = await supabase.from('tracking').select('*').eq('user_id', userId).in('date', dates)
+  const map = {}
+  if (data) data.forEach(r => { map[r.date] = r })
+  return dates.reverse().map(date => toAppTracking(map[date] || null, userId, date))
 }
 
-// --- Seed admin on first run ---
-export function seedAdminIfNeeded() {
-  const users = getUsers()
-  if (!users.find(u => u.username === 'xRaudra')) {
-    upsertUser({
+// ─── Seed admin ───────────────────────────────────────────────────────────────
+export async function seedAdminIfNeeded() {
+  const { data } = await supabase.from('users').select('id').eq('username', 'xRaudra').maybeSingle()
+  if (!data) {
+    await upsertUser({
       id: 'admin_xraudra',
       username: 'xRaudra',
       email: 'admin@gympro.app',

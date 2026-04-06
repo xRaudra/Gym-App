@@ -9,14 +9,16 @@ export function TrackingProvider({ children }) {
   const [today, setToday] = useState(null)
   const [history, setHistory] = useState([])
 
-  const loadToday = useCallback(() => {
+  const loadToday = useCallback(async () => {
     if (!user) return
-    setToday(getTodayTracking(user.id))
+    const data = await getTodayTracking(user.id)
+    setToday(data)
   }, [user])
 
-  const loadHistory = useCallback(() => {
+  const loadHistory = useCallback(async () => {
     if (!user) return
-    setHistory(getUserTrackingHistory(user.id, 30))
+    const data = await getUserTrackingHistory(user.id, 30)
+    setHistory(data)
   }, [user])
 
   useEffect(() => {
@@ -24,7 +26,7 @@ export function TrackingProvider({ children }) {
     loadHistory()
   }, [loadToday, loadHistory])
 
-  const toggleExercise = useCallback((exerciseId) => {
+  const toggleExercise = useCallback(async (exerciseId) => {
     if (!user || !today) return
     const list = today.exercisesCompleted || []
     const updated = list.includes(exerciseId)
@@ -32,10 +34,10 @@ export function TrackingProvider({ children }) {
       : [...list, exerciseId]
     const next = { ...today, exercisesCompleted: updated }
     setToday(next)
-    saveTodayTracking(user.id, next)
+    await saveTodayTracking(user.id, next)
   }, [user, today])
 
-  const toggleMeal = useCallback((mealId, mealCalories, mealProtein) => {
+  const toggleMeal = useCallback(async (mealId, mealCalories, mealProtein) => {
     if (!user || !today) return
     const list = today.mealsCompleted || []
     const wasCompleted = list.includes(mealId)
@@ -57,11 +59,11 @@ export function TrackingProvider({ children }) {
       ),
     }
     setToday(next)
-    saveTodayTracking(user.id, next)
+    await saveTodayTracking(user.id, next)
     loadHistory()
   }, [user, today, loadHistory])
 
-  const resetToday = useCallback(() => {
+  const resetToday = useCallback(async () => {
     if (!user) return
     const fresh = {
       userId: user.id,
@@ -72,7 +74,7 @@ export function TrackingProvider({ children }) {
       caloriesConsumed: 0,
     }
     setToday(fresh)
-    saveTodayTracking(user.id, fresh)
+    await saveTodayTracking(user.id, fresh)
     loadHistory()
   }, [user, loadHistory])
 

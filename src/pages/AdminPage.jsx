@@ -66,11 +66,11 @@ function AddMemberModal({ onClose, onAdd }) {
   const [err, setErr] = useState('')
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!form.name || !form.username || !form.email) return setErr('All fields required.')
-    const users = getUsers()
-    if (users.find(u => u.username.toLowerCase() === form.username.toLowerCase())) return setErr('Username taken.')
-    if (users.find(u => u.email.toLowerCase() === form.email.toLowerCase())) return setErr('Email already in use.')
+    const allUsers = await getUsers()
+    if (allUsers.find(u => u.username.toLowerCase() === form.username.toLowerCase())) return setErr('Username taken.')
+    if (allUsers.find(u => u.email.toLowerCase() === form.email.toLowerCase())) return setErr('Email already in use.')
     const member = {
       id: `user_${Date.now()}`,
       ...form,
@@ -78,7 +78,7 @@ function AddMemberModal({ onClose, onAdd }) {
       profile: { gender:'', age:'', height:'', weight:'', dietaryPreference:'', preferredFoods:[], goal:'maintenance', workOnSunday:false, completedOnboarding:false },
       createdAt: new Date().toISOString(),
     }
-    upsertUser(member)
+    await upsertUser(member)
     onAdd()
     onClose()
   }
@@ -160,20 +160,16 @@ function MemberDetailModal({ member, onClose }) {
 
 export default function AdminPage() {
   const { user } = useAuth()
-  const [users, setUsers] = useState(() => getUsers())
+  const [users, setUsers] = useState([])
   const [search, setSearch] = useState('')
   const [showAdd, setShowAdd] = useState(false)
   const [viewMember, setViewMember] = useState(null)
   const [confirmDelete, setConfirmDelete] = useState(null)
 
-  const refresh = () => setUsers(getUsers())
+  const refresh = async () => setUsers(await getUsers())
 
-  // Reload users whenever the page becomes visible (handles registrations from other tabs)
   useEffect(() => {
     refresh()
-    const onFocus = () => refresh()
-    window.addEventListener('focus', onFocus)
-    return () => window.removeEventListener('focus', onFocus)
   }, [])
 
   const filtered = useMemo(() => {
@@ -187,14 +183,14 @@ export default function AdminPage() {
   const totalMem  = users.filter(u => u.role === 'member').length
   const totalAdm  = users.filter(u => u.role === 'admin').length
 
-  const handleToggleAdmin = (member) => {
+  const handleToggleAdmin = async (member) => {
     const updated = { ...member, role: member.role === 'admin' ? 'member' : 'admin' }
-    upsertUser(updated)
+    await upsertUser(updated)
     refresh()
   }
 
-  const handleDelete = (member) => {
-    deleteUserFromStore(member.id)
+  const handleDelete = async (member) => {
+    await deleteUserFromStore(member.id)
     refresh()
     setConfirmDelete(null)
   }

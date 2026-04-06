@@ -12,14 +12,17 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    seedAdminIfNeeded()
-    const u = getCurrentUser()
-    setUser(u)
-    setLoading(false)
+    async function init() {
+      await seedAdminIfNeeded()
+      const u = await getCurrentUser()
+      setUser(u)
+      setLoading(false)
+    }
+    init()
   }, [])
 
-  const login = useCallback((username, password) => {
-    const found = getUserByUsername(username)
+  const login = useCallback(async (username, password) => {
+    const found = await getUserByUsername(username)
     if (!found) return { ok: false, error: 'Username not found.' }
     if (found.password !== password) return { ok: false, error: 'Incorrect password.' }
     setCurrentUserId(found.id)
@@ -27,13 +30,13 @@ export function AuthProvider({ children }) {
     return { ok: true, user: found }
   }, [])
 
-  const register = useCallback((data) => {
+  const register = useCallback(async (data) => {
     const { username, email, password, name } = data
     if (!username || !email || !password || !name)
       return { ok: false, error: 'All fields are required.' }
-    if (getUserByUsername(username))
+    if (await getUserByUsername(username))
       return { ok: false, error: 'Username already taken.' }
-    if (getUserByEmail(email))
+    if (await getUserByEmail(email))
       return { ok: false, error: 'Email already registered.' }
     const pwErrors = validatePassword(password)
     if (pwErrors.length) return { ok: false, error: `Password must include: ${pwErrors.join(', ')}.` }
@@ -55,7 +58,7 @@ export function AuthProvider({ children }) {
       },
       createdAt: new Date().toISOString(),
     }
-    upsertUser(newUser)
+    await upsertUser(newUser)
     setCurrentUserId(newUser.id)
     setUser(newUser)
     return { ok: true, user: newUser }
@@ -66,16 +69,15 @@ export function AuthProvider({ children }) {
     setUser(null)
   }, [])
 
-  const updateProfile = useCallback((profileData) => {
+  const updateProfile = useCallback(async (profileData) => {
     if (!user) return
     const updated = { ...user, profile: { ...user.profile, ...profileData } }
-    upsertUser(updated)
+    await upsertUser(updated)
     setUser(updated)
   }, [user])
 
-  const updateUser = useCallback((fields) => {
+  const updateUser = useCallback(async (fields) => {
     if (!user) return { ok: true }
-    // Password change validation
     if (fields.newPassword) {
       const pwErrors = validatePassword(fields.newPassword)
       if (pwErrors.length) return { ok: false, error: `Password must include: ${pwErrors.join(', ')}.` }
@@ -88,13 +90,13 @@ export function AuthProvider({ children }) {
       ...rest,
       ...(newPassword ? { password: newPassword } : {}),
     }
-    upsertUser(updated)
+    await upsertUser(updated)
     setUser(updated)
     return { ok: true }
   }, [user])
 
-  const refreshUser = useCallback(() => {
-    const u = getCurrentUser()
+  const refreshUser = useCallback(async () => {
+    const u = await getCurrentUser()
     setUser(u)
   }, [])
 
