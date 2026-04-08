@@ -20,13 +20,12 @@ function Ring({ pct: p, label, consumed, target, unit, color, size = 120 }) {
           <circle cx={size / 2} cy={size / 2} r={r} stroke="var(--border)" strokeWidth={10} fill="none" />
           <circle
             cx={size / 2} cy={size / 2} r={r}
-            stroke={color}
-            strokeWidth={10}
             fill="none"
+            strokeWidth={10}
             strokeDasharray={circ}
             strokeDashoffset={offset}
             strokeLinecap="round"
-            style={{ transition: 'stroke-dashoffset 0.6s ease' }}
+            style={{ stroke: color, transition: 'stroke-dashoffset 0.6s ease' }}
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
@@ -120,7 +119,7 @@ export default function DashboardPage() {
             consumed={today?.proteinConsumed || 0}
             target={nutrition?.protein || '—'}
             unit="g"
-            color="#22C55E"
+            color="var(--brand-ring)"
           />
           <Ring
             pct={caloriesPct}
