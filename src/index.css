@@ -4,41 +4,41 @@
 
 /* ── CSS Variables ─────────────────────────────────────────────────────────── */
 :root {
-  /* Dark mode — Deep Indigo + Electric Violet */
-  --bg:          #0E0E1A;
-  --bg-surface:  #171727;
-  --bg-raised:   #21213A;
-  --bg-overlay:  #2A2A4A;
-  --border:      #2D2D50;
-  --border-light:#3A3A65;
-  --text:        #EEEEFF;
-  --text-muted:  #8888BB;
-  --text-subtle: #555580;
-  --input-bg:    #171727;
-  --nav-bg:      #0A0A14;
-  --card-bg:     #171727;
-  --scrollbar-track: #0E0E1A;
-  --scrollbar-thumb: #3A3A65;
-  --brand-ring:  #8B5CF6;
+  /* Dark mode — Pitch Black + Electric Orange */
+  --bg:          #080808;
+  --bg-surface:  #111111;
+  --bg-raised:   #1A1A1A;
+  --bg-overlay:  #242424;
+  --border:      #2A2A2A;
+  --border-light:#363636;
+  --text:        #F0F0F0;
+  --text-muted:  #888888;
+  --text-subtle: #555555;
+  --input-bg:    #111111;
+  --nav-bg:      #060606;
+  --card-bg:     #111111;
+  --scrollbar-track: #080808;
+  --scrollbar-thumb: #363636;
+  --brand-ring:  #FF6B2B;
 }
 
 html.light {
-  /* Light mode — Soft Lavender + Deep Purple */
-  --bg:          #F5F3FF;
+  /* Light mode — Warm White + Burnt Orange */
+  --bg:          #F8F7F5;
   --bg-surface:  #FFFFFF;
-  --bg-raised:   #EDE9FF;
-  --bg-overlay:  #E5DEFF;
-  --border:      #C4B5FD;
-  --border-light:#DDD6FE;
-  --text:        #1E1033;
-  --text-muted:  #5B4E8A;
-  --text-subtle: #9580C8;
+  --bg-raised:   #F0EDE8;
+  --bg-overlay:  #E8E2DA;
+  --border:      #E0DDD8;
+  --border-light:#EDE9E3;
+  --text:        #1A1A1A;
+  --text-muted:  #666666;
+  --text-subtle: #999999;
   --input-bg:    #FFFFFF;
-  --nav-bg:      #EDE9FF;
+  --nav-bg:      #F0EDE8;
   --card-bg:     #FFFFFF;
-  --scrollbar-track: #F5F3FF;
-  --scrollbar-thumb: #C4B5FD;
-  --brand-ring:  #7C3AED;
+  --scrollbar-track: #F8F7F5;
+  --scrollbar-thumb: #E0DDD8;
+  --brand-ring:  #E55722;
 }
 
 @layer base {
@@ -76,7 +76,7 @@ html.light {
     outline: none;
     transition: border-color 0.2s, background-color 0.2s;
   }
-  input:focus, textarea:focus, select:focus { border-color: #8B5CF6; }
+  input:focus, textarea:focus, select:focus { border-color: #FF6B2B; }
   input::placeholder, textarea::placeholder { color: var(--text-subtle); }
   select option { background-color: var(--input-bg); }
 }
@@ -87,32 +87,31 @@ html.light .text-gray-300 { color: var(--text-muted)  !important; }
 
 html.light .bg-surface         { background-color: var(--bg-surface) !important; }
 html.light .bg-surface-raised  { background-color: var(--bg-raised)  !important; }
+html.light .bg-\[#080808\]    { background-color: var(--bg)         !important; }
 html.light .bg-\[#0A0A0A\]    { background-color: var(--bg)         !important; }
-html.light .bg-\[#0D0D0D\]    { background-color: var(--nav-bg)     !important; }
-html.light .bg-\[#141414\]    { background-color: var(--bg-surface) !important; }
+html.light .bg-\[#111111\]    { background-color: var(--bg-surface) !important; }
 html.light .bg-\[#1A1A1A\]    { background-color: var(--bg-raised)  !important; }
 html.light .bg-\[#1E1E1E\]    { background-color: var(--bg-raised)  !important; }
 html.light .bg-\[#2A2A2A\]    { background-color: var(--border)     !important; }
-html.light .bg-\[#252525\]    { background-color: var(--bg-overlay) !important; }
 
 html.light .border-border       { border-color: var(--border)       !important; }
 html.light .border-border-light { border-color: var(--border-light) !important; }
 html.light .border-\[#2A2A2A\] { border-color: var(--border)       !important; }
 
-/* Light mode brand colour — Deep Purple instead of Electric Violet */
-html.light .text-brand           { color: #7C3AED !important; }
-html.light .bg-brand             { background-color: #7C3AED !important; }
-html.light .border-brand         { border-color: #7C3AED !important; }
-html.light .bg-brand\/5          { background-color: rgba(124,58,237,0.05)  !important; }
-html.light .bg-brand\/10         { background-color: rgba(124,58,237,0.10)  !important; }
-html.light .bg-brand\/15         { background-color: rgba(124,58,237,0.15)  !important; }
-html.light .bg-brand\/20         { background-color: rgba(124,58,237,0.20)  !important; }
-html.light .border-brand\/20     { border-color: rgba(124,58,237,0.20) !important; }
-html.light .border-brand\/30     { border-color: rgba(124,58,237,0.30) !important; }
-html.light .border-brand\/40     { border-color: rgba(124,58,237,0.40) !important; }
+/* Light mode brand — Burnt Orange */
+html.light .text-brand           { color: #E55722 !important; }
+html.light .bg-brand             { background-color: #E55722 !important; }
+html.light .border-brand         { border-color: #E55722 !important; }
+html.light .bg-brand\/5          { background-color: rgba(229,87,34,0.05)  !important; }
+html.light .bg-brand\/10         { background-color: rgba(229,87,34,0.10)  !important; }
+html.light .bg-brand\/15         { background-color: rgba(229,87,34,0.15)  !important; }
+html.light .bg-brand\/20         { background-color: rgba(229,87,34,0.20)  !important; }
+html.light .border-brand\/20     { border-color: rgba(229,87,34,0.20) !important; }
+html.light .border-brand\/30     { border-color: rgba(229,87,34,0.30) !important; }
+html.light .border-brand\/40     { border-color: rgba(229,87,34,0.40) !important; }
 html.light input:focus,
 html.light textarea:focus,
-html.light select:focus          { border-color: #7C3AED !important; }
+html.light select:focus          { border-color: #E55722 !important; }
 
 @layer components {
   .btn-primary {

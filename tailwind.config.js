@@ -5,24 +5,24 @@ export default {
     extend: {
       colors: {
         brand: {
-          DEFAULT: '#8B5CF6',
-          dark: '#7C3AED',
-          light: '#A78BFA',
-          muted: '#2E1065',
+          DEFAULT: '#FF6B2B',
+          dark: '#E55722',
+          light: '#FF8C55',
+          muted: '#2A1208',
         },
         accent: {
-          DEFAULT: '#F97316',
-          dark: '#EA580C',
-          light: '#FB923C',
+          DEFAULT: '#FFB347',
+          dark: '#F59E0B',
+          light: '#FCD34D',
         },
         surface: {
-          DEFAULT: '#171727',
-          raised: '#21213A',
-          overlay: '#2A2A4A',
+          DEFAULT: '#111111',
+          raised: '#1A1A1A',
+          overlay: '#242424',
         },
         border: {
-          DEFAULT: '#2D2D50',
-          light: '#3A3A65',
+          DEFAULT: '#2A2A2A',
+          light: '#363636',
         },
       },
       fontFamily: {
