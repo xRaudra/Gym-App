@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function LoginPage() {
@@ -26,97 +26,85 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen relative flex flex-col overflow-hidden">
-      {/* Splash image */}
+      {/* Splash image (dimmed) */}
       <img
         src="/splash.jpg"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover object-top"
+        className="absolute inset-0 w-full h-full object-cover object-top opacity-30"
         draggable={false}
       />
+      <div className="absolute inset-0" style={{ backgroundColor: '#080808cc' }} />
 
-      {/* Gradient: light top → very dark bottom */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/55 to-black/96" />
+      <div className="relative flex flex-col min-h-screen px-5">
+        {/* Back */}
+        <div className="pt-12 pb-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 text-gray-400 active:scale-95 transition-transform w-fit"
+          >
+            <ArrowLeft size={18} />
+            <span className="text-sm font-medium">Back</span>
+          </button>
+        </div>
 
-      {/* Content */}
-      <div className="relative flex flex-col min-h-screen">
+        {/* App name */}
+        <div className="mb-8 mt-4">
+          <h1 className="text-3xl font-black text-white">
+            Grit n <span className="text-brand">Gain.</span>
+          </h1>
+          <p className="text-gray-500 text-sm mt-1">Sign in to continue</p>
+        </div>
 
-        {/* Hero text */}
-        <div className="flex-1 flex flex-col justify-end px-6 pb-10">
-          <div className="mb-1">
-            <span className="inline-flex items-center gap-1.5 bg-brand/20 border border-brand/30 rounded-full px-3 py-1 mb-5">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-              <span className="text-brand text-[11px] font-bold tracking-widest uppercase">Grit n Gain</span>
-            </span>
+        {/* Form */}
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <label className="label">Username</label>
+            <input
+              type="text"
+              placeholder="Your username"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              autoComplete="username"
+              autoCapitalize="none"
+            />
           </div>
 
-          <h1 className="text-[2.75rem] font-black text-white leading-[1.05] tracking-tight mb-3">
-            Built on Grit,<br />
-            <span className="text-brand">Delivered</span> by Gain.
-          </h1>
-          <p className="text-gray-400 text-sm leading-relaxed max-w-[280px]">
-            Train smarter. Track every rep.<br />Become the strongest version of you.
-          </p>
-        </div>
-
-        {/* Login card */}
-        <div
-          className="mx-4 mb-8 rounded-3xl border border-white/10 p-6 animate-slide-up"
-          style={{ backgroundColor: 'rgba(8,8,8,0.88)', backdropFilter: 'blur(24px)' }}
-        >
-          <h2 className="text-lg font-bold text-white mb-1">Sign in</h2>
-          <p className="text-gray-500 text-sm mb-5">Enter your credentials to continue</p>
-
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label className="label">Username</label>
+          <div>
+            <label className="label">Password</label>
+            <div className="relative">
               <input
-                type="text"
-                placeholder="Your username"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                autoComplete="username"
-                autoCapitalize="none"
+                type={showPw ? 'text' : 'password'}
+                placeholder="Your password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                autoComplete="current-password"
+                className="pr-12"
               />
+              <button
+                type="button"
+                onClick={() => setShowPw(v => !v)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
+          </div>
 
-            <div>
-              <label className="label">Password</label>
-              <div className="relative">
-                <input
-                  type={showPw ? 'text' : 'password'}
-                  placeholder="Your password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  autoComplete="current-password"
-                  className="pr-12"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPw(v => !v)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
-                >
-                  {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-red-400 text-sm">
+              {error}
             </div>
+          )}
 
-            {error && (
-              <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-red-400 text-sm">
-                {error}
-              </div>
-            )}
+          <button type="submit" disabled={loading} className="btn-primary mt-2">
+            {loading ? 'Signing in…' : 'Sign In'}
+          </button>
+        </form>
 
-            <button type="submit" disabled={loading} className="btn-primary">
-              {loading ? 'Signing in…' : 'Sign In'}
-            </button>
-          </form>
-
-          <p className="text-gray-600 mt-4 text-sm text-center">
-            New member?{' '}
-            <Link to="/register" className="text-brand font-semibold">Create account</Link>
-          </p>
-        </div>
-
+        <p className="text-gray-600 mt-6 text-sm text-center">
+          New member?{' '}
+          <Link to="/register" className="text-brand font-semibold">Create account</Link>
+        </p>
       </div>
     </div>
   )
