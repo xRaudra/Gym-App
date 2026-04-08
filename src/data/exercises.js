@@ -1,81 +1,843 @@
-// ─── Exercise Database ────────────────────────────────────────────────────────
+// ─── Image constants (Wikimedia Commons — verified URLs) ─────────────────────
+const W = 'https://upload.wikimedia.org/wikipedia/commons/'
+const IMG = {
+  // Compound lifts
+  benchPress:   W + 'thumb/a/aa/Bench_press_1.jpg/480px-Bench_press_1.jpg',
+  squat:        W + 'thumb/8/82/Squats.svg/400px-Squats.svg.png',
+  deadlift:     W + '6/63/Deadlift-phase_1.JPG',
+  rdl:          W + 'e/e8/Romanian-deadlift-1.png',
+  ohp:          W + '6/62/Seated-military-shoulder-press-1.png',
 
+  // Push — isolation
+  lateralRaise: W + 'thumb/d/d8/DumbbellLateralRaise.JPG/480px-DumbbellLateralRaise.JPG',
+  skullCrusher: W + '5/51/DumbbellTricepsExtension.JPG',
+  dips:         W + '8/89/Dips.jpg',
+  cableMachine: W + 'thumb/f/f8/PulldownMachineExercise.JPG/480px-PulldownMachineExercise.JPG',
+
+  // Pull — rows & pulldowns
+  pullup:       W + 'thumb/6/67/Marine_Pull-ups.jpg/480px-Marine_Pull-ups.jpg',
+  latPulldown:  W + 'thumb/f/f8/PulldownMachineExercise.JPG/480px-PulldownMachineExercise.JPG',
+  cableRow:     W + 'thumb/8/82/CableMachineUprightRow.JPG/480px-CableMachineUprightRow.JPG',
+  bentRow:      W + 'thumb/e/e1/Barbell_row.jpg/480px-Barbell_row.jpg',
+
+  // Curls
+  bicepCurl:    W + 'd/d3/Standing-biceps-curl-1.gif',
+  preacherCurl: W + 'c/c6/Two-arm-preacher-curl-2.gif',
+  concCurl:     W + '6/6a/Concentration-curls-1.png',
+
+  // Legs — machines & free
+  legPress:     W + 'thumb/5/57/Leg_press_(cropped,_flipped).jpg/480px-Leg_press_(cropped,_flipped).jpg',
+  legCurl:      W + 'thumb/c/c6/LyingLegCurlMachineExercise.JPG/480px-LyingLegCurlMachineExercise.JPG',
+  legExt:       W + 'thumb/3/36/LegExtensionMachineExercise.JPG/480px-LegExtensionMachineExercise.JPG',
+  calfRaise:    W + 'thumb/6/68/DumbbellStandingCalfRaise.JPG/480px-DumbbellStandingCalfRaise.JPG',
+  seatedCalf:   W + 'thumb/e/e7/SeatedCalfRaiseMachineExercise.JPG/480px-SeatedCalfRaiseMachineExercise.JPG',
+  lunge:        W + 'thumb/2/29/Airman_performing_lunge.jpg/480px-Airman_performing_lunge.jpg',
+
+  // Yoga poses
+  yogaMountain: W + 'f/f2/Tadasana_-_Yoga_Art_and_Science.jpg',
+  yogaCatCow:   W + '4/48/Yoga_at_Your_Park_-_Bidalasana.jpg',
+  yogaDowndog:  W + 'thumb/5/57/Downward-Facing-Dog.JPG/480px-Downward-Facing-Dog.JPG',
+  yogaWarrior1: W + 'thumb/a/a6/Virabhadrasana_I_-_Warrior_Pose_I.jpg/480px-Virabhadrasana_I_-_Warrior_Pose_I.jpg',
+  yogaWarrior2: W + 'b/b4/Yoga_%289707548938%29.jpg',
+  yogaBridge:   W + 'thumb/c/cf/Stretching_1200830.jpg/480px-Stretching_1200830.jpg',
+  yogaTree:     W + 'thumb/7/72/Vriksasana_Yoga-Asana_Nina-Mel.jpg/480px-Vriksasana_Yoga-Asana_Nina-Mel.jpg',
+  yogaFold:     W + '6/66/Paschimotanasana_Yoga-Asana_Nina-Mel.jpg',
+  yogaChild:    W + 'thumb/0/0b/Balasana.JPG/480px-Balasana.JPG',
+  yogaSavasana: W + '9/9f/Shavasana.jpg',
+}
+
+// ─── Push A ───────────────────────────────────────────────────────────────────
 const PUSH_A = [
-  { id: 'bench_press',      name: 'Barbell Bench Press',      sets: 4, reps: '8–10', rest: '90s', muscles: 'Chest, Triceps, Front Deltoids', tip: 'Keep shoulder blades retracted and feet flat on floor.' },
-  { id: 'incline_db_press', name: 'Incline Dumbbell Press',   sets: 3, reps: '10–12', rest: '75s', muscles: 'Upper Chest, Triceps',           tip: 'Set bench at 30–45°. Control the descent.' },
-  { id: 'ohp_a',            name: 'Overhead Shoulder Press',  sets: 3, reps: '10–12', rest: '75s', muscles: 'Deltoids, Triceps',              tip: 'Press directly overhead, do not arch lower back excessively.' },
-  { id: 'lateral_raise_a',  name: 'Dumbbell Lateral Raise',   sets: 3, reps: '12–15', rest: '60s', muscles: 'Side Deltoids',                  tip: 'Slight bend in elbows. Lead with elbows, not wrists.' },
-  { id: 'tricep_pushdown',  name: 'Cable Tricep Pushdown',    sets: 3, reps: '12–15', rest: '60s', muscles: 'Triceps',                         tip: 'Keep elbows tucked at your sides throughout.' },
-  { id: 'skull_crusher',    name: 'Skull Crushers (EZ-Bar)',  sets: 3, reps: '12–15', rest: '60s', muscles: 'Triceps (Long Head)',             tip: 'Lower bar to forehead slowly. Full extension at top.' },
+  {
+    id: 'bench_press', name: 'Barbell Bench Press',
+    sets: 4, reps: '8–10', rest: '90s',
+    muscles: 'Chest, Triceps, Front Deltoids',
+    equipment: 'Barbell · Bench',
+    image: IMG.benchPress,
+    tip: 'Keep shoulder blades retracted and feet flat on floor.',
+    steps: [
+      'Lie flat on the bench, eyes under the bar. Grip slightly wider than shoulder-width.',
+      'Plant feet firmly, arch your lower back slightly, retract shoulder blades into the bench.',
+      'Unrack the bar and hold it directly over your lower chest.',
+      'Lower the bar in a controlled arc to mid-chest, elbows at 45–75°.',
+      'Drive the bar back up explosively, fully extending arms at the top.',
+    ],
+  },
+  {
+    id: 'incline_db_press', name: 'Incline Dumbbell Press',
+    sets: 3, reps: '10–12', rest: '75s',
+    muscles: 'Upper Chest, Triceps',
+    equipment: 'Dumbbells · Incline Bench',
+    image: IMG.dumbbell,
+    tip: 'Set bench at 30–45°. Control the descent for maximum chest stretch.',
+    steps: [
+      'Set the bench to 30–45° incline. Sit with dumbbells on thighs.',
+      'Kick the dumbbells up as you lie back, positioning them at chest level.',
+      'Press up until arms are extended, dumbbells nearly touching.',
+      'Lower slowly over 2–3 seconds until you feel a deep chest stretch.',
+      'Pause, then press back up, squeezing the upper chest at the top.',
+    ],
+  },
+  {
+    id: 'ohp_a', name: 'Overhead Shoulder Press',
+    sets: 3, reps: '10–12', rest: '75s',
+    muscles: 'Deltoids, Triceps',
+    equipment: 'Barbell or Dumbbells',
+    image: IMG.ohp,
+    tip: 'Press directly overhead. Brace your core — do not arch lower back.',
+    steps: [
+      'Stand or sit upright. Hold barbell/dumbbells at shoulder height, palms forward.',
+      'Brace core, squeeze glutes, neutral spine throughout.',
+      'Press the weight straight up overhead until arms are fully extended.',
+      'At the top, shrug traps slightly to lock the weight overhead safely.',
+      'Lower under control back to shoulder height and repeat.',
+    ],
+  },
+  {
+    id: 'lateral_raise_a', name: 'Dumbbell Lateral Raise',
+    sets: 3, reps: '12–15', rest: '60s',
+    muscles: 'Side Deltoids',
+    equipment: 'Dumbbells',
+    image: IMG.lateralRaise,
+    tip: 'Lead with elbows, not wrists. Slight forward lean helps isolation.',
+    steps: [
+      'Stand holding dumbbells at sides, slight bend at elbows.',
+      'Lean slightly forward from hips (about 10°) to target middle delts.',
+      'Raise arms out to the sides until they are parallel to the floor.',
+      'Hold briefly at the top, thumb slightly down (like pouring water).',
+      'Lower slowly over 3 seconds. Avoid swinging.',
+    ],
+  },
+  {
+    id: 'tricep_pushdown', name: 'Cable Tricep Pushdown',
+    sets: 3, reps: '12–15', rest: '60s',
+    muscles: 'Triceps',
+    equipment: 'Cable Machine · Rope or Bar',
+    image: IMG.cableMachine,
+    tip: 'Keep elbows locked at sides. Only your forearms should move.',
+    steps: [
+      'Set cable pulley to high position, attach rope or straight bar.',
+      'Stand close to the cable, elbows at sides and bent at 90°.',
+      'Push the weight down by extending elbows until arms are straight.',
+      'Flare the rope handles outward slightly at the bottom for full extension.',
+      'Squeeze triceps hard, then slowly return to starting position.',
+    ],
+  },
+  {
+    id: 'skull_crusher', name: 'Skull Crushers (EZ-Bar)',
+    sets: 3, reps: '12–15', rest: '60s',
+    muscles: 'Triceps (Long Head)',
+    equipment: 'EZ-Bar · Bench',
+    image: IMG.skullCrusher,
+    tip: 'Lower to forehead slowly. Breathe in on the way down.',
+    steps: [
+      'Lie on a flat bench holding the EZ-bar with an overhand grip, arms vertical.',
+      'Keep upper arms still and pointing straight up throughout the movement.',
+      'Slowly bend elbows to lower the bar toward your forehead.',
+      'Stop about 1 inch from your forehead — feel the stretch in your triceps.',
+      'Press back up by extending elbows to full lockout, squeezing hard at top.',
+    ],
+  },
 ]
 
+// ─── Push B ───────────────────────────────────────────────────────────────────
 const PUSH_B = [
-  { id: 'db_bench',         name: 'Dumbbell Bench Press',     sets: 4, reps: '8–10', rest: '90s', muscles: 'Chest, Triceps',                  tip: 'Greater range of motion than barbell — feel the stretch.' },
-  { id: 'cable_fly',        name: 'Cable Chest Fly',          sets: 3, reps: '12–15', rest: '60s', muscles: 'Chest (inner)',                   tip: 'Slight bend in elbows throughout. Squeeze hard at the top.' },
-  { id: 'arnold_press',     name: 'Arnold Press',             sets: 3, reps: '10–12', rest: '75s', muscles: 'All 3 Deltoid Heads',             tip: 'Rotate palms outward as you press up.' },
-  { id: 'cable_lateral',    name: 'Cable Lateral Raise',      sets: 3, reps: '15–20', rest: '45s', muscles: 'Side Deltoids',                   tip: 'Keep constant tension with cable version.' },
-  { id: 'dips',             name: 'Tricep Dips',              sets: 3, reps: '10–12', rest: '75s', muscles: 'Triceps, Chest',                  tip: 'Lean slightly forward for chest; stay upright for triceps.' },
-  { id: 'overhead_ext',     name: 'DB Overhead Tricep Ext.', sets: 3, reps: '12–15', rest: '60s', muscles: 'Triceps (Long Head)',             tip: 'Keep upper arms stationary, only move forearms.' },
+  {
+    id: 'db_bench', name: 'Dumbbell Bench Press',
+    sets: 4, reps: '8–10', rest: '90s',
+    muscles: 'Chest, Triceps',
+    equipment: 'Dumbbells · Bench',
+    image: IMG.benchPress,
+    tip: 'Greater ROM than barbell. Feel the full stretch at the bottom.',
+    steps: [
+      'Sit on bench with dumbbells on thighs; kick up as you lie back.',
+      'Hold dumbbells at chest level, palms facing forward, slight angle inward.',
+      'Press up until arms are nearly straight, dumbbells almost touching.',
+      'Lower slowly until you feel a deep stretch across your chest.',
+      'Push back up in a slight arc, squeezing pecs at the top.',
+    ],
+  },
+  {
+    id: 'cable_fly', name: 'Cable Chest Fly',
+    sets: 3, reps: '12–15', rest: '60s',
+    muscles: 'Chest (Inner)',
+    equipment: 'Cable Machine (both sides)',
+    image: IMG.cableRow,
+    tip: 'Maintain soft elbows throughout. Squeeze hard at the top.',
+    steps: [
+      'Set both cables to shoulder height. Stand in the centre, one foot forward.',
+      'Grab handles, lean slightly forward, arms extended to sides.',
+      'Bring hands together in front of you in a wide hugging arc.',
+      'Squeeze chest hard when hands meet — hold for 1 second.',
+      'Return to start under control, feeling a full chest stretch.',
+    ],
+  },
+  {
+    id: 'arnold_press', name: 'Arnold Press',
+    sets: 3, reps: '10–12', rest: '75s',
+    muscles: 'All 3 Deltoid Heads',
+    equipment: 'Dumbbells',
+    image: IMG.ohp,
+    tip: 'The rotation recruits all three deltoid heads. Keep it slow.',
+    steps: [
+      'Sit upright, hold dumbbells in front of shoulders, palms facing you.',
+      'Begin pressing up while simultaneously rotating palms forward.',
+      'By the time arms are fully extended, palms should face forward.',
+      'Lower in reverse: rotate palms back to face you as you come down.',
+      'Maintain slow, controlled rotation throughout the full range.',
+    ],
+  },
+  {
+    id: 'cable_lateral', name: 'Cable Lateral Raise',
+    sets: 3, reps: '15–20', rest: '45s',
+    muscles: 'Side Deltoids',
+    equipment: 'Cable Machine',
+    image: IMG.lateralRaise,
+    tip: 'Cable keeps constant tension even at the top — better than dumbbells.',
+    steps: [
+      'Set cable to low position. Stand sideways, grab handle with far hand.',
+      'Arm should cross in front of body at the start.',
+      'Raise arm out to the side, keeping slight elbow bend.',
+      'Lift until arm is parallel to floor; pause at the top.',
+      'Slowly lower back to starting position. Complete all reps then switch sides.',
+    ],
+  },
+  {
+    id: 'dips', name: 'Tricep Dips',
+    sets: 3, reps: '10–12', rest: '75s',
+    muscles: 'Triceps, Chest',
+    equipment: 'Dip Bars or Bench',
+    image: IMG.dips,
+    tip: 'Stay upright for triceps focus. Slight lean forward for more chest.',
+    steps: [
+      'Grip parallel bars, arms extended, body upright.',
+      'Lower yourself by bending elbows, keeping torso nearly vertical.',
+      'Descend until upper arms are parallel to the floor.',
+      'Push back up by straightening arms, squeezing triceps at top.',
+      'Avoid flaring elbows wide — keep them tracking back.',
+    ],
+  },
+  {
+    id: 'overhead_ext', name: 'DB Overhead Tricep Extension',
+    sets: 3, reps: '12–15', rest: '60s',
+    muscles: 'Triceps (Long Head)',
+    equipment: 'Single Dumbbell',
+    image: IMG.skullCrusher,
+    tip: 'Upper arms stay still — only forearms move.',
+    steps: [
+      'Sit upright, hold one dumbbell overhead with both hands (diamond grip).',
+      'Upper arms locked pointing straight up beside your head.',
+      'Lower the dumbbell behind your head by bending elbows.',
+      'Stop when forearms are slightly past parallel to the floor.',
+      'Drive back up to full extension, squeezing triceps.',
+    ],
+  },
 ]
 
+// ─── Pull A ───────────────────────────────────────────────────────────────────
 const PULL_A = [
-  { id: 'deadlift',         name: 'Conventional Deadlift',    sets: 4, reps: '5–6',  rest: '120s', muscles: 'Entire Back, Glutes, Hamstrings', tip: 'Hinge at hips, neutral spine. Drive through heels.' },
-  { id: 'pulldown',         name: 'Lat Pulldown',             sets: 4, reps: '8–10', rest: '90s', muscles: 'Lats, Biceps',                    tip: 'Pull to upper chest, squeeze lats at bottom.' },
-  { id: 'seated_row',       name: 'Seated Cable Row',         sets: 3, reps: '10–12', rest: '75s', muscles: 'Mid Back, Rhomboids',             tip: 'Drive elbows back, pause and squeeze at end of row.' },
-  { id: 'face_pull_a',      name: 'Face Pulls',               sets: 3, reps: '15–20', rest: '60s', muscles: 'Rear Delts, Rotator Cuff',        tip: 'Pull to face height, externally rotate at the end.' },
-  { id: 'barbell_curl',     name: 'Barbell Bicep Curl',       sets: 3, reps: '10–12', rest: '60s', muscles: 'Biceps',                          tip: 'Don\'t swing. Squeeze at top, slow negative.' },
-  { id: 'hammer_curl',      name: 'Hammer Curl',              sets: 3, reps: '12–15', rest: '60s', muscles: 'Biceps, Brachialis',              tip: 'Neutral grip throughout. Alternate arms for control.' },
+  {
+    id: 'deadlift', name: 'Conventional Deadlift',
+    sets: 4, reps: '5–6', rest: '120s',
+    muscles: 'Entire Back, Glutes, Hamstrings',
+    equipment: 'Barbell · Plates',
+    image: IMG.deadlift,
+    tip: 'Hinge at hips, neutral spine at all times. Drive through heels.',
+    steps: [
+      'Bar over mid-foot. Hip-width stance. Hinge down, grip just outside legs.',
+      'Pull the slack out of the bar; chest up, neutral spine, lats engaged.',
+      'Drive through the floor (leg press cue) while keeping bar close to shins.',
+      'As bar passes knees, drive hips forward and stand tall.',
+      'Lower under control: hinge hips back first, then bend knees once bar passes them.',
+    ],
+  },
+  {
+    id: 'pulldown', name: 'Lat Pulldown',
+    sets: 4, reps: '8–10', rest: '90s',
+    muscles: 'Lats, Biceps',
+    equipment: 'Cable Machine · Wide Bar',
+    image: IMG.latPulldown,
+    tip: 'Pull to your upper chest — not behind your neck. Squeeze lats.',
+    steps: [
+      'Sit at the machine, thighs locked under pad. Overhand grip, wider than shoulders.',
+      'Lean back slightly (about 15–20°) and retract shoulder blades.',
+      'Pull the bar down to your upper chest in a smooth arc.',
+      'Hold briefly at the bottom — feel your lats fully contracted.',
+      'Slowly let the bar rise back up, fully extending arms at top.',
+    ],
+  },
+  {
+    id: 'seated_row', name: 'Seated Cable Row',
+    sets: 3, reps: '10–12', rest: '75s',
+    muscles: 'Mid Back, Rhomboids, Biceps',
+    equipment: 'Cable Machine · V-Bar',
+    image: IMG.cableRow,
+    tip: 'Drive elbows back. Pause 1 second at full contraction.',
+    steps: [
+      'Sit at cable row station, feet on platform, knees slightly bent.',
+      'Grab V-bar, arms fully extended. Sit upright — not rounded.',
+      'Pull the handle into your lower chest/upper abdomen area.',
+      'Drive elbows past your torso and squeeze shoulder blades together.',
+      "Control the return — don't let the weight yank you forward.",
+    ],
+  },
+  {
+    id: 'face_pull_a', name: 'Face Pulls',
+    sets: 3, reps: '15–20', rest: '60s',
+    muscles: 'Rear Delts, Rotator Cuff, Traps',
+    equipment: 'Cable Machine · Rope',
+    image: IMG.cableMachine,
+    tip: 'Pull to face height and rotate externally at the end position.',
+    steps: [
+      'Set cable to head height with rope attachment.',
+      'Grab rope with both hands, thumbs pointing behind you.',
+      'Step back so arms are fully extended in front of you.',
+      'Pull rope to face, separating hands wide as you pull.',
+      'Externally rotate — end with hands beside ears, elbows high. Hold 1 sec.',
+    ],
+  },
+  {
+    id: 'barbell_curl', name: 'Barbell Bicep Curl',
+    sets: 3, reps: '10–12', rest: '60s',
+    muscles: 'Biceps',
+    equipment: 'Barbell or EZ-Bar',
+    image: IMG.bicepCurl,
+    tip: "Don't swing. Squeeze hard at the top, slow 3-second negative.",
+    steps: [
+      'Stand holding barbell with shoulder-width underhand grip.',
+      'Arms fully extended, elbows close to sides.',
+      'Curl the bar up by contracting your biceps — no swinging.',
+      'Squeeze hard at the top, fully contracting the bicep.',
+      'Lower slowly over 3 seconds to full extension.',
+    ],
+  },
+  {
+    id: 'hammer_curl', name: 'Hammer Curl',
+    sets: 3, reps: '12–15', rest: '60s',
+    muscles: 'Biceps, Brachialis, Forearms',
+    equipment: 'Dumbbells',
+    image: IMG.bicepCurl,
+    tip: 'Neutral grip (palms facing each other) throughout the movement.',
+    steps: [
+      'Hold dumbbells at sides, palms facing your torso (hammer grip).',
+      'Keep elbows pinned at sides throughout.',
+      'Curl one dumbbell up to shoulder height, maintaining neutral grip.',
+      'Squeeze at the top, then lower under control.',
+      'Alternate arms, keeping the movement strict and controlled.',
+    ],
+  },
 ]
 
+// ─── Pull B ───────────────────────────────────────────────────────────────────
 const PULL_B = [
-  { id: 'rdl',              name: 'Romanian Deadlift',        sets: 4, reps: '8–10', rest: '90s', muscles: 'Hamstrings, Glutes, Lower Back',  tip: 'Soft knees, push hips back. Feel hamstring stretch.' },
-  { id: 'pullup',           name: 'Pull-ups / Assisted',      sets: 4, reps: '6–10', rest: '90s', muscles: 'Lats, Biceps, Core',              tip: 'Full hang at bottom, chin over bar at top.' },
-  { id: 'bent_row',         name: 'Bent-over Barbell Row',    sets: 3, reps: '10–12', rest: '75s', muscles: 'Lats, Mid Back, Biceps',          tip: '45° torso. Pull bar to lower chest/navel.' },
-  { id: 'face_pull_b',      name: 'Band Pull-Aparts',         sets: 3, reps: '15–20', rest: '45s', muscles: 'Rear Delts, Traps',               tip: 'Keep arms at shoulder height throughout.' },
-  { id: 'preacher_curl',    name: 'Preacher Curl / EZ-Bar',   sets: 3, reps: '12–15', rest: '60s', muscles: 'Biceps (Short Head)',             tip: 'Full ROM — don\'t let the weight pull you back.' },
-  { id: 'conc_curl',        name: 'Concentration Curl',       sets: 3, reps: '12–15', rest: '60s', muscles: 'Biceps (Peak)',                   tip: 'Elbow braced on inner thigh. Twist pinky up at top.' },
+  {
+    id: 'rdl', name: 'Romanian Deadlift',
+    sets: 4, reps: '8–10', rest: '90s',
+    muscles: 'Hamstrings, Glutes, Lower Back',
+    equipment: 'Barbell or Dumbbells',
+    image: IMG.rdl,
+    tip: 'Push hips back, not down. Feel the hamstring stretch.',
+    steps: [
+      'Stand holding barbell at hip level, overhand grip, arms straight.',
+      'Soft bend in knees — this position stays fixed throughout.',
+      'Hinge hips back, lowering bar along thighs while maintaining neutral spine.',
+      'Lower until you feel a strong stretch in hamstrings (around mid-shin).',
+      'Drive hips forward to return to standing, squeezing glutes at top.',
+    ],
+  },
+  {
+    id: 'pullup', name: 'Pull-ups / Assisted',
+    sets: 4, reps: '6–10', rest: '90s',
+    muscles: 'Lats, Biceps, Core',
+    equipment: 'Pull-up Bar / Assisted Machine',
+    image: IMG.pullup,
+    tip: 'Start from a dead hang. Chin over bar at the top.',
+    steps: [
+      'Hang from bar with overhand grip, slightly wider than shoulders.',
+      'Dead hang at the start — arms fully extended, lats engaged.',
+      'Initiate by depressing shoulder blades (pull them down/back).',
+      'Pull up until chin clears the bar, driving elbows toward your hips.',
+      'Lower slowly to a full dead hang — maximum muscle stretch.',
+    ],
+  },
+  {
+    id: 'bent_row', name: 'Bent-over Barbell Row',
+    sets: 3, reps: '10–12', rest: '75s',
+    muscles: 'Lats, Mid Back, Biceps',
+    equipment: 'Barbell',
+    image: IMG.bentRow,
+    tip: 'Torso at 45°. Pull bar to your lower chest or navel.',
+    steps: [
+      'Hinge forward about 45°, bar hanging at arms length below you.',
+      'Neutral spine — do not round your lower back.',
+      'Pull bar up to your lower chest/navel, driving elbows to the ceiling.',
+      'Squeeze shoulder blades together at the top — 1 second hold.',
+      'Lower under complete control to full arm extension.',
+    ],
+  },
+  {
+    id: 'face_pull_b', name: 'Band Pull-Aparts',
+    sets: 3, reps: '15–20', rest: '45s',
+    muscles: 'Rear Delts, Traps, Rotator Cuff',
+    equipment: 'Resistance Band',
+    image: IMG.cableRow,
+    tip: 'Keep arms at shoulder height. Full stretch at the end.',
+    steps: [
+      'Hold resistance band with both hands, shoulder-width, arms extended forward.',
+      'Arms parallel to the floor throughout.',
+      'Pull band apart by moving arms out to sides.',
+      'Squeeze shoulder blades together at full stretch.',
+      'Slowly return to starting position without losing tension.',
+    ],
+  },
+  {
+    id: 'preacher_curl', name: 'Preacher Curl / EZ-Bar',
+    sets: 3, reps: '12–15', rest: '60s',
+    muscles: 'Biceps (Short Head)',
+    equipment: 'EZ-Bar · Preacher Bench',
+    image: IMG.preacherCurl,
+    tip: "Full ROM — don't let weight pull you back down fast.",
+    steps: [
+      'Sit at preacher bench, upper arms resting on pad.',
+      'Hold EZ-bar with underhand grip at shoulder width.',
+      'Lower the bar until arms are almost fully extended (stop before lockout).',
+      'Curl back up until forearms are vertical, squeezing biceps hard.',
+      'Hold at top for 1 second before lowering.',
+    ],
+  },
+  {
+    id: 'conc_curl', name: 'Concentration Curl',
+    sets: 3, reps: '12–15', rest: '60s',
+    muscles: 'Biceps (Peak)',
+    equipment: 'Dumbbell',
+    image: IMG.concCurl,
+    tip: 'Elbow braced on inner thigh. Twist pinky up at the top.',
+    steps: [
+      'Sit on a bench, legs wide. Hold dumbbell in one hand.',
+      'Rest the back of your upper arm against your inner thigh.',
+      'Curl the dumbbell up, supinating (rotating palm up) as you lift.',
+      'Squeeze at peak contraction — pause 1 second.',
+      'Lower slowly until arm is nearly extended. Complete reps, then switch.',
+    ],
+  },
 ]
 
+// ─── Legs A ───────────────────────────────────────────────────────────────────
 const LEGS_A = [
-  { id: 'barbell_squat',    name: 'Barbell Back Squat',       sets: 4, reps: '8–10', rest: '120s', muscles: 'Quads, Glutes, Core',             tip: 'Chest up, knees track over toes. Break parallel if able.' },
-  { id: 'leg_press',        name: 'Leg Press',                sets: 3, reps: '10–12', rest: '90s', muscles: 'Quads, Glutes, Hamstrings',       tip: 'Feet shoulder-width. Don\'t lock out knees at top.' },
-  { id: 'leg_curl',         name: 'Lying Leg Curl',           sets: 3, reps: '12–15', rest: '75s', muscles: 'Hamstrings',                      tip: 'Pause at top contraction. Slow negative phase.' },
-  { id: 'calf_raise_a',     name: 'Standing Calf Raise',      sets: 4, reps: '15–20', rest: '60s', muscles: 'Calves (Gastrocnemius)',           tip: 'Full stretch at bottom, strong squeeze at top.' },
-  { id: 'plank_a',          name: 'Plank',                    sets: 3, reps: '45 sec', rest: '60s', muscles: 'Core, Shoulders',                tip: 'Straight line head to heels. Squeeze glutes and abs.' },
-  { id: 'crunches_a',       name: 'Cable/Bodyweight Crunches',sets: 3, reps: '20',   rest: '45s', muscles: 'Rectus Abdominis',                tip: 'Focus on curling ribcage to pelvis, not just lifting head.' },
+  {
+    id: 'barbell_squat', name: 'Barbell Back Squat',
+    sets: 4, reps: '8–10', rest: '120s',
+    muscles: 'Quads, Glutes, Core',
+    equipment: 'Barbell · Squat Rack',
+    image: IMG.squat,
+    tip: 'Chest up, knees track over toes. Break parallel depth if possible.',
+    steps: [
+      'Bar across upper traps (high bar) or lower traps (low bar). Step out.',
+      'Feet shoulder-width, toes slightly outward (15–30°).',
+      'Brace core hard. Take a big breath and hold it (Valsalva).',
+      'Descend by pushing knees out and sitting between legs.',
+      'Drive up through your whole foot, keeping chest up. Exhale at the top.',
+    ],
+  },
+  {
+    id: 'leg_press', name: 'Leg Press Machine',
+    sets: 3, reps: '10–12', rest: '90s',
+    muscles: 'Quads, Glutes, Hamstrings',
+    equipment: 'Leg Press Machine',
+    image: IMG.legPress,
+    tip: "Feet shoulder-width, mid-platform. Don't lock out knees at the top.",
+    steps: [
+      'Adjust seat so knees are at 90° when feet on the platform.',
+      'Place feet shoulder-width, mid-to-high on the platform.',
+      'Unlock safety handles and bend knees to lower the weight.',
+      'Stop when knees are at 90° or lower (without hips rounding off seat).',
+      'Press the platform away explosively, stopping just short of lockout.',
+    ],
+  },
+  {
+    id: 'leg_curl', name: 'Lying Leg Curl Machine',
+    sets: 3, reps: '12–15', rest: '75s',
+    muscles: 'Hamstrings',
+    equipment: 'Leg Curl Machine',
+    image: IMG.legCurl,
+    tip: 'Pause at peak contraction. Control the negative phase fully.',
+    steps: [
+      'Lie face down on the machine. Position pad just above your heels.',
+      'Grip the handles, hips flat against the pad.',
+      'Curl the pad up by bending knees toward your glutes.',
+      'Squeeze hard at full contraction — hold 1 second.',
+      'Lower slowly over 3 seconds to full extension.',
+    ],
+  },
+  {
+    id: 'calf_raise_a', name: 'Standing Calf Raise',
+    sets: 4, reps: '15–20', rest: '60s',
+    muscles: 'Calves (Gastrocnemius)',
+    equipment: 'Calf Raise Machine or Step',
+    image: IMG.calfRaise,
+    tip: 'Full stretch at the bottom, strong squeeze at the top.',
+    steps: [
+      'Position shoulders under pads (or hold dumbbells). Feet hip-width.',
+      'Ball of foot on edge of platform, heels hanging off.',
+      'Lower heels as far as possible for maximum calf stretch.',
+      'Rise up on tiptoes as high as possible, squeezing calves.',
+      'Hold top position 1 second, then lower slowly.',
+    ],
+  },
+  {
+    id: 'plank_a', name: 'Plank',
+    sets: 3, reps: '45 sec', rest: '60s',
+    muscles: 'Core, Shoulders, Glutes',
+    equipment: 'Bodyweight · Mat',
+    image: IMG.core,
+    tip: 'Straight line head to heels. Squeeze glutes and abs hard.',
+    steps: [
+      'Forearms and toes on the floor, body in a straight line.',
+      'Elbows directly below shoulders, fists or flat palms.',
+      'Squeeze core like you\'re about to take a punch.',
+      'Squeeze glutes, push heels back — don\'t let hips sag.',
+      'Breathe steadily. Hold for the target time without any sagging.',
+    ],
+  },
+  {
+    id: 'crunches_a', name: 'Cable / Bodyweight Crunches',
+    sets: 3, reps: '20', rest: '45s',
+    muscles: 'Rectus Abdominis',
+    equipment: 'Cable Machine or Bodyweight',
+    image: IMG.core,
+    tip: 'Curl ribcage to pelvis — not just lifting your head.',
+    steps: [
+      'Lie on back, knees bent, hands lightly behind head (not pulling).',
+      'Exhale as you contract: curl your ribcage toward your pelvis.',
+      'Your lower back stays flat on the floor throughout.',
+      'Lift shoulder blades off the floor at the top — focus on the squeeze.',
+      'Lower slowly, reset, and repeat without neck strain.',
+    ],
+  },
 ]
 
+// ─── Legs B ───────────────────────────────────────────────────────────────────
 const LEGS_B = [
-  { id: 'goblet_squat',     name: 'Goblet Squat',             sets: 4, reps: '10–12', rest: '90s', muscles: 'Quads, Glutes, Core',             tip: 'Goblet position keeps torso upright — great for depth.' },
-  { id: 'db_lunge',         name: 'Dumbbell Walking Lunge',   sets: 3, reps: '10 each', rest: '75s', muscles: 'Quads, Glutes, Hamstrings',     tip: 'Long stride, front shin vertical, back knee nearly touches floor.' },
-  { id: 'leg_ext',          name: 'Leg Extension',            sets: 3, reps: '15–20', rest: '60s', muscles: 'Quads (Isolation)',               tip: 'Squeeze at top, control descent fully.' },
-  { id: 'calf_raise_b',     name: 'Seated Calf Raise',        sets: 4, reps: '15–20', rest: '60s', muscles: 'Calves (Soleus)',                 tip: 'Works the soleus — bend knees slightly on seated version.' },
-  { id: 'leg_raise',        name: 'Hanging Leg Raise',        sets: 3, reps: '12–15', rest: '60s', muscles: 'Lower Abs, Hip Flexors',          tip: 'Slight posterior pelvic tilt. Don\'t swing.' },
-  { id: 'russian_twist',    name: 'Russian Twists',           sets: 3, reps: '20 total', rest: '45s', muscles: 'Obliques',                    tip: 'Feet off floor for harder variation. Rotate torso, not arms.' },
+  {
+    id: 'goblet_squat', name: 'Goblet Squat',
+    sets: 4, reps: '10–12', rest: '90s',
+    muscles: 'Quads, Glutes, Core',
+    equipment: 'Dumbbell or Kettlebell',
+    image: IMG.squat,
+    tip: 'Goblet position keeps torso upright — great for achieving depth.',
+    steps: [
+      'Hold dumbbell/kettlebell vertically at chest height with both hands.',
+      'Stand feet shoulder-width, toes turned out 30°.',
+      'Squat down, driving knees outward over toes.',
+      'Keep chest up and elbows inside knees at the bottom.',
+      'Drive up through full foot, returning to standing.',
+    ],
+  },
+  {
+    id: 'db_lunge', name: 'Dumbbell Walking Lunge',
+    sets: 3, reps: '10 each leg', rest: '75s',
+    muscles: 'Quads, Glutes, Hamstrings',
+    equipment: 'Dumbbells',
+    image: IMG.lunge,
+    tip: 'Long stride, front shin vertical, back knee nearly touches floor.',
+    steps: [
+      'Hold dumbbells at sides. Stand upright.',
+      'Step forward with one foot, landing heel first.',
+      'Lower back knee toward the floor — front shin stays vertical.',
+      'Drive up through front heel to bring feet together.',
+      'Step forward with the other foot. Continue alternating.',
+    ],
+  },
+  {
+    id: 'leg_ext', name: 'Leg Extension Machine',
+    sets: 3, reps: '15–20', rest: '60s',
+    muscles: 'Quads (Isolation)',
+    equipment: 'Leg Extension Machine',
+    image: IMG.legExt,
+    tip: 'Squeeze hard at the top. Control the descent fully.',
+    steps: [
+      'Sit in machine, back flat, pad resting on lower shins.',
+      'Adjust seat so knees align with the machine\'s pivot point.',
+      'Extend legs fully by contracting quads — squeeze at the top.',
+      'Hold peak contraction for 1 second.',
+      'Lower slowly over 3 seconds. Do not let weight crash down.',
+    ],
+  },
+  {
+    id: 'calf_raise_b', name: 'Seated Calf Raise',
+    sets: 4, reps: '15–20', rest: '60s',
+    muscles: 'Calves (Soleus)',
+    equipment: 'Seated Calf Raise Machine',
+    image: IMG.seatedCalf,
+    tip: 'Targets the deeper soleus muscle. Slow and full range of motion.',
+    steps: [
+      'Sit on machine, pads resting on lower thighs just above knees.',
+      'Place balls of feet on the platform edge, heels hanging.',
+      'Lower heels as far as comfortable for a full soleus stretch.',
+      'Press up on tiptoes as high as possible, hold 1 second.',
+      'Lower slowly to full stretch and repeat.',
+    ],
+  },
+  {
+    id: 'leg_raise', name: 'Hanging Leg Raise',
+    sets: 3, reps: '12–15', rest: '60s',
+    muscles: 'Lower Abs, Hip Flexors',
+    equipment: 'Pull-up Bar',
+    image: IMG.pullup,
+    tip: 'Slight posterior pelvic tilt. No swinging — control the motion.',
+    steps: [
+      'Hang from pull-up bar, arms straight, body still.',
+      'Engage core and tilt pelvis slightly backward (posterior tilt).',
+      'Lift legs by bending at hips until thighs are parallel or higher.',
+      'Keep legs together; avoid swinging by moving slowly.',
+      'Lower legs under control — don\'t just drop them.',
+    ],
+  },
+  {
+    id: 'russian_twist', name: 'Russian Twists',
+    sets: 3, reps: '20 total', rest: '45s',
+    muscles: 'Obliques, Core',
+    equipment: 'Bodyweight or Weight Plate',
+    image: IMG.core,
+    tip: 'Rotate your torso, not just your arms. Feet off floor for harder version.',
+    steps: [
+      'Sit on the floor, knees bent, feet either flat or raised.',
+      'Lean back 45°, keeping lower back straight (not rounded).',
+      'Clasp hands together or hold a weight at chest level.',
+      'Rotate torso to the right, bringing hands toward the floor.',
+      'Rotate left. Each side counts as one rep.',
+    ],
+  },
 ]
 
+// ─── Yoga Session ─────────────────────────────────────────────────────────────
+export const YOGA_SESSION = [
+  {
+    id: 'tadasana', name: 'Mountain Pose',
+    subtitle: 'Tadasana',
+    sets: 1, reps: '5 slow breaths', rest: '—',
+    muscles: 'Full Body Alignment, Posture',
+    equipment: 'Yoga Mat',
+    image: IMG.yogaMountain,
+    tip: 'The foundation of every standing pose. Builds awareness.',
+    steps: [
+      'Stand with feet together, weight evenly distributed on both feet.',
+      'Engage your thighs, lifting kneecaps without locking knees.',
+      'Lengthen tailbone downward, gently engage your core.',
+      'Roll shoulders back and down; arms rest alongside the body.',
+      'Lengthen through the crown of your head. Take 5 deep breaths.',
+    ],
+  },
+  {
+    id: 'cat_cow', name: 'Cat-Cow',
+    subtitle: 'Marjaryasana-Bitilasana',
+    sets: 2, reps: '10 cycles', rest: '—',
+    muscles: 'Spine Mobility, Core',
+    equipment: 'Yoga Mat',
+    image: IMG.yogaCatCow,
+    tip: 'Link movement to breath — inhale for Cow, exhale for Cat.',
+    steps: [
+      'Start on hands and knees, wrists below shoulders, knees below hips.',
+      'COW: Inhale — let belly drop, lift chest and tailbone (arch the back).',
+      'CAT: Exhale — round your spine to ceiling, tuck chin and tailbone.',
+      'Flow smoothly between the two, following your breath rhythm.',
+      'Repeat for 10 breath cycles. Move slowly and mindfully.',
+    ],
+  },
+  {
+    id: 'downdog', name: 'Downward Dog',
+    subtitle: 'Adho Mukha Svanasana',
+    sets: 1, reps: '5–8 breaths', rest: '—',
+    muscles: 'Hamstrings, Calves, Shoulders, Back',
+    equipment: 'Yoga Mat',
+    image: IMG.yogaDowndog,
+    tip: 'Press the floor away. Pedal feet gently to warm up hamstrings.',
+    steps: [
+      'Start on all fours. Tuck toes under and lift hips up and back.',
+      'Form an inverted V-shape — hips high, heels pressing toward the floor.',
+      'Straighten arms and lengthen your spine; do not round the back.',
+      'Press the mat away firmly through both palms.',
+      'Hold 5–8 breaths. Pedal your feet alternately to stretch calves.',
+    ],
+  },
+  {
+    id: 'warrior1', name: 'Warrior I',
+    subtitle: 'Virabhadrasana I',
+    sets: 1, reps: '5 breaths each side', rest: '—',
+    muscles: 'Quads, Hip Flexors, Shoulders',
+    equipment: 'Yoga Mat',
+    image: IMG.yogaWarrior1,
+    tip: 'Square your hips to the front. Strong back foot grounded.',
+    steps: [
+      'From Downward Dog, step right foot between hands.',
+      'Turn left heel down at 45°, back foot flat on the mat.',
+      'Rise up, lifting arms overhead, palms together or apart.',
+      'Bend right knee to 90°, back leg straight and strong.',
+      'Hold 5 breaths, gazing forward or up. Switch sides.',
+    ],
+  },
+  {
+    id: 'warrior2', name: 'Warrior II',
+    subtitle: 'Virabhadrasana II',
+    sets: 1, reps: '5 breaths each side', rest: '—',
+    muscles: 'Quads, Groin, Shoulders',
+    equipment: 'Yoga Mat',
+    image: IMG.yogaWarrior2,
+    tip: 'Reach through both fingertips. Gaze over front middle finger.',
+    steps: [
+      'Step feet wide apart (3–4 feet). Right foot turns out 90°, left in 15°.',
+      'Bend right knee to 90°, tracking over right ankle.',
+      'Open arms wide to the sides at shoulder height, palms down.',
+      'Torso faces sideways — not toward the bent knee.',
+      'Hold 5 breaths. Switch sides. Keep back leg strong and straight.',
+    ],
+  },
+  {
+    id: 'bridge', name: 'Bridge Pose',
+    subtitle: 'Setu Bandhasana',
+    sets: 3, reps: '10 reps or 30 sec hold', rest: '30s',
+    muscles: 'Glutes, Hamstrings, Lower Back, Core',
+    equipment: 'Yoga Mat',
+    image: IMG.yogaBridge,
+    tip: 'Squeeze glutes hard at the top. Press feet actively into the mat.',
+    steps: [
+      'Lie on your back, knees bent, feet flat and hip-width apart.',
+      'Feet close enough that fingertips graze your heels.',
+      'Press feet into the mat and lift hips toward the ceiling.',
+      'Interlace hands under your back and press arms down for support.',
+      'Squeeze glutes at the top. Hold 30 sec or lower and lift for reps.',
+    ],
+  },
+  {
+    id: 'tree_pose', name: 'Tree Pose',
+    subtitle: 'Vrksasana',
+    sets: 1, reps: '5 breaths each side', rest: '—',
+    muscles: 'Balance, Hip Flexors, Core',
+    equipment: 'Yoga Mat',
+    image: IMG.yogaTree,
+    tip: 'Fix your gaze on a still point to help balance.',
+    steps: [
+      'Stand in Mountain Pose. Shift weight to your left foot.',
+      'Place right foot on inner left thigh or calf (avoid the knee).',
+      'Press foot and thigh against each other for stability.',
+      'Bring palms together at chest or lift overhead.',
+      'Fix your gaze on one still point. Hold 5 breaths, then switch.',
+    ],
+  },
+  {
+    id: 'seated_fold', name: 'Seated Forward Fold',
+    subtitle: 'Paschimottanasana',
+    sets: 1, reps: '8–10 breaths', rest: '—',
+    muscles: 'Hamstrings, Lower Back, Calves',
+    equipment: 'Yoga Mat',
+    image: IMG.yogaFold,
+    tip: 'Hinge from hips, not lower back. Chest forward, not down.',
+    steps: [
+      'Sit with legs straight in front of you, feet flexed.',
+      'Inhale and lengthen your spine tall.',
+      'Exhale: hinge forward from the hips, reaching for shins or feet.',
+      'Keep your back as flat as possible — lead with chest, not forehead.',
+      'Hold 8–10 breaths, relaxing deeper with each exhale.',
+    ],
+  },
+  {
+    id: 'childs_pose', name: "Child's Pose",
+    subtitle: 'Balasana',
+    sets: 1, reps: '1–2 min', rest: '—',
+    muscles: 'Lower Back, Hips, Ankles',
+    equipment: 'Yoga Mat',
+    image: IMG.yogaChild,
+    tip: 'This is a rest pose. Let your body fully relax.',
+    steps: [
+      'Kneel on mat, big toes touching, knees wide (or together).',
+      'Sit your hips back toward your heels.',
+      'Walk hands forward and lower your forehead to the mat.',
+      'Arms either extended forward or alongside your body.',
+      'Close your eyes. Breathe deeply into your back. Hold for 1–2 min.',
+    ],
+  },
+  {
+    id: 'savasana', name: 'Corpse Pose',
+    subtitle: 'Savasana',
+    sets: 1, reps: '5–10 min', rest: '—',
+    muscles: 'Full Body Relaxation',
+    equipment: 'Yoga Mat',
+    image: IMG.yogaSavasana,
+    tip: 'The most important pose. Do not skip it — this is where integration happens.',
+    steps: [
+      'Lie flat on your back, legs slightly apart, arms at sides.',
+      'Palms face upward. Close your eyes.',
+      'Consciously relax each body part, from feet up to face.',
+      'Let your breath become natural — do not control it.',
+      'Stay completely still for 5–10 minutes. Let thoughts pass like clouds.',
+    ],
+  },
+]
+
+// ─── Rest Day ─────────────────────────────────────────────────────────────────
 const REST_DAY = [
-  { id: 'rest_walk',        name: 'Light Walk',               sets: 1, reps: '20–30 min', rest: '—', muscles: 'Active Recovery',              tip: 'Moderate pace. Great for circulation and recovery.' },
-  { id: 'rest_stretch',     name: 'Full Body Stretch',        sets: 1, reps: '15 min',    rest: '—', muscles: 'Flexibility',                   tip: 'Hold each stretch 30 seconds. Focus on tight areas.' },
-  { id: 'rest_foam',        name: 'Foam Rolling',             sets: 1, reps: '10 min',    rest: '—', muscles: 'Recovery',                      tip: 'Slow rolls over quads, hamstrings, upper back.' },
+  {
+    id: 'rest_walk', name: 'Light Walk',
+    sets: 1, reps: '20–30 min', rest: '—',
+    muscles: 'Active Recovery',
+    equipment: 'Comfortable Shoes',
+    image: IMG.rest,
+    tip: 'Moderate pace. Great for circulation and recovery.',
+    steps: [
+      'Choose a comfortable pace — conversational speed.',
+      'Focus on proper posture: head up, shoulders relaxed.',
+      'Swing arms naturally. Land heel to toe.',
+      'Aim for 20–30 minutes of continuous walking.',
+    ],
+  },
+  {
+    id: 'rest_stretch', name: 'Full Body Stretch',
+    sets: 1, reps: '15 min', rest: '—',
+    muscles: 'Flexibility, Recovery',
+    equipment: 'Yoga Mat',
+    image: IMG.yoga1,
+    tip: 'Hold each stretch 30 seconds. Focus on the tightest areas.',
+    steps: [
+      'Start with neck rolls (gentle). Then shoulder cross-body stretch.',
+      'Move to chest opener: clasp hands behind back and open chest.',
+      'Hip flexor stretch: one knee on floor, lean into front hip.',
+      'Hamstring stretch: seated or standing forward fold.',
+      'Finish with lying spinal twist each side.',
+    ],
+  },
+  {
+    id: 'rest_foam', name: 'Foam Rolling',
+    sets: 1, reps: '10 min', rest: '—',
+    muscles: 'Myofascial Release',
+    equipment: 'Foam Roller',
+    image: IMG.rest,
+    tip: 'Slow rolls over tight spots. Pause on tender areas.',
+    steps: [
+      'Start with quads: lie face down, roll from hip to knee slowly.',
+      'IT band: lie on side, roll from hip to just above knee.',
+      'Upper back: lie on roller across shoulder blades, arms crossed.',
+      'Calves: sit with roller under calves, roll calf from ankle to knee.',
+      'Spend extra time on tender spots — 30–60 seconds each.',
+    ],
+  },
 ]
 
 // ─── Weekly plan mapping ──────────────────────────────────────────────────────
-// dayIndex: 0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat
 export const WEEKLY_SCHEDULE = {
-  0: { type: 'rest',  label: 'Rest / Recovery',          exercises: REST_DAY },
-  1: { type: 'push',  label: 'Push Day A — Chest & Arms',exercises: PUSH_A },
-  2: { type: 'pull',  label: 'Pull Day A — Back & Biceps',exercises: PULL_A },
-  3: { type: 'legs',  label: 'Legs & Core A',            exercises: LEGS_A },
-  4: { type: 'push',  label: 'Push Day B — Chest & Arms',exercises: PUSH_B },
-  5: { type: 'pull',  label: 'Pull Day B — Back & Biceps',exercises: PULL_B },
-  6: { type: 'legs',  label: 'Legs & Core B',            exercises: LEGS_B },
+  0: { type: 'yoga',  label: 'Yoga & Recovery',             exercises: YOGA_SESSION },
+  1: { type: 'push',  label: 'Push Day A — Chest & Arms',   exercises: PUSH_A },
+  2: { type: 'pull',  label: 'Pull Day A — Back & Biceps',  exercises: PULL_A },
+  3: { type: 'legs',  label: 'Legs & Core A',               exercises: LEGS_A },
+  4: { type: 'push',  label: 'Push Day B — Chest & Arms',   exercises: PUSH_B },
+  5: { type: 'pull',  label: 'Pull Day B — Back & Biceps',  exercises: PULL_B },
+  6: { type: 'legs',  label: 'Legs & Core B',               exercises: LEGS_B },
 }
 
 export const DAY_TYPE_COLOR = {
   push: 'text-orange-400',
   pull: 'text-blue-400',
   legs: 'text-purple-400',
+  yoga: 'text-teal-400',
   rest: 'text-gray-400',
 }
 
@@ -83,25 +845,23 @@ export const DAY_TYPE_BG = {
   push: 'bg-orange-400/10 border-orange-400/20',
   pull: 'bg-blue-400/10 border-blue-400/20',
   legs: 'bg-purple-400/10 border-purple-400/20',
+  yoga: 'bg-teal-400/10 border-teal-400/20',
   rest: 'bg-gray-700/20 border-gray-600/20',
 }
 
 export function getTodayWorkout(dayIndex, workOnSunday) {
-  const plan = WEEKLY_SCHEDULE[dayIndex]
-  if (dayIndex === 0 && !workOnSunday) {
-    return { ...WEEKLY_SCHEDULE[0], label: 'Rest Day — You earned it!' }
-  }
-  if (dayIndex === 0 && workOnSunday) {
-    return { ...WEEKLY_SCHEDULE[6], label: 'Bonus Legs & Core B (Sunday)' }
-  }
-  return plan
+  if (dayIndex === 0 && !workOnSunday)
+    return { ...WEEKLY_SCHEDULE[0], label: 'Yoga — Active Recovery' }
+  if (dayIndex === 0 && workOnSunday)
+    return { ...WEEKLY_SCHEDULE[0], label: 'Yoga & Full Recovery' }
+  return WEEKLY_SCHEDULE[dayIndex]
 }
 
 export function getWeeklyOverview(workOnSunday) {
   return [0,1,2,3,4,5,6].map(i => {
     const plan = WEEKLY_SCHEDULE[i]
-    if (i === 0 && !workOnSunday) return { dayIndex: i, day: 'Sun', label: 'Rest', type: 'rest', exercises: REST_DAY }
-    if (i === 0 && workOnSunday)  return { dayIndex: i, day: 'Sun', label: WEEKLY_SCHEDULE[6].label, type: WEEKLY_SCHEDULE[6].type, exercises: LEGS_B }
-    return { dayIndex: i, day: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][i], label: plan.label, type: plan.type, exercises: plan.exercises }
+    const dayName = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][i]
+    if (i === 0) return { dayIndex: i, day: 'Sun', label: 'Yoga', type: 'yoga', exercises: YOGA_SESSION }
+    return { dayIndex: i, day: dayName, label: plan.label, type: plan.type, exercises: plan.exercises }
   })
 }

@@ -2,13 +2,15 @@ import { useState, useMemo } from 'react'
 import { CheckCircle2, Circle, ChevronDown, ChevronUp, Dumbbell, Info } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { useTracking } from '../contexts/TrackingContext'
-import { getWeeklyOverview, getTodayWorkout, DAY_TYPE_COLOR, DAY_TYPE_BG } from '../data/exercises'
+import { getWeeklyOverview, DAY_TYPE_COLOR, DAY_TYPE_BG } from '../data/exercises'
 import { getTodayDayIndex } from '../utils/calculations'
 
 const REST_COLOR = 'text-gray-400'
 
 function ExerciseCard({ ex, completed, onToggle }) {
   const [expanded, setExpanded] = useState(false)
+  const isYoga = !!ex.subtitle
+
   return (
     <div className={`rounded-2xl border transition-all duration-200 overflow-hidden ${completed ? 'border-brand/30 bg-brand/5' : 'border-border bg-surface'}`}>
       {/* Header row */}
@@ -24,11 +26,20 @@ function ExerciseCard({ ex, completed, onToggle }) {
         </button>
         <div className="flex-1 min-w-0">
           <p className={`font-semibold text-base ${completed ? 'line-through' : ''}`} style={{ color: completed ? 'var(--text-subtle)' : 'var(--text)' }}>{ex.name}</p>
-          <p className="text-gray-500 text-xs mt-0.5">{ex.muscles}</p>
+          <p className="text-gray-500 text-xs mt-0.5">{isYoga ? ex.subtitle : ex.muscles}</p>
         </div>
         <div className="text-right flex-shrink-0">
-          <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>{ex.sets}×{ex.reps}</p>
-          <p className="text-gray-500 text-xs">Rest: {ex.rest}</p>
+          {isYoga ? (
+            <>
+              <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>{ex.reps}</p>
+              <p className="text-gray-500 text-xs">Mindful breath</p>
+            </>
+          ) : (
+            <>
+              <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>{ex.sets}×{ex.reps}</p>
+              <p className="text-gray-500 text-xs">Rest: {ex.rest}</p>
+            </>
+          )}
         </div>
         <button
           onClick={() => setExpanded(v => !v)}
@@ -38,13 +49,48 @@ function ExerciseCard({ ex, completed, onToggle }) {
         </button>
       </div>
 
-      {/* Expandable tip */}
+      {/* Expandable details */}
       {expanded && (
-        <div className="px-4 pb-4 pt-0">
-          <div className="rounded-xl p-3 flex gap-2" style={{ backgroundColor: 'var(--bg-raised)' }}>
-            <Info size={14} className="text-brand flex-shrink-0 mt-0.5" />
-            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{ex.tip}</p>
-          </div>
+        <div className="px-4 pb-4 pt-0 space-y-3">
+          {/* Exercise image */}
+          {ex.image && (
+            <img
+              src={ex.image}
+              alt={ex.name}
+              className="w-full rounded-xl object-cover"
+              style={{ height: '160px' }}
+              loading="lazy"
+            />
+          )}
+
+          {/* Equipment badge */}
+          {ex.equipment && (
+            <div className="flex items-center gap-2">
+              <Dumbbell size={13} className="text-brand flex-shrink-0" />
+              <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>{ex.equipment}</span>
+            </div>
+          )}
+
+          {/* Step-by-step instructions */}
+          {ex.steps && ex.steps.length > 0 && (
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-subtle)' }}>How To</p>
+              {ex.steps.map((step, i) => (
+                <div key={i} className="flex gap-3">
+                  <span className="text-brand text-xs font-bold flex-shrink-0 w-4 text-right mt-0.5">{i + 1}</span>
+                  <p className="text-sm leading-snug" style={{ color: 'var(--text-muted)' }}>{step}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Tip */}
+          {ex.tip && (
+            <div className="rounded-xl p-3 flex gap-2" style={{ backgroundColor: 'var(--bg-raised)' }}>
+              <Info size={14} className="text-brand flex-shrink-0 mt-0.5" />
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{ex.tip}</p>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -195,6 +241,7 @@ export default function WorkoutPage() {
           {currentDayPlan?.type === 'pull' && "Pull with your elbows, not your hands. Visualise your hands as hooks and drive your elbows into your pockets on every pull."}
           {currentDayPlan?.type === 'legs' && "Never skip the warm-up squat set. Light squats before heavy ones protect your knees and improve depth."}
           {currentDayPlan?.type === 'rest' && "Sleep 7–9 hours. Protein synthesis peaks during sleep — this is when your muscles actually grow."}
+          {currentDayPlan?.type === 'yoga' && "Breathe steadily throughout every pose — inhale to lengthen, exhale to deepen. Never push into pain; work to the edge of comfort."}
         </p>
       </div>
     </div>
