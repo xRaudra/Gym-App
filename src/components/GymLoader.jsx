@@ -89,18 +89,9 @@ export default function GymLoader() {
           transform: show ? 'scale(1)' : 'scale(0.65)',
         }}
       >
-        {ICONS[idx].El(56)}
+        {ICONS[idx].El(36)}
       </div>
 
-      {/* App name */}
-      <div className="text-center">
-        <p className="text-white text-xl font-black tracking-tight">
-          Grit n <span className="text-brand">Gain</span>
-        </p>
-        <p className="text-gray-600 text-[11px] mt-1 tracking-[0.2em] uppercase">
-          {ICONS[idx].name}
-        </p>
-      </div>
     </div>
   )
 }

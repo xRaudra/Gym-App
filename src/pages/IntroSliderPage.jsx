@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 
@@ -19,31 +19,53 @@ const SLIDES = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/6/63/Deadlift-phase_1.JPG',
     eyebrow: 'Action is the',
     headline: 'Key to all\nsuccess',
-    sub: 'The only person you\'re competing with is yesterday\'s you.',
+    sub: "The only person you're competing with is yesterday's you.",
     cta: true,
   },
 ]
 
+const DURATION = 4000 // ms per slide
+
 export default function IntroSliderPage() {
   const navigate = useNavigate()
   const [current, setCurrent] = useState(0)
+  const [progress, setProgress] = useState(0)
+  const startRef = useRef(Date.now())
+  const rafRef = useRef(null)
   const touchStartX = useRef(null)
 
-  const goNext = () => {
-    if (current < SLIDES.length - 1) setCurrent(c => c + 1)
-    else navigate('/login')
+  const goTo = (idx) => {
+    if (idx >= SLIDES.length) { navigate('/login'); return }
+    setCurrent(idx)
   }
 
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX
-  }
+  // Auto-advance with smooth progress
+  useEffect(() => {
+    setProgress(0)
+    startRef.current = Date.now()
 
+    const tick = () => {
+      const elapsed = Date.now() - startRef.current
+      const pct = Math.min((elapsed / DURATION) * 100, 100)
+      setProgress(pct)
+      if (pct < 100) {
+        rafRef.current = requestAnimationFrame(tick)
+      } else {
+        goTo(current + 1)
+      }
+    }
+    rafRef.current = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [current])
+
+  // Touch swipe
+  const handleTouchStart = (e) => { touchStartX.current = e.touches[0].clientX }
   const handleTouchEnd = (e) => {
     if (touchStartX.current === null) return
     const diff = touchStartX.current - e.changedTouches[0].clientX
     if (Math.abs(diff) > 40) {
-      if (diff > 0 && current < SLIDES.length - 1) setCurrent(c => c + 1)
-      else if (diff < 0 && current > 0) setCurrent(c => c - 1)
+      if (diff > 0) goTo(current + 1)
+      else if (diff < 0 && current > 0) goTo(current - 1)
     }
     touchStartX.current = null
   }
@@ -56,7 +78,7 @@ export default function IntroSliderPage() {
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Background image */}
+      {/* Slide image */}
       <img
         key={current}
         src={slide.image}
@@ -65,24 +87,45 @@ export default function IntroSliderPage() {
         draggable={false}
       />
 
-      {/* Dark overlay at top so image reads clearly */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-transparent" />
-
-      {/* Green gradient from bottom — fades to transparent at top */}
+      {/* Black at top → transparent mid → solid green at bottom */}
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(to top, #67DE6D 0%, rgba(103,222,109,0.92) 15%, rgba(103,222,109,0.65) 32%, rgba(103,222,109,0.2) 52%, transparent 70%)',
+          background: 'linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.6) 20%, rgba(0,0,0,0.05) 48%, rgba(103,222,109,0.55) 70%, #67DE6D 100%)',
         }}
       />
 
       {/* Content */}
       <div className="relative flex flex-col min-h-screen">
-        {/* Skip button */}
-        <div className="flex justify-end px-5 pt-12">
+
+        {/* ── Progress bars (WhatsApp status style) ── */}
+        <div className="flex gap-1.5 px-4 pt-12">
+          {SLIDES.map((_, i) => (
+            <div
+              key={i}
+              className="flex-1 h-[3px] rounded-full overflow-hidden"
+              style={{ backgroundColor: 'rgba(255,255,255,0.25)' }}
+            >
+              <div
+                className="h-full rounded-full"
+                style={{
+                  backgroundColor: '#fff',
+                  width:
+                    i < current ? '100%'
+                    : i === current ? `${progress}%`
+                    : '0%',
+                  transition: i === current ? 'none' : undefined,
+                }}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Skip */}
+        <div className="flex justify-end px-5 pt-3">
           <button
             onClick={() => navigate('/login')}
-            className="text-black/50 text-sm font-semibold"
+            className="text-white/60 text-sm font-semibold"
           >
             Skip
           </button>
@@ -90,45 +133,29 @@ export default function IntroSliderPage() {
 
         <div className="flex-1" />
 
-        {/* Bottom text + CTA */}
+        {/* Bottom text */}
         <div className="px-6 pb-12">
-          {/* Slide text */}
           <p className="text-black/60 text-sm font-medium mb-1">{slide.eyebrow}</p>
-          <h2 className="text-[2.2rem] font-black text-black leading-[1.1] tracking-tight mb-3 whitespace-pre-line">
+          <h2
+            className="text-[2.2rem] font-black text-black leading-[1.1] tracking-tight mb-3 whitespace-pre-line"
+          >
             {slide.headline}
           </h2>
           <p className="text-black/65 text-sm leading-relaxed mb-8 max-w-[280px]">
             {slide.sub}
           </p>
 
-          {/* Dot indicators */}
-          <div className="flex items-center gap-2 mb-6">
-            {SLIDES.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                className="transition-all duration-300 rounded-full"
-                style={{
-                  width: i === current ? '28px' : '8px',
-                  height: '8px',
-                  backgroundColor: i === current ? '#111' : 'rgba(0,0,0,0.3)',
-                }}
-              />
-            ))}
-          </div>
-
-          {/* CTA */}
           {slide.cta ? (
             <button
               onClick={() => navigate('/login')}
-              className="flex items-center gap-3 bg-black text-white font-bold px-6 py-4 rounded-2xl active:scale-95 transition-transform"
+              className="flex items-center gap-3 bg-black text-white font-bold px-7 py-4 rounded-2xl active:scale-95 transition-transform"
             >
               Start Now
               <ArrowRight size={18} />
             </button>
           ) : (
             <button
-              onClick={goNext}
+              onClick={() => goTo(current + 1)}
               className="w-14 h-14 bg-black rounded-2xl flex items-center justify-center active:scale-95 transition-transform"
             >
               <ArrowRight size={22} className="text-white" />

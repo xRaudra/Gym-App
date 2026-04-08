@@ -13,8 +13,13 @@ export default function WelcomePage() {
         draggable={false}
       />
 
-      {/* Dark overlay — heavier at bottom */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/40 to-black/90" />
+      {/* Gradient: black at top → transparent mid → solid green at bottom */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.7) 25%, rgba(0,0,0,0.15) 50%, rgba(103,222,109,0.5) 75%, #67DE6D 100%)',
+        }}
+      />
 
       {/* Content */}
       <div className="relative flex flex-col min-h-screen px-6">
@@ -31,29 +36,29 @@ export default function WelcomePage() {
 
         {/* Headline + CTA */}
         <div className="pb-14">
-          <p className="text-brand text-sm font-semibold uppercase tracking-wider mb-3">
+          <p className="text-black/60 text-sm font-semibold uppercase tracking-wider mb-3">
             Your Digital Trainer
           </p>
-          <h1 className="text-[2.6rem] font-black text-white leading-[1.08] tracking-tight mb-3">
+          <h1 className="text-[2.6rem] font-black text-black leading-[1.08] tracking-tight mb-3">
             Built on Grit,<br />
-            <span className="text-brand">Delivered</span><br />
+            Delivered<br />
             by Gain.
           </h1>
-          <p className="text-gray-400 text-sm leading-relaxed mb-10 max-w-[260px]">
+          <p className="text-black/60 text-sm leading-relaxed mb-10 max-w-[260px]">
             Train smarter. Track every rep. Become the strongest version of you.
           </p>
 
           <button
             onClick={() => navigate('/intro')}
-            className="w-full py-4 rounded-2xl font-bold text-base text-black active:scale-95 transition-all duration-150"
-            style={{ backgroundColor: '#67DE6D' }}
+            className="w-full py-4 rounded-2xl font-bold text-base text-white active:scale-95 transition-all duration-150"
+            style={{ backgroundColor: '#111' }}
           >
             Get Started
           </button>
 
-          <p className="text-center text-gray-500 text-sm mt-4">
+          <p className="text-center text-black/50 text-sm mt-4">
             Already a member?{' '}
-            <button onClick={() => navigate('/login')} className="text-brand font-semibold">
+            <button onClick={() => navigate('/login')} className="text-black font-bold underline">
               Sign in
             </button>
           </p>
