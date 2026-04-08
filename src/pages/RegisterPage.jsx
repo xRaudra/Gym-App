@@ -24,13 +24,13 @@ export default function RegisterPage() {
   const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }))
   const pwErrors = validatePassword(form.password)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     if (form.password !== form.confirm) return setError('Passwords do not match.')
     if (pwErrors.length) return setError('Please fix password requirements.')
     setLoading(true)
-    const res = register({ name: form.name, username: form.username, email: form.email, password: form.password })
+    const res = await register({ name: form.name, username: form.username, email: form.email, password: form.password })
     setLoading(false)
     if (!res.ok) return setError(res.error)
     navigate('/onboarding')
