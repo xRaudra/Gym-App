@@ -91,7 +91,7 @@ export default function IntroSliderPage() {
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.6) 20%, rgba(0,0,0,0.05) 48%, rgba(103,222,109,0.55) 70%, #67DE6D 100%)',
+          background: 'linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 50%, rgba(103,222,109,0.6) 70%, #67DE6D 100%)',
         }}
       />
 

@@ -17,7 +17,7 @@ export default function WelcomePage() {
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.7) 25%, rgba(0,0,0,0.15) 50%, rgba(103,222,109,0.5) 75%, #67DE6D 100%)',
+          background: 'linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 50%, rgba(103,222,109,0.6) 70%, #67DE6D 100%)',
         }}
       />
 
