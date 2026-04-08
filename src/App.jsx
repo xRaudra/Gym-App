@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { TrackingProvider } from './contexts/TrackingContext'
 import { ThemeProvider } from './contexts/ThemeContext'
 import Layout from './components/Layout'
+import GymLoader from './components/GymLoader'
 import WelcomePage      from './pages/WelcomePage'
 import IntroSliderPage  from './pages/IntroSliderPage'
 import LoginPage        from './pages/LoginPage'
@@ -18,7 +19,7 @@ import AdminPage      from './pages/AdminPage'
 // Guard: redirect to login if not authenticated
 function RequireAuth({ children }) {
   const { user, loading } = useAuth()
-  if (loading) return <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center"><div className="w-8 h-8 border-2 border-brand border-t-transparent rounded-full animate-spin" /></div>
+  if (loading) return <GymLoader />
   if (!user) return <Navigate to="/welcome" replace />
   if (!user.profile?.completedOnboarding) return <Navigate to="/onboarding" replace />
   return children
@@ -27,7 +28,7 @@ function RequireAuth({ children }) {
 // Guard: redirect to dashboard if already authenticated
 function RequireGuest({ children }) {
   const { user, loading } = useAuth()
-  if (loading) return null
+  if (loading) return <GymLoader />
   if (user && user.profile?.completedOnboarding) return <Navigate to="/dashboard" replace />
   return children
 }
