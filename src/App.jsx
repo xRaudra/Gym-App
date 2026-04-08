@@ -20,7 +20,7 @@ import AdminPage      from './pages/AdminPage'
 function RequireAuth({ children }) {
   const { user, loading } = useAuth()
   if (loading) return <GymLoader />
-  if (!user) return <Navigate to="/welcome" replace />
+  if (!user) return <Navigate to="/intro" replace />
   if (!user.profile?.completedOnboarding) return <Navigate to="/onboarding" replace />
   return children
 }
@@ -44,8 +44,8 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Public */}
-      <Route path="/welcome"  element={<RequireGuest><WelcomePage /></RequireGuest>} />
       <Route path="/intro"    element={<RequireGuest><IntroSliderPage /></RequireGuest>} />
+      <Route path="/welcome"  element={<RequireGuest><WelcomePage /></RequireGuest>} />
       <Route path="/login"    element={<RequireGuest><LoginPage /></RequireGuest>} />
       <Route path="/register" element={<RequireGuest><RegisterPage /></RequireGuest>} />
       <Route path="/onboarding" element={<OnboardingPage />} />
@@ -62,7 +62,7 @@ function AppRoutes() {
       </Route>
 
       {/* Fallback */}
-      <Route path="*" element={<Navigate to="/welcome" replace />} />
+      <Route path="*" element={<Navigate to="/intro" replace />} />
     </Routes>
   )
 }

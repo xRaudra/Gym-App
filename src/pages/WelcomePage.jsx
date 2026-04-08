@@ -7,7 +7,7 @@ export default function WelcomePage() {
     <div className="min-h-screen relative flex flex-col overflow-hidden">
       {/* Splash image */}
       <img
-        src="/splash.jpg"
+        src="/rana2.jpg"
         alt=""
         className="absolute inset-0 w-full h-full object-cover object-top"
         draggable={false}
@@ -17,7 +17,7 @@ export default function WelcomePage() {
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 50%, rgba(103,222,109,0.6) 70%, #67DE6D 100%)',
+          background: 'linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.75) 25%, rgba(0,0,0,0.2) 42%, rgba(103,222,109,0.55) 62%, #67DE6D 100%)',
         }}
       />
 
@@ -49,7 +49,7 @@ export default function WelcomePage() {
           </p>
 
           <button
-            onClick={() => navigate('/intro')}
+            onClick={() => navigate('/login')}
             className="w-full py-4 rounded-2xl font-bold text-base text-white active:scale-95 transition-all duration-150"
             style={{ backgroundColor: '#111' }}
           >

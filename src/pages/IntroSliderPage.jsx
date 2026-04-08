@@ -1,26 +1,24 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
 
 const SLIDES = [
   {
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Marine_Pull-ups.jpg/480px-Marine_Pull-ups.jpg',
+    image: '/slider1.jpg',
     eyebrow: 'Meet your coach,',
     headline: 'Start your\njourney',
     sub: 'Personalized plans built around your goals, fitness level, and schedule.',
   },
   {
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Bench_press_1.jpg/480px-Bench_press_1.jpg',
+    image: '/slider2.jpg',
     eyebrow: 'Create a workout plan',
     headline: 'To stay\nfit & strong',
     sub: 'Push/Pull/Legs, Yoga & more — every session tracked, every gain counted.',
   },
   {
-    image: 'https://upload.wikimedia.org/wikipedia/commons/6/63/Deadlift-phase_1.JPG',
+    image: '/slider3.jpg',
     eyebrow: 'Action is the',
     headline: 'Key to all\nsuccess',
     sub: "The only person you're competing with is yesterday's you.",
-    cta: true,
   },
 ]
 
@@ -35,7 +33,7 @@ export default function IntroSliderPage() {
   const touchStartX = useRef(null)
 
   const goTo = (idx) => {
-    if (idx >= SLIDES.length) { navigate('/login'); return }
+    if (idx >= SLIDES.length) { navigate('/welcome'); return }
     setCurrent(idx)
   }
 
@@ -87,44 +85,39 @@ export default function IntroSliderPage() {
         draggable={false}
       />
 
-      {/* Black at top → transparent mid → solid green at bottom */}
+      {/* Black at top → transparent → solid green at bottom, green starts above halfway */}
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 50%, rgba(103,222,109,0.6) 70%, #67DE6D 100%)',
+          background: 'linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.75) 25%, rgba(0,0,0,0.2) 42%, rgba(103,222,109,0.55) 62%, #67DE6D 100%)',
         }}
       />
 
       {/* Content */}
       <div className="relative flex flex-col min-h-screen">
 
-        {/* ── Progress bars (WhatsApp status style) ── */}
-        <div className="flex gap-1.5 px-4 pt-12">
+        {/* ── Pill indicators (top) ── */}
+        <div className="flex gap-2 px-6 pt-12 justify-center">
           {SLIDES.map((_, i) => (
             <div
               key={i}
-              className="flex-1 h-[3px] rounded-full overflow-hidden"
-              style={{ backgroundColor: 'rgba(255,255,255,0.25)' }}
-            >
-              <div
-                className="h-full rounded-full"
-                style={{
-                  backgroundColor: '#fff',
-                  width:
-                    i < current ? '100%'
-                    : i === current ? `${progress}%`
-                    : '0%',
-                  transition: i === current ? 'none' : undefined,
-                }}
-              />
-            </div>
+              style={{
+                height: '6px',
+                borderRadius: '9999px',
+                backgroundColor: i < current ? '#fff' : i === current ? '#fff' : 'rgba(255,255,255,0.3)',
+                // elongate active pill
+                width: i === current ? `${Math.max(24, 24 + (progress / 100) * 28)}px` : '8px',
+                transition: i === current ? 'width 0.05s linear' : 'width 0.25s ease',
+                flexShrink: 0,
+              }}
+            />
           ))}
         </div>
 
         {/* Skip */}
         <div className="flex justify-end px-5 pt-3">
           <button
-            onClick={() => navigate('/login')}
+            onClick={() => navigate('/welcome')}
             className="text-white/60 text-sm font-semibold"
           >
             Skip
@@ -134,7 +127,7 @@ export default function IntroSliderPage() {
         <div className="flex-1" />
 
         {/* Bottom text */}
-        <div className="px-6 pb-12">
+        <div className="px-6 pb-14">
           <p className="text-black/60 text-sm font-medium mb-1">{slide.eyebrow}</p>
           <h2
             className="text-[2.2rem] font-black text-black leading-[1.1] tracking-tight mb-3 whitespace-pre-line"
@@ -145,22 +138,13 @@ export default function IntroSliderPage() {
             {slide.sub}
           </p>
 
-          {slide.cta ? (
-            <button
-              onClick={() => navigate('/login')}
-              className="flex items-center gap-3 bg-black text-white font-bold px-7 py-4 rounded-2xl active:scale-95 transition-transform"
-            >
-              Start Now
-              <ArrowRight size={18} />
-            </button>
-          ) : (
-            <button
-              onClick={() => goTo(current + 1)}
-              className="w-14 h-14 bg-black rounded-2xl flex items-center justify-center active:scale-95 transition-transform"
-            >
-              <ArrowRight size={22} className="text-white" />
-            </button>
-          )}
+          <button
+            onClick={() => goTo(current + 1)}
+            className="w-full py-4 rounded-2xl font-bold text-base text-white active:scale-95 transition-all duration-150"
+            style={{ backgroundColor: '#111' }}
+          >
+            {current === SLIDES.length - 1 ? 'Get Started' : 'Next'}
+          </button>
         </div>
       </div>
     </div>
