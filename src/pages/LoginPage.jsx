@@ -35,7 +35,7 @@ export default function LoginPage() {
           <div className="w-20 h-20 bg-brand/10 rounded-3xl flex items-center justify-center mx-auto mb-4 border border-brand/20">
             <Dumbbell size={40} className="text-brand" />
           </div>
-          <h1 className="text-3xl font-bold" style={{ color: 'var(--text)' }}>GymPro</h1>
+          <h1 className="text-3xl font-bold" style={{ color: 'var(--text)' }}>Grit n Gain</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Your digital personal trainer</p>
         </div>
 

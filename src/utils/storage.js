@@ -107,7 +107,7 @@ export async function seedAdminIfNeeded() {
     await upsertUser({
       id: 'admin_xraudra',
       username: 'xRaudra',
-      email: 'admin@gympro.app',
+      email: 'admin@gritngain.app',
       password: 'Qwerty@12345',
       role: 'admin',
       name: 'Saurabh Pandey',

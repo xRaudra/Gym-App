@@ -42,7 +42,7 @@ export default function RegisterPage() {
 
       <div className="mb-8">
         <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Create Account</h2>
-        <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Join GymPro and start your fitness journey.</p>
+        <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Join Grit n Gain and start your fitness journey.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
