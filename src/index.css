@@ -4,41 +4,41 @@
 
 /* ── CSS Variables ─────────────────────────────────────────────────────────── */
 :root {
-  /* Dark mode — Eerie Black + Chartreuse */
-  --bg:          #222222;
-  --bg-surface:  #2C2C2C;
-  --bg-raised:   #363636;
-  --bg-overlay:  #404040;
-  --border:      #3C3C3C;
-  --border-light:#4A4A4A;
-  --text:        #F0F0F0;
-  --text-muted:  #A0A0A0;
-  --text-subtle: #686868;
-  --input-bg:    #2C2C2C;
-  --nav-bg:      #1A1A1A;
-  --card-bg:     #2C2C2C;
-  --scrollbar-track: #222222;
-  --scrollbar-thumb: #4A4A4A;
-  --brand-ring:      #E8FF57;
+  /* Dark mode — Deep Indigo + Electric Violet */
+  --bg:          #0E0E1A;
+  --bg-surface:  #171727;
+  --bg-raised:   #21213A;
+  --bg-overlay:  #2A2A4A;
+  --border:      #2D2D50;
+  --border-light:#3A3A65;
+  --text:        #EEEEFF;
+  --text-muted:  #8888BB;
+  --text-subtle: #555580;
+  --input-bg:    #171727;
+  --nav-bg:      #0A0A14;
+  --card-bg:     #171727;
+  --scrollbar-track: #0E0E1A;
+  --scrollbar-thumb: #3A3A65;
+  --brand-ring:  #8B5CF6;
 }
 
 html.light {
-  /* Light mode — Cream + Forest Green */
-  --bg:          #FFFDD0;
+  /* Light mode — Soft Lavender + Deep Purple */
+  --bg:          #F5F3FF;
   --bg-surface:  #FFFFFF;
-  --bg-raised:   #FFF8B0;
-  --bg-overlay:  #FFF4A0;
-  --border:      #E2D87A;
-  --border-light:#EEE698;
-  --text:        #1A1A1A;
-  --text-muted:  #4A4A4A;
-  --text-subtle: #888888;
+  --bg-raised:   #EDE9FF;
+  --bg-overlay:  #E5DEFF;
+  --border:      #C4B5FD;
+  --border-light:#DDD6FE;
+  --text:        #1E1033;
+  --text-muted:  #5B4E8A;
+  --text-subtle: #9580C8;
   --input-bg:    #FFFFFF;
-  --nav-bg:      #FFF8B0;
+  --nav-bg:      #EDE9FF;
   --card-bg:     #FFFFFF;
-  --scrollbar-track: #FFFDD0;
-  --scrollbar-thumb: #C8C070;
-  --brand-ring:      #0F842A;
+  --scrollbar-track: #F5F3FF;
+  --scrollbar-thumb: #C4B5FD;
+  --brand-ring:  #7C3AED;
 }
 
 @layer base {
@@ -76,7 +76,7 @@ html.light {
     outline: none;
     transition: border-color 0.2s, background-color 0.2s;
   }
-  input:focus, textarea:focus, select:focus { border-color: var(--brand-color, #E8FF57); }
+  input:focus, textarea:focus, select:focus { border-color: #8B5CF6; }
   input::placeholder, textarea::placeholder { color: var(--text-subtle); }
   select option { background-color: var(--input-bg); }
 }
@@ -99,24 +99,24 @@ html.light .border-border       { border-color: var(--border)       !important; 
 html.light .border-border-light { border-color: var(--border-light) !important; }
 html.light .border-\[#2A2A2A\] { border-color: var(--border)       !important; }
 
-/* Light mode brand colour — Forest Green instead of Chartreuse */
-html.light .text-brand           { color: #0F842A !important; }
-html.light .bg-brand             { background-color: #0F842A !important; }
-html.light .border-brand         { border-color: #0F842A !important; }
-html.light .bg-brand\/5          { background-color: rgba(15,132,42,0.05)  !important; }
-html.light .bg-brand\/10         { background-color: rgba(15,132,42,0.10)  !important; }
-html.light .bg-brand\/15         { background-color: rgba(15,132,42,0.15)  !important; }
-html.light .bg-brand\/20         { background-color: rgba(15,132,42,0.20)  !important; }
-html.light .border-brand\/20     { border-color: rgba(15,132,42,0.20) !important; }
-html.light .border-brand\/30     { border-color: rgba(15,132,42,0.30) !important; }
-html.light .border-brand\/40     { border-color: rgba(15,132,42,0.40) !important; }
+/* Light mode brand colour — Deep Purple instead of Electric Violet */
+html.light .text-brand           { color: #7C3AED !important; }
+html.light .bg-brand             { background-color: #7C3AED !important; }
+html.light .border-brand         { border-color: #7C3AED !important; }
+html.light .bg-brand\/5          { background-color: rgba(124,58,237,0.05)  !important; }
+html.light .bg-brand\/10         { background-color: rgba(124,58,237,0.10)  !important; }
+html.light .bg-brand\/15         { background-color: rgba(124,58,237,0.15)  !important; }
+html.light .bg-brand\/20         { background-color: rgba(124,58,237,0.20)  !important; }
+html.light .border-brand\/20     { border-color: rgba(124,58,237,0.20) !important; }
+html.light .border-brand\/30     { border-color: rgba(124,58,237,0.30) !important; }
+html.light .border-brand\/40     { border-color: rgba(124,58,237,0.40) !important; }
 html.light input:focus,
 html.light textarea:focus,
-html.light select:focus          { border-color: #0F842A !important; }
+html.light select:focus          { border-color: #7C3AED !important; }
 
 @layer components {
   .btn-primary {
-    @apply w-full bg-brand text-black font-semibold py-4 rounded-2xl text-base active:scale-95 transition-transform touch-manipulation;
+    @apply w-full bg-brand text-white font-semibold py-4 rounded-2xl text-base active:scale-95 transition-transform touch-manipulation;
   }
   .btn-secondary {
     @apply w-full font-semibold py-4 rounded-2xl text-base active:scale-95 transition-transform touch-manipulation;

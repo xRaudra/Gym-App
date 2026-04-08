@@ -4,8 +4,8 @@
   "description": "Personalised workouts, diet plans and progress tracking — your digital personal trainer.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#222222",
-  "theme_color": "#222222",
+  "background_color": "#0E0E1A",
+  "theme_color": "#0E0E1A",
   "orientation": "portrait",
   "icons": [
     {
