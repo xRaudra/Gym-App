@@ -41,9 +41,9 @@ function Ring({ pct: p, label, consumed, target, unit, color, size = 120 }) {
 
 function MissedBanner({ message }) {
   return (
-    <div className="bg-accent/10 border border-accent/20 rounded-xl px-4 py-3 flex items-center gap-3">
-      <Bell size={16} className="text-accent flex-shrink-0" />
-      <span className="text-sm text-accent">{message}</span>
+    <div className="bg-brand/8 border border-brand/20 rounded-xl px-4 py-3 flex items-center gap-3">
+      <Bell size={16} className="text-brand flex-shrink-0" />
+      <span className="text-sm text-brand/90">{message}</span>
     </div>
   )
 }
@@ -127,7 +127,7 @@ export default function DashboardPage() {
             consumed={today?.caloriesConsumed || 0}
             target={nutrition?.calories || '—'}
             unit=""
-            color="#F97316"
+            color="#A3F0A7"
           />
         </div>
       </div>
@@ -199,7 +199,7 @@ export default function DashboardPage() {
                 }
                 <span className="truncate" style={{ color: 'var(--text-muted)' }}>{m.label}</span>
                 <div className="ml-auto flex items-center gap-2 flex-shrink-0">
-                  <span className="text-orange-400 text-xs flex items-center gap-0.5"><Flame size={10} />{m.calories}</span>
+                  <span className="text-brand/70 text-xs flex items-center gap-0.5"><Flame size={10} />{m.calories}</span>
                   <span className="text-brand text-xs flex items-center gap-0.5"><Zap size={10} />{m.protein}g</span>
                 </div>
               </div>

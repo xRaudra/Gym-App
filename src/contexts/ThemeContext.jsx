@@ -1,26 +1,16 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 
 const ThemeContext = createContext(null)
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => localStorage.getItem('gp_theme') || 'dark')
-
   useEffect(() => {
     const root = document.documentElement
-    if (theme === 'light') {
-      root.classList.add('light')
-      root.classList.remove('dark')
-    } else {
-      root.classList.add('dark')
-      root.classList.remove('light')
-    }
-    localStorage.setItem('gp_theme', theme)
-  }, [theme])
-
-  const toggle = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
+    root.classList.add('dark')
+    root.classList.remove('light')
+  }, [])
 
   return (
-    <ThemeContext.Provider value={{ theme, toggle }}>
+    <ThemeContext.Provider value={{ theme: 'dark' }}>
       {children}
     </ThemeContext.Provider>
   )

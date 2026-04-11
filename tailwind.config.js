@@ -6,36 +6,37 @@ export default {
       colors: {
         brand: {
           DEFAULT: '#67DE6D',
-          dark: '#3EBF45',
-          light: '#8FE993',
-          muted: '#0A2A0B',
+          dark:    '#3EBF45',
+          light:   '#A3F0A7',
+          muted:   '#0D2A0E',
         },
+        // accent = warm green-lime for notifications / secondary highlights
         accent: {
-          DEFAULT: '#FFB347',
-          dark: '#F59E0B',
-          light: '#FCD34D',
+          DEFAULT: '#B8F084',
+          dark:    '#8BC34A',
+          light:   '#D4F7A8',
         },
         surface: {
           DEFAULT: '#111111',
-          raised: '#1A1A1A',
+          raised:  '#1A1A1A',
           overlay: '#242424',
         },
         border: {
           DEFAULT: '#2A2A2A',
-          light: '#363636',
+          light:   '#363636',
         },
       },
       fontFamily: {
         sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       animation: {
-        'fade-in': 'fadeIn 0.3s ease-in-out',
-        'slide-up': 'slideUp 0.3s ease-out',
+        'fade-in':    'fadeIn 0.3s ease-in-out',
+        'slide-up':   'slideUp 0.3s ease-out',
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
-        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+        fadeIn:  { '0%': { opacity: '0' },                              '100%': { opacity: '1' } },
+        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' },'100%': { transform: 'translateY(0)', opacity: '1' } },
       },
     },
   },

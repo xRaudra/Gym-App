@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── CSS Variables ─────────────────────────────────────────────────────────── */
+/* ── CSS Variables — Dark mode only ──────────────────────────────────────────── */
 :root {
-  /* Dark mode — Pitch Black + Electric Orange */
   --bg:          #080808;
   --bg-surface:  #111111;
   --bg-raised:   #1A1A1A;
@@ -22,25 +21,6 @@
   --brand-ring:  #67DE6D;
 }
 
-html.light {
-  /* Light mode — Warm White + Forest Green */
-  --bg:          #F8F7F5;
-  --bg-surface:  #FFFFFF;
-  --bg-raised:   #F0EDE8;
-  --bg-overlay:  #E8E2DA;
-  --border:      #E0DDD8;
-  --border-light:#EDE9E3;
-  --text:        #1A1A1A;
-  --text-muted:  #666666;
-  --text-subtle: #999999;
-  --input-bg:    #FFFFFF;
-  --nav-bg:      #F0EDE8;
-  --card-bg:     #FFFFFF;
-  --scrollbar-track: #F8F7F5;
-  --scrollbar-thumb: #E0DDD8;
-  --brand-ring:  #3EBF45;
-}
-
 @layer base {
   * {
     -webkit-tap-highlight-color: transparent;
@@ -54,7 +34,6 @@ html.light {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     overscroll-behavior: none;
-    transition: background-color 0.2s, color 0.2s;
   }
 
   body {
@@ -74,48 +53,16 @@ html.light {
     width: 100%;
     font-size: 1rem;
     outline: none;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition: border-color 0.2s;
   }
   input:focus, textarea:focus, select:focus { border-color: #67DE6D; }
   input::placeholder, textarea::placeholder { color: var(--text-subtle); }
   select option { background-color: var(--input-bg); }
 }
 
-/* ── Light Mode Overrides ───────────────────────────────────────────────────── */
-html.light .text-white    { color: var(--text)        !important; }
-html.light .text-gray-300 { color: var(--text-muted)  !important; }
-
-html.light .bg-surface         { background-color: var(--bg-surface) !important; }
-html.light .bg-surface-raised  { background-color: var(--bg-raised)  !important; }
-html.light .bg-\[#080808\]    { background-color: var(--bg)         !important; }
-html.light .bg-\[#0A0A0A\]    { background-color: var(--bg)         !important; }
-html.light .bg-\[#111111\]    { background-color: var(--bg-surface) !important; }
-html.light .bg-\[#1A1A1A\]    { background-color: var(--bg-raised)  !important; }
-html.light .bg-\[#1E1E1E\]    { background-color: var(--bg-raised)  !important; }
-html.light .bg-\[#2A2A2A\]    { background-color: var(--border)     !important; }
-
-html.light .border-border       { border-color: var(--border)       !important; }
-html.light .border-border-light { border-color: var(--border-light) !important; }
-html.light .border-\[#2A2A2A\] { border-color: var(--border)       !important; }
-
-/* Light mode brand — Forest Green */
-html.light .text-brand           { color: #3EBF45 !important; }
-html.light .bg-brand             { background-color: #3EBF45 !important; }
-html.light .border-brand         { border-color: #3EBF45 !important; }
-html.light .bg-brand\/5          { background-color: rgba(62,191,69,0.05)  !important; }
-html.light .bg-brand\/10         { background-color: rgba(62,191,69,0.10)  !important; }
-html.light .bg-brand\/15         { background-color: rgba(62,191,69,0.15)  !important; }
-html.light .bg-brand\/20         { background-color: rgba(62,191,69,0.20)  !important; }
-html.light .border-brand\/20     { border-color: rgba(62,191,69,0.20) !important; }
-html.light .border-brand\/30     { border-color: rgba(62,191,69,0.30) !important; }
-html.light .border-brand\/40     { border-color: rgba(62,191,69,0.40) !important; }
-html.light input:focus,
-html.light textarea:focus,
-html.light select:focus          { border-color: #3EBF45 !important; }
-
 @layer components {
   .btn-primary {
-    @apply w-full bg-brand text-white font-semibold py-4 rounded-2xl text-base active:scale-95 transition-transform touch-manipulation;
+    @apply w-full bg-brand text-black font-bold py-4 rounded-2xl text-base active:scale-95 transition-transform touch-manipulation;
   }
   .btn-secondary {
     @apply w-full font-semibold py-4 rounded-2xl text-base active:scale-95 transition-transform touch-manipulation;
@@ -139,19 +86,9 @@ html.light select:focus          { border-color: #3EBF45 !important; }
     @apply min-h-screen px-4 pt-4 pb-24 animate-fade-in;
     background-color: var(--bg);
   }
-  .theme-surface {
-    background-color: var(--bg-surface);
-  }
-  .theme-raised {
-    background-color: var(--bg-raised);
-  }
-  .theme-border {
-    border-color: var(--border);
-  }
-  .theme-text {
-    color: var(--text);
-  }
-  .theme-muted {
-    color: var(--text-muted);
-  }
+  .theme-surface   { background-color: var(--bg-surface); }
+  .theme-raised    { background-color: var(--bg-raised); }
+  .theme-border    { border-color: var(--border); }
+  .theme-text      { color: var(--text); }
+  .theme-muted     { color: var(--text-muted); }
 }

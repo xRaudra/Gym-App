@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Eye, EyeOff, LogOut, User, Pencil, Check, X, Sun, Moon } from 'lucide-react'
+import { Eye, EyeOff, LogOut, User, Pencil, Check, X } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
-import { useTheme } from '../contexts/ThemeContext'
 import { calcNutrition, bmiCategory } from '../utils/calculations'
 
 function InfoRow({ label, value }) {
@@ -50,7 +49,6 @@ function EditableField({ label, value, type = 'text', onChange, min, max, placeh
 
 export default function ProfilePage() {
   const { user, updateProfile, updateUser, logout } = useAuth()
-  const { theme, toggle: toggleTheme } = useTheme()
   const navigate = useNavigate()
   const profile = user?.profile || {}
 
@@ -110,7 +108,7 @@ export default function ProfilePage() {
           <p className="text-gray-500 text-xs">{user?.email}</p>
         </div>
         {user?.role === 'admin' && (
-          <span className="ml-auto px-2.5 py-1 bg-accent/10 text-accent text-xs font-semibold rounded-full border border-accent/20">Admin</span>
+          <span className="ml-auto px-2.5 py-1 bg-brand/10 text-brand text-xs font-semibold rounded-full border border-brand/20">Admin</span>
         )}
       </div>
 
@@ -246,23 +244,6 @@ export default function ProfilePage() {
           <button type="submit" className="btn-primary">Update Password</button>
         </form>
       )}
-
-      {/* Theme toggle */}
-      <div className="mt-6 flex items-center justify-between py-4 px-4 rounded-2xl border" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-raised)' }}>
-        <div className="flex items-center gap-3">
-          {theme === 'dark' ? <Moon size={18} className="text-brand" /> : <Sun size={18} className="text-accent" />}
-          <div>
-            <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>Appearance</p>
-            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{theme === 'dark' ? 'Dark mode' : 'Light mode'}</p>
-          </div>
-        </div>
-        <button
-          onClick={toggleTheme}
-          className={`relative w-12 h-6 rounded-full transition-colors duration-300 overflow-hidden ${theme === 'dark' ? 'bg-brand' : 'bg-gray-300'}`}
-        >
-          <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all duration-300 ${theme === 'dark' ? 'left-[26px]' : 'left-0.5'}`} />
-        </button>
-      </div>
 
       {/* Logout */}
       <button

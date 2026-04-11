@@ -5,7 +5,6 @@ import { ThemeProvider } from './contexts/ThemeContext'
 import Layout from './components/Layout'
 import GymLoader from './components/GymLoader'
 import WelcomePage      from './pages/WelcomePage'
-import IntroSliderPage  from './pages/IntroSliderPage'
 import LoginPage        from './pages/LoginPage'
 import RegisterPage     from './pages/RegisterPage'
 import OnboardingPage   from './pages/OnboardingPage'
@@ -16,16 +15,14 @@ import ProgressPage   from './pages/ProgressPage'
 import ProfilePage    from './pages/ProfilePage'
 import AdminPage      from './pages/AdminPage'
 
-// Guard: redirect to login if not authenticated
 function RequireAuth({ children }) {
   const { user, loading } = useAuth()
   if (loading) return <GymLoader />
-  if (!user) return <Navigate to="/intro" replace />
+  if (!user) return <Navigate to="/welcome" replace />
   if (!user.profile?.completedOnboarding) return <Navigate to="/onboarding" replace />
   return children
 }
 
-// Guard: redirect to dashboard if already authenticated
 function RequireGuest({ children }) {
   const { user, loading } = useAuth()
   if (loading) return <GymLoader />
@@ -33,7 +30,6 @@ function RequireGuest({ children }) {
   return children
 }
 
-// Guard: admin only
 function RequireAdmin({ children }) {
   const { user } = useAuth()
   if (!user || user.role !== 'admin') return <Navigate to="/dashboard" replace />
@@ -44,13 +40,12 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Public */}
-      <Route path="/intro"    element={<RequireGuest><IntroSliderPage /></RequireGuest>} />
       <Route path="/welcome"  element={<RequireGuest><WelcomePage /></RequireGuest>} />
       <Route path="/login"    element={<RequireGuest><LoginPage /></RequireGuest>} />
       <Route path="/register" element={<RequireGuest><RegisterPage /></RequireGuest>} />
       <Route path="/onboarding" element={<OnboardingPage />} />
 
-      {/* Protected — wrapped in layout */}
+      {/* Protected */}
       <Route path="/" element={<RequireAuth><TrackingProvider><Layout /></TrackingProvider></RequireAuth>}>
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<DashboardPage />} />
@@ -61,8 +56,7 @@ function AppRoutes() {
         <Route path="admin"     element={<RequireAdmin><AdminPage /></RequireAdmin>} />
       </Route>
 
-      {/* Fallback */}
-      <Route path="*" element={<Navigate to="/intro" replace />} />
+      <Route path="*" element={<Navigate to="/welcome" replace />} />
     </Routes>
   )
 }

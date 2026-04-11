@@ -26,14 +26,14 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen relative flex flex-col overflow-hidden">
-      {/* Splash image (dimmed) */}
+      {/* Background image */}
       <img
-        src="/splash.jpg"
+        src="/advid.jpg"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover object-top opacity-30"
+        className="absolute inset-0 w-full h-full object-cover object-center opacity-20"
         draggable={false}
       />
-      <div className="absolute inset-0" style={{ backgroundColor: '#080808cc' }} />
+      <div className="absolute inset-0" style={{ backgroundColor: '#050505e8' }} />
 
       <div className="relative flex flex-col min-h-screen px-5">
         {/* Back */}
