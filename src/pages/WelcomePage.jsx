@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import Logo from '../components/Logo'
 
 export default function WelcomePage() {
   const navigate = useNavigate()
@@ -21,12 +22,9 @@ export default function WelcomePage() {
         }}
       />
 
-      {/* Top badge */}
-      <div className="relative pt-14 flex justify-center">
-        <span className="inline-flex items-center gap-2 bg-black/50 border border-white/15 rounded-full px-4 py-1.5 backdrop-blur-sm">
-          <span className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-          <span className="text-white text-[11px] font-bold tracking-widest uppercase">Grit n Gain</span>
-        </span>
+      {/* Logo mark */}
+      <div className="relative pt-12 flex justify-center">
+        <Logo size={72} />
       </div>
 
       {/* Spacer pushes content to bottom */}

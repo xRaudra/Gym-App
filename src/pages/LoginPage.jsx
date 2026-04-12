@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import Logo from '../components/Logo'
 
 export default function LoginPage() {
   const { login } = useAuth()
@@ -47,12 +48,10 @@ export default function LoginPage() {
           </button>
         </div>
 
-        {/* App name */}
+        {/* Logo */}
         <div className="mb-8 mt-4">
-          <h1 className="text-3xl font-black text-white">
-            Grit n <span className="text-brand">Gain.</span>
-          </h1>
-          <p className="text-gray-500 text-sm mt-1">Sign in to continue</p>
+          <Logo size={56} wordmark />
+          <p className="text-gray-600 text-sm mt-4">Sign in to continue</p>
         </div>
 
         {/* Form */}
