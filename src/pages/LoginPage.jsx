@@ -50,7 +50,7 @@ export default function LoginPage() {
 
         {/* Logo */}
         <div className="mb-8 mt-4">
-          <Logo size={56} wordmark />
+          <Logo size={48} />
           <p className="text-gray-600 text-sm mt-4">Sign in to continue</p>
         </div>
 
