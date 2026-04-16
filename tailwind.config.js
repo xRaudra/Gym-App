@@ -10,6 +10,12 @@ export default {
           light:   '#A3F0A7',
           muted:   '#0D2A0E',
         },
+        // fitness = yellow for workout / fitness sections
+        fitness: {
+          DEFAULT: '#ffec64',
+          dark:    '#e6d200',
+          muted:   '#2a2808',
+        },
         // accent = warm green-lime for notifications / secondary highlights
         accent: {
           DEFAULT: '#B8F084',
