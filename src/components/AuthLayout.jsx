@@ -1,84 +1,76 @@
 import Logo from './Logo'
 
-// Shared split layout for all auth pages (Login, Register)
-// Mobile  → full-screen with advid.jpg background + form overlay
-// Desktop → left half: fitness image + brand copy / right half: form panel
 export default function AuthLayout({ children }) {
   return (
     <div className="min-h-screen flex" style={{ backgroundColor: 'var(--bg)' }}>
 
-      {/* ── Left image panel (lg+) ───────────────────────────────── */}
-      <div className="hidden lg:flex lg:w-[52%] xl:w-[55%] relative flex-col overflow-hidden flex-shrink-0">
-        <img
-          src="/advid.jpg"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover object-center"
-          draggable={false}
-        />
-        {/* Dark tinted gradient over image */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(150deg, rgba(5,5,5,0.96) 0%, rgba(5,5,5,0.72) 55%, rgba(5,5,5,0.88) 100%)',
-          }}
-        />
+      {/* ── Left image card (lg+) ────────────────────────────────── */}
+      <div className="hidden lg:flex lg:w-[44%] xl:w-[46%] flex-shrink-0 p-4">
+        {/* Rounded card */}
+        <div className="relative w-full rounded-[20px] overflow-hidden flex flex-col">
+          <img
+            src="/bg-desktop.jpg"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover object-center"
+            draggable={false}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.68) 100%)',
+            }}
+          />
 
-        <div className="relative z-10 flex flex-col h-full p-12 xl:p-16">
-          {/* Logo placeholder */}
-          <Logo size={46} />
+          <div className="relative z-10 flex flex-col h-full p-10 xl:p-12">
+            {/* Top brand */}
+            <div>
+              <p className="text-white/70 text-xs font-semibold uppercase tracking-[0.18em] mb-2">
+                Your Digital Trainer
+              </p>
+              <div className="w-8 h-[1.5px]" style={{ backgroundColor: 'rgba(255,255,255,0.4)' }} />
+            </div>
 
-          <div className="flex-1" />
+            <div className="flex-1" />
 
-          {/* Brand copy */}
-          <div className="max-w-xs xl:max-w-sm">
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-600 mb-4">
-              Grit n Gain
-            </p>
-            <h2 className="text-4xl xl:text-5xl font-black text-white leading-[1.05] tracking-tight mb-4">
-              Every rep<br />counts.
-            </h2>
-            <p className="text-gray-400 text-[15px] leading-relaxed mb-10">
-              Personalised workouts, smart nutrition, and progress
-              tracking — all in one place.
-            </p>
-
-            {/* Stats */}
-            <div className="flex gap-8">
-              <div>
-                <p className="text-2xl font-black" style={{ color: '#ffec64' }}>500+</p>
-                <p className="text-xs text-gray-600 mt-0.5">Exercises</p>
-              </div>
-              <div>
-                <p className="text-2xl font-black text-brand">7-Day</p>
-                <p className="text-xs text-gray-600 mt-0.5">Plan</p>
-              </div>
-              <div>
-                <p className="text-2xl font-black text-white">100%</p>
-                <p className="text-xs text-gray-600 mt-0.5">Yours</p>
-              </div>
+            {/* Bottom headline */}
+            <div>
+              <h2 className="text-4xl xl:text-5xl font-black text-white leading-[1.05] tracking-tight mb-3">
+                Built on Grit,<br />
+                Delivered by<br />
+                Gain.
+              </h2>
+              <p className="text-white/55 text-sm xl:text-base leading-relaxed max-w-[260px]">
+                Train smarter. Track every rep.<br />
+                Become the strongest version of you.
+              </p>
             </div>
           </div>
         </div>
       </div>
 
       {/* ── Right form panel ─────────────────────────────────────── */}
-      <div className="flex-1 relative flex flex-col min-h-screen overflow-y-auto">
-        {/* Mobile-only image background */}
+      <div className="panel-light flex-1 relative flex flex-col min-h-screen overflow-y-auto lg:bg-white">
+        {/* Mobile bg image */}
         <img
-          src="/advid.jpg"
+          src="/bg-mobile.jpg"
           alt=""
           className="lg:hidden absolute inset-0 w-full h-full object-cover object-center"
-          style={{ opacity: 0.12 }}
+          style={{ opacity: 0.14 }}
           draggable={false}
         />
         <div
           className="lg:hidden absolute inset-0"
-          style={{ backgroundColor: 'rgba(5,5,5,0.9)' }}
+          style={{ backgroundColor: 'rgba(5,5,5,0.88)' }}
         />
 
-        {/* Form slot — vertically centered on desktop, stacked on mobile */}
-        <div className="relative z-10 flex flex-col min-h-screen lg:min-h-0 lg:h-full lg:justify-center px-6 sm:px-10 lg:px-12 xl:px-16 py-10">
+        {/* Logo — top center on desktop */}
+        <div className="hidden lg:flex justify-center pt-10 relative z-10">
+          <Logo size={46} />
+        </div>
+
+        {/* Form slot */}
+        <div className="relative z-10 flex flex-col flex-1 lg:justify-center px-6 sm:px-10 lg:px-14 xl:px-20 py-10 lg:py-8">
           {children}
         </div>
       </div>

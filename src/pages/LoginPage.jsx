@@ -37,13 +37,13 @@ export default function LoginPage() {
         <span className="text-sm font-medium">Back</span>
       </button>
 
-      {/* Logo placeholder — mobile only (desktop has it in left panel) */}
+      {/* Logo — mobile only (desktop shows it in the panel header) */}
       <Logo size={44} className="mb-6 lg:hidden" />
 
       {/* Heading */}
       <div className="mb-8">
-        <h1 className="text-2xl font-black" style={{ color: 'var(--text)' }}>Welcome back</h1>
-        <p className="text-sm mt-1 text-gray-500">Sign in to continue your journey.</p>
+        <h1 className="text-2xl font-black" style={{ color: 'var(--text)' }}>Welcome Back</h1>
+        <p className="text-sm mt-1 text-gray-500">Enter your username and password to access your account.</p>
       </div>
 
       {/* Form */}
@@ -92,9 +92,9 @@ export default function LoginPage() {
         </button>
       </form>
 
-      <p className="text-gray-600 mt-6 text-sm">
-        New member?{' '}
-        <Link to="/register" className="text-brand font-semibold">Create account</Link>
+      <p className="mt-6 text-sm" style={{ color: 'var(--text-muted)' }}>
+        Don&apos;t have an account?{' '}
+        <Link to="/register" className="font-semibold" style={{ color: 'var(--text)' }}>Sign Up</Link>
       </p>
     </AuthLayout>
   )

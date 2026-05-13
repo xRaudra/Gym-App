@@ -93,4 +93,24 @@
   .theme-border    { border-color: var(--border); }
   .theme-text      { color: var(--text); }
   .theme-muted     { color: var(--text-muted); }
+
+  /* Light panel — activates on desktop for the auth right panel */
+  @media (min-width: 1024px) {
+    .panel-light {
+      --text:        #111111;
+      --text-muted:  #71717a;
+      --text-subtle: #a1a1aa;
+      --input-bg:    #f4f4f5;
+      --border:      #d4d4d8;
+    }
+    .panel-light input:focus,
+    .panel-light textarea:focus,
+    .panel-light select:focus {
+      border-color: #111111;
+    }
+    .panel-light .btn-primary {
+      background-color: #111111;
+      color: #ffffff;
+    }
+  }
 }
