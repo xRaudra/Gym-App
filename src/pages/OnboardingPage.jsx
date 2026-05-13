@@ -65,6 +65,7 @@ export default function OnboardingPage() {
     workOnSunday: false,
   })
   const [error, setError] = useState('')
+  const [saving, setSaving] = useState(false)
 
   const set = (k, v) => setData(d => ({ ...d, [k]: v }))
 
@@ -92,10 +93,12 @@ export default function OnboardingPage() {
 
   const back = () => { setError(''); setStep(s => s - 1) }
 
-  const finish = () => {
+  const finish = async () => {
     const err = validateStep()
     if (err) return setError(err)
-    updateProfile({ ...data, completedOnboarding: true })
+    setSaving(true)
+    await updateProfile({ ...data, completedOnboarding: true })
+    setSaving(false)
     navigate('/dashboard')
   }
 
@@ -264,8 +267,8 @@ export default function OnboardingPage() {
             Continue <ChevronRight size={18} />
           </button>
         ) : (
-          <button onClick={finish} className="btn-primary flex items-center justify-center gap-2 flex-1">
-            <Check size={18} /> Let's Go!
+          <button onClick={finish} disabled={saving} className="btn-primary flex items-center justify-center gap-2 flex-1">
+            <Check size={18} /> {saving ? 'Saving…' : "Let's Go!"}
           </button>
         )}
       </div>

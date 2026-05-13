@@ -30,14 +30,14 @@ function WeekStrip() {
         const isToday = i === dow
         return (
           <div key={day} className="flex flex-col items-center gap-1.5">
-            <span className="text-[10px] font-semibold" style={{ color: isToday ? '#ffec64' : '#555' }}>
+            <span className="text-[10px] font-semibold" style={{ color: isToday ? '#ffec64' : '#888' }}>
               {day}
             </span>
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
               style={isToday
                 ? { background: '#ffec64', color: '#080808' }
-                : { color: '#666' }
+                : { color: '#aaa' }
               }
             >
               {d.getDate()}
@@ -199,7 +199,7 @@ export default function DashboardPage() {
 
           {/* Progress bar */}
           <div className="mt-4">
-            <div className="flex justify-between text-[11px] text-gray-600 mb-1.5">
+            <div className="flex justify-between text-[11px] text-gray-400 mb-1.5">
               <span>{exCompleted}/{totalEx} completed</span>
               <span>{totalEx ? Math.round((exCompleted / totalEx) * 100) : 0}%</span>
             </div>
@@ -301,7 +301,7 @@ export default function DashboardPage() {
 
           {/* Calorie progress */}
           <div className="mt-4">
-            <div className="flex justify-between text-[11px] text-gray-600 mb-1.5">
+            <div className="flex justify-between text-[11px] text-gray-400 mb-1.5">
               <span>{today?.caloriesConsumed || 0} / {nutrition?.calories || '—'} kcal</span>
               <span>{caloriesPct}%</span>
             </div>
@@ -324,7 +324,7 @@ export default function DashboardPage() {
           >
             <p className="text-xs text-gray-500 mb-1">Daily Calories</p>
             <p className="text-2xl font-black" style={{ color: '#ffec64' }}>{nutrition.calories}</p>
-            <p className="text-gray-600 text-xs">kcal target</p>
+            <p className="text-gray-400 text-xs">kcal target</p>
           </div>
           <div
             className="rounded-2xl p-4 text-center"
@@ -332,7 +332,7 @@ export default function DashboardPage() {
           >
             <p className="text-xs text-gray-500 mb-1">Daily Protein</p>
             <p className="text-2xl font-black text-brand">{nutrition.protein}g</p>
-            <p className="text-gray-600 text-xs">protein target</p>
+            <p className="text-gray-400 text-xs">protein target</p>
           </div>
         </div>
       )}

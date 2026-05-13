@@ -1,7 +1,12 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 
 export default function WelcomePage() {
   const navigate = useNavigate()
+
+  // Desktop / tablet → skip the splash, go straight to login
+  if (window.matchMedia('(min-width: 1024px)').matches) {
+    return <Navigate to="/login" replace />
+  }
 
   return (
     <div className="min-h-screen relative flex flex-col overflow-hidden">

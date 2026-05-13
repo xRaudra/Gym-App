@@ -9,8 +9,9 @@ import GymLoader from './components/GymLoader'
 const Layout        = lazy(() => import('./components/Layout'))
 const WelcomePage   = lazy(() => import('./pages/WelcomePage'))
 const LoginPage     = lazy(() => import('./pages/LoginPage'))
-const RegisterPage  = lazy(() => import('./pages/RegisterPage'))
-const OnboardingPage= lazy(() => import('./pages/OnboardingPage'))
+const RegisterPage       = lazy(() => import('./pages/RegisterPage'))
+const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'))
+const OnboardingPage     = lazy(() => import('./pages/OnboardingPage'))
 const DashboardPage = lazy(() => import('./pages/DashboardPage'))
 const WorkoutPage   = lazy(() => import('./pages/WorkoutPage'))
 const DietPage      = lazy(() => import('./pages/DietPage'))
@@ -46,8 +47,9 @@ function AppRoutes() {
         {/* Public */}
         <Route path="/welcome"    element={<RequireGuest><WelcomePage /></RequireGuest>} />
         <Route path="/login"      element={<RequireGuest><LoginPage /></RequireGuest>} />
-        <Route path="/register"   element={<RequireGuest><RegisterPage /></RequireGuest>} />
-        <Route path="/onboarding" element={<OnboardingPage />} />
+        <Route path="/register"        element={<RequireGuest><RegisterPage /></RequireGuest>} />
+        <Route path="/forgot-password" element={<RequireGuest><ForgotPasswordPage /></RequireGuest>} />
+        <Route path="/onboarding"      element={<OnboardingPage />} />
 
         {/* Protected */}
         <Route path="/" element={
