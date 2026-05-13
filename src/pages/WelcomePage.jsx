@@ -6,7 +6,7 @@ export default function WelcomePage() {
   return (
     <div className="min-h-screen relative flex flex-col overflow-hidden">
 
-      {/* Hero — welcome screen image */}
+      {/* Hero image */}
       <img
         src="/welcome.jpg"
         alt=""
@@ -18,24 +18,25 @@ export default function WelcomePage() {
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(to bottom, rgba(255,236,100,0) 0%, rgba(255,236,100,0) 38%, rgba(255,236,100,0.72) 62%, #ffec64 100%)',
+          background:
+            'linear-gradient(to bottom, rgba(255,236,100,0) 0%, rgba(255,236,100,0) 38%, rgba(255,236,100,0.72) 62%, #ffec64 100%)',
         }}
       />
 
-      {/* Spacer pushes content down */}
+      {/* Spacer pushes content to bottom */}
       <div className="flex-1" />
 
-      {/* Bottom content — sits on yellow zone */}
-      <div className="relative px-6 pb-14">
+      {/* Bottom content — centered with max-width for tablet/desktop */}
+      <div className="relative px-6 pb-14 sm:pb-16 w-full max-w-md sm:max-w-lg md:max-w-xl mx-auto">
         <p className="text-black/50 text-xs font-bold uppercase tracking-[0.15em] mb-2">
           Your Digital Trainer
         </p>
-        <h1 className="text-[2.75rem] font-black text-black leading-[1.05] tracking-tight mb-3">
+        <h1 className="text-[2.75rem] sm:text-5xl font-black text-black leading-[1.05] tracking-tight mb-3">
           Built on Grit,<br />
           Delivered<br />
           by Gain.
         </h1>
-        <p className="text-black/55 text-sm leading-relaxed mb-10 max-w-[270px]">
+        <p className="text-black/55 text-sm sm:text-base leading-relaxed mb-10 max-w-[300px]">
           Train smarter. Track every rep.<br />
           Become the strongest version of you.
         </p>

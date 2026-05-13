@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { Eye, EyeOff, CheckCircle2, XCircle } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { validatePassword } from '../utils/calculations'
+import AuthLayout from '../components/AuthLayout'
 
 function PwRule({ met, text }) {
   return (
@@ -37,15 +38,22 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col px-6 pt-10 pb-10 animate-fade-in" style={{ backgroundColor: 'var(--bg)' }}>
-      <Link to="/login" className="text-gray-400 text-sm mb-8 flex items-center gap-1 w-fit">← Back</Link>
+    <AuthLayout>
+      {/* Back */}
+      <Link
+        to="/login"
+        className="flex items-center gap-2 text-gray-500 hover:text-gray-300 transition-colors w-fit mb-8"
+      >
+        <span className="text-sm font-medium">← Back to login</span>
+      </Link>
 
+      {/* Heading */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Create Account</h2>
-        <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Join Grit n Gain and start your fitness journey.</p>
+        <h2 className="text-2xl font-black" style={{ color: 'var(--text)' }}>Create Account</h2>
+        <p className="text-sm mt-1 text-gray-500">Join Grit n Gain and start your fitness journey.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 w-full lg:max-w-sm">
         <div>
           <label className="label">Full Name</label>
           <input type="text" placeholder="Your full name" value={form.name} onChange={set('name')} />
@@ -69,17 +77,17 @@ export default function RegisterPage() {
               autoComplete="new-password"
               className="pr-12"
             />
-            <button type="button" onClick={() => setShowPw(v => !v)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
-              {showPw ? <EyeOff size={20} /> : <Eye size={20} />}
+            <button type="button" onClick={() => setShowPw(v => !v)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors">
+              {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
           {form.password && (
             <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 px-1">
-              <PwRule met={form.password.length >= 8}        text="8+ chars" />
-              <PwRule met={/[A-Z]/.test(form.password)}      text="Uppercase" />
-              <PwRule met={/[a-z]/.test(form.password)}      text="Lowercase" />
-              <PwRule met={/[0-9]/.test(form.password)}      text="Number" />
-              <PwRule met={/[^A-Za-z0-9]/.test(form.password)} text="Special char" />
+              <PwRule met={form.password.length >= 8}           text="8+ chars" />
+              <PwRule met={/[A-Z]/.test(form.password)}         text="Uppercase" />
+              <PwRule met={/[a-z]/.test(form.password)}         text="Lowercase" />
+              <PwRule met={/[0-9]/.test(form.password)}         text="Number" />
+              <PwRule met={/[^A-Za-z0-9]/.test(form.password)}  text="Special char" />
             </div>
           )}
         </div>
@@ -100,10 +108,10 @@ export default function RegisterPage() {
         </button>
       </form>
 
-      <p className="text-gray-500 mt-6 text-sm text-center">
+      <p className="text-gray-600 mt-6 text-sm">
         Already have an account?{' '}
-        <Link to="/login" className="text-brand font-medium">Sign in</Link>
+        <Link to="/login" className="text-brand font-semibold">Sign in</Link>
       </p>
-    </div>
+    </AuthLayout>
   )
 }

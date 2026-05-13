@@ -83,7 +83,9 @@
     color: var(--text-muted);
   }
   .page {
-    @apply min-h-screen px-4 pt-4 pb-24 animate-fade-in;
+    /* Mobile: bottom-nav offset (pb-24). Desktop: sidebar handled by Layout, just normal padding */
+    @apply px-4 pt-4 pb-24 animate-fade-in md:px-8 md:pt-6 md:pb-10 lg:px-10 lg:pt-8;
+    min-height: 100vh;
     background-color: var(--bg);
   }
   .theme-surface   { background-color: var(--bg-surface); }

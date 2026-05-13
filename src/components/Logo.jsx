@@ -1,17 +1,18 @@
-/**
- * Grit n Gain — Logo component
- * Uses the official Logo.png from assets.
- * Pass `size` to control height (width scales proportionally).
- */
-export default function Logo({ size = 64, className = '' }) {
+// Logo placeholder — swap this component when the final logo asset is ready
+export default function Logo({ size = 40, className = '' }) {
+  const fs = Math.round(size * 0.4)
   return (
-    <img
-      src="/logo.png"
-      alt="Grit n Gain"
-      height={size}
-      style={{ height: size, width: 'auto', display: 'block' }}
-      className={className}
-      draggable={false}
-    />
+    <div
+      className={`flex items-center justify-center flex-shrink-0 ${className}`}
+      style={{
+        width: size,
+        height: size,
+        borderRadius: Math.round(size * 0.26),
+        background: 'rgba(255,236,100,0.1)',
+        border: '1.5px solid rgba(255,236,100,0.25)',
+      }}
+    >
+      <span style={{ color: '#ffec64', fontSize: fs, fontWeight: 900, lineHeight: 1 }}>G</span>
+    </div>
   )
 }
