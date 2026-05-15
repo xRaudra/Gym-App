@@ -22,8 +22,17 @@ function putLocalUser(user) {
   if (!user?.id) return
   const users = getLocalUsers()
   const i = users.findIndex(u => u.id === user.id)
-  if (i >= 0) users[i] = user
-  else users.push(user)
+  if (i >= 0) {
+    // Merge: never overwrite a good local value with null/undefined from Supabase.
+    // Supabase may return rows missing fields (e.g. password) if RLS restricted the write.
+    const merged = { ...users[i] }
+    for (const [k, v] of Object.entries(user)) {
+      if (v !== null && v !== undefined) merged[k] = v
+    }
+    users[i] = merged
+  } else {
+    users.push(user)
+  }
   saveLocalUsers(users)
 }
 function removeLocalUser(id) {
@@ -191,27 +200,39 @@ export async function getUserTrackingHistory(userId, days = 30) {
 
 // ─── Seed admin ───────────────────────────────────────────────────────────────
 export async function seedAdminIfNeeded() {
-  const existing = await getUserByUsername('xRaudra')
+  // Pull all Supabase users into local store on startup (recovers pre-fix registrations).
+  // putLocalUser uses smart-merge so Supabase nulls never overwrite good local values.
+  try {
+    const { data, error } = await supabase.from('users').select('*')
+    if (!error && data?.length) data.forEach(row => putLocalUser(toAppUser(row)))
+  } catch {}
+
+  const ADMIN = {
+    id: 'admin_xraudra',
+    username: 'xRaudra',
+    email: 'admin@gritngain.app',
+    password: 'Qwerty@12345',
+    role: 'admin',
+    name: 'Saurabh Pandey',
+    profile: {
+      gender: 'male',
+      age: 28,
+      height: 175,
+      weight: 75,
+      dietaryPreference: 'non-veg',
+      preferredFoods: ['chicken_breast', 'eggs', 'oats', 'banana', 'almonds'],
+      goal: 'maintenance',
+      workOnSunday: false,
+      completedOnboarding: true,
+    },
+  }
+
+  const existing = getLocalUsers().find(u => u.username?.toLowerCase() === 'xraudra')
   if (!existing) {
-    await upsertUser({
-      id: 'admin_xraudra',
-      username: 'xRaudra',
-      email: 'admin@gritngain.app',
-      password: 'Qwerty@12345',
-      role: 'admin',
-      name: 'Saurabh Pandey',
-      profile: {
-        gender: 'male',
-        age: 28,
-        height: 175,
-        weight: 75,
-        dietaryPreference: 'non-veg',
-        preferredFoods: ['chicken_breast', 'eggs', 'oats', 'banana', 'almonds'],
-        goal: 'maintenance',
-        workOnSunday: false,
-        completedOnboarding: true,
-      },
-      createdAt: new Date().toISOString(),
-    })
+    // First time on this device — create admin
+    await upsertUser({ ...ADMIN, createdAt: new Date().toISOString() })
+  } else if (!existing.password || existing.role !== 'admin') {
+    // Supabase corrupted the local entry (e.g. null password) — fix it in-place
+    putLocalUser({ ...existing, password: ADMIN.password, role: ADMIN.role })
   }
 }
