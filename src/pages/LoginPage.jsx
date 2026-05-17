@@ -31,7 +31,7 @@ export default function LoginPage() {
       {/* Back */}
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-gray-500 hover:text-gray-300 active:scale-95 transition-all w-fit mb-8"
+        className="flex items-center gap-2 text-gray-500 hover:text-gray-300 active:scale-95 transition-all w-fit mb-6"
       >
         <ArrowLeft size={17} />
         <span className="text-sm font-medium">Back</span>
@@ -41,13 +41,13 @@ export default function LoginPage() {
       <Logo size={44} className="mb-6 lg:hidden" variant="light" />
 
       {/* Heading */}
-      <div className="mb-8">
+      <div className="mb-5">
         <h1 className="text-2xl font-black" style={{ color: 'var(--text)' }}>Welcome Back</h1>
         <p className="text-sm mt-1 text-gray-500">Enter your username and password to access your account.</p>
       </div>
 
       {/* Form */}
-      <form onSubmit={handleLogin} className="space-y-4 w-full lg:max-w-sm">
+      <form onSubmit={handleLogin} className="space-y-3 w-full lg:max-w-sm">
         <div>
           <label className="label">Username</label>
           <input

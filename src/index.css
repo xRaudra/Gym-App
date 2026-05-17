@@ -108,9 +108,33 @@
     .panel-light select:focus {
       border-color: #111111;
     }
+    /* Compact form sizing — desktop doesn't need mobile touch targets */
+    .panel-light input,
+    .panel-light textarea,
+    .panel-light select {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      border-radius: 0.625rem;
+    }
+    .panel-light .label {
+      font-size: 0.75rem;
+      margin-bottom: 0.25rem;
+    }
     .panel-light .btn-primary {
       background-color: #111111;
       color: #ffffff;
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      border-radius: 0.625rem;
+    }
+    .panel-light .btn-secondary {
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      border-radius: 0.625rem;
     }
   }
 }
