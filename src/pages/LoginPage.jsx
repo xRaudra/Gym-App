@@ -38,7 +38,7 @@ export default function LoginPage() {
       </button>
 
       {/* Logo — mobile only (desktop shows it in the panel header) */}
-      <Logo size={44} className="mb-6 lg:hidden" />
+      <Logo size={44} className="mb-6 lg:hidden" variant="light" />
 
       {/* Heading */}
       <div className="mb-8">
