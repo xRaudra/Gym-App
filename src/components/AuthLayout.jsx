@@ -5,7 +5,7 @@ export default function AuthLayout({ children }) {
     <div className="min-h-screen flex" style={{ backgroundColor: 'var(--bg)' }}>
 
       {/* ── Left image card (lg+) ────────────────────────────────── */}
-      <div className="hidden lg:flex lg:w-[44%] xl:w-[46%] flex-shrink-0 p-4">
+      <div className="hidden lg:flex lg:w-[44%] xl:w-[46%] flex-shrink-0 p-4 bg-white">
         {/* Rounded card */}
         <div className="relative w-full rounded-[20px] overflow-hidden flex flex-col">
           <img
