@@ -1,7 +1,7 @@
 {
-  "name": "Grit n Gain — Your Digital Trainer",
-  "short_name": "Grit n Gain",
-  "description": "Personalised workouts, diet plans and progress tracking — your digital personal trainer.",
+  "name": "Gurofy — Move. Fuel. Grow.",
+  "short_name": "Gurofy",
+  "description": "Personalised workouts, diet plans and progress tracking — your digital fitness guru.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0E0E1A",

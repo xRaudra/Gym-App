@@ -46,7 +46,7 @@ export default function Layout() {
             </div>
             <div>
               <p className="text-sm font-black leading-tight" style={{ color: 'var(--text)' }}>
-                Grit n Gain
+                Gurofy
               </p>
               <p className="text-[10px] text-gray-600 leading-tight">Digital Trainer</p>
             </div>
