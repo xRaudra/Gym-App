@@ -70,8 +70,8 @@ export default function AuthLayout({ children }) {
         </div>
 
         {/* Form slot */}
-        <div className="relative z-10 flex flex-col flex-1 lg:justify-center lg:items-center px-6 sm:px-10 py-10 lg:py-8">
-          <div className="w-full lg:max-w-sm">
+        <div className="relative z-10 flex flex-col flex-1 lg:items-center px-6 sm:px-10 py-10 lg:py-0">
+          <div className="w-full lg:max-w-sm lg:flex-1 lg:flex lg:flex-col">
             {children}
           </div>
         </div>
