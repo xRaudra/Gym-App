@@ -210,7 +210,7 @@ export async function seedAdminIfNeeded() {
   const ADMIN = {
     id: 'admin_xraudra',
     username: 'xRaudra',
-    email: 'admin@gurofy.app',
+    email: 'admin@geodefit.app',
     password: 'Qwerty@12345',
     role: 'admin',
     name: 'Saurabh Pandey',

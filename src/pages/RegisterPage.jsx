@@ -50,7 +50,7 @@ export default function RegisterPage() {
       {/* Heading */}
       <div className="mb-8">
         <h2 className="text-2xl font-black" style={{ color: 'var(--text)' }}>Create Account</h2>
-        <p className="text-sm mt-1 text-gray-500">Join Gurofy and start your fitness journey.</p>
+        <p className="text-sm mt-1 text-gray-500">Join Geode Fit and start your fitness journey.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4 w-full lg:max-w-sm">

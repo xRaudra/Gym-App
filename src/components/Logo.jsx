@@ -3,7 +3,7 @@ export default function Logo({ size = 40, className = '', variant = 'dark' }) {
   return (
     <img
       src={src}
-      alt="Gurofy"
+      alt="Geode Fit"
       draggable={false}
       className={`flex-shrink-0 ${className}`}
       style={{ width: size, height: size, objectFit: 'contain' }}

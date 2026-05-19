@@ -36,9 +36,9 @@ export default function AuthLayout({ children }) {
             {/* Bottom headline */}
             <div>
               <h2 className="text-4xl xl:text-5xl font-black text-white leading-[1.05] tracking-tight mb-3">
-                Move.<br />
-                Fuel.<br />
-                Grow.
+                Break.<br />
+                Build.<br />
+                Become.
               </h2>
               <p className="text-white/55 text-sm xl:text-base leading-relaxed max-w-[260px]">
                 Train smarter. Track every rep.<br />

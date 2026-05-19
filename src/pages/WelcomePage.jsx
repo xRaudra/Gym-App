@@ -46,9 +46,9 @@ export default function WelcomePage() {
       {/* Bottom content */}
       <div className="relative px-6 pb-14 sm:pb-16 w-full max-w-md sm:max-w-lg lg:max-w-2xl mx-auto">
         <h1 className="text-[2.75rem] sm:text-5xl lg:text-6xl font-black text-white leading-[1.05] tracking-tight mb-3">
-          Move.<br />
-          Fuel.<br />
-          Grow.
+          Break.<br />
+          Build.<br />
+          Become.
         </h1>
         <p className="text-white/55 text-sm sm:text-base leading-relaxed mb-8 max-w-[280px] lg:max-w-sm">
           Train smarter. Track every rep.<br />
