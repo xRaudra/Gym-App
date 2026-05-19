@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Allow: /welcome
+Allow: /login
+Allow: /register
+
+Disallow: /dashboard
+Disallow: /workout
+Disallow: /diet
+Disallow: /progress
+Disallow: /profile
+Disallow: /admin
+Disallow: /onboarding
+
+Sitemap: https://www.geodefit.in/sitemap.xml
