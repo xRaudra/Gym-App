@@ -5,6 +5,18 @@ import { useAuth } from '../contexts/AuthContext'
 import { validatePassword } from '../utils/calculations'
 import AuthLayout from '../components/AuthLayout'
 
+import mixpanel from 'mixpanel-browser'
+
+// After user is created successfully
+mixpanel.alias(userId) // links anonymous → identified user
+mixpanel.track('signup_completed', {
+  signup_method: 'email_otp', // or 'google' etc
+  country: 'India',
+  ui_theme: 'dark'
+})
+
+
+
 function PwRule({ met, text }) {
   return (
     <span className={`flex items-center gap-1.5 text-xs ${met ? 'text-brand' : 'text-gray-500'}`}>
