@@ -6,7 +6,25 @@ import { getWeeklyOverview, DAY_TYPE_COLOR, DAY_TYPE_BG } from '../data/exercise
 import { getTodayDayIndex } from '../utils/calculations'
 
 
+import mixpanel from 'mixpanel-browser'
 
+// When user starts a workout
+const handleStartWorkout = () => {
+  mixpanel.track('first_workout_started', {
+    workout_program_type: workoutType,
+    selected_goal: userGoal
+  })
+}
+
+// When user completes a workout
+const handleFinishWorkout = () => {
+  mixpanel.track('daily_workout_completed', {
+    workout_type: workoutType,
+    streak_day_number: currentStreak,
+    selected_goal: userGoal,
+    workout_date: new Date().toISOString()
+  })
+}
 
 const REST_COLOR = 'text-gray-400'
 
