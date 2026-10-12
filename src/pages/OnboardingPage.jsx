@@ -4,6 +4,28 @@ import { ChevronRight, ChevronLeft, Check } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { FOODS } from '../data/foods'
 
+import { useEffect } from 'react'
+import mixpanel from 'mixpanel-browser'
+
+
+useEffect(() => {
+  mixpanel.track('onboarding_step_viewed', {
+    step_number: currentStep,        // 1, 2, 3, or 4
+    step_name: 'personal_info',      // match to current step
+    onboarding_session_id: sessionId
+  })
+}, [currentStep])
+
+
+const handleNext = () => {
+  mixpanel.track('onboarding_step_completed', {
+    step_number: currentStep,
+    step_name: 'personal_info',
+    duration_seconds: timeSpentOnStep
+  })
+  // your existing next-step logic...
+}
+
 const TOTAL_STEPS = 4
 
 const FOOD_PREF_OPTIONS = {
