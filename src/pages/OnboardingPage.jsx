@@ -4,36 +4,6 @@ import { ChevronRight, ChevronLeft, Check } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { FOODS } from '../data/foods'
 
-import mixpanel from 'mixpanel-browser'
-
-// When a step loads
-useEffect(() => {
-  mixpanel.track('onboarding_step_viewed', {
-    step_number: currentStep,
-    step_name: stepNames[currentStep], // e.g. 'personal_info'
-    onboarding_session_id: sessionId
-  })
-}, [currentStep])
-
-// When user clicks Continue
-const handleNext = () => {
-  mixpanel.track('onboarding_step_completed', {
-    step_number: currentStep,
-    step_name: stepNames[currentStep],
-    duration_seconds: Math.floor((Date.now() - stepStartTime) / 1000)
-  })
-  // your existing logic...
-}
-
-// When final step is submitted
-const handleFinish = () => {
-  mixpanel.track('onboarding_completed', {
-    selected_goal: formData.goal,           // 'lose_weight' / 'stay_fit' / 'build_muscle'
-    dietary_preference: formData.diet,      // 'vegetarian' / 'non_veg' / 'eggetarian'
-    workout_schedule_preference: formData.schedule
-  })
-}
-
 
 const TOTAL_STEPS = 4
 
