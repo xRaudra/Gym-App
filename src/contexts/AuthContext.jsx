@@ -5,6 +5,16 @@ import {
 } from '../utils/storage'
 import { validatePassword } from '../utils/calculations'
 
+import mixpanel from 'mixpanel-browser'
+
+// Where you restore/set the logged-in user
+mixpanel.identify(user.uid) // or user.id
+mixpanel.people.set({
+  $name: user.displayName,
+  $email: user.email
+})
+
+
 const AuthContext = createContext(null)
 
 const USER_CACHE_KEY = 'gp_user_cache'
