@@ -5,6 +5,18 @@ import { useTracking } from '../contexts/TrackingContext'
 import { calcNutrition, pct } from '../utils/calculations'
 import { generateDietPlan, planTotals } from '../data/foods'
 
+import mixpanel from 'mixpanel-browser'
+
+const handleLogMeal = () => {
+  // your existing log logic...
+  mixpanel.track('daily_nutrition_logged', {
+    entries_count: mealsLoggedToday,
+    dietary_preference: userDietPref
+  })
+}
+
+
+
 function MacroBar({ label, consumed, target, color }) {
   const p = pct(consumed, target)
   return (
