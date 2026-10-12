@@ -5,6 +5,20 @@ import { useAuth } from '../contexts/AuthContext'
 import AuthLayout from '../components/AuthLayout'
 import Logo from '../components/Logo'
 
+import mixpanel from 'mixpanel-browser'
+
+const handleSignup = async () => {
+  // your existing signup logic...
+  await createUser()
+
+  // 👇 add this after signup succeeds
+  mixpanel.track('signup_completed', {
+    signup_method: 'email_otp',
+    country: 'India',
+    ui_theme: 'dark'
+  })
+}
+
 export default function LoginPage() {
   const { login } = useAuth()
   const navigate  = useNavigate()
