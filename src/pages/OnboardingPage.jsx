@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronRight, ChevronLeft, Check } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { FOODS } from '../data/foods'
+import mixpanel from 'mixpanel-browser'
 
 const TOTAL_STEPS = 4
+const STEP_NAMES = ['personal_info', 'body_metrics', 'dietary_preference', 'goal_schedule']
 
 const FOOD_PREF_OPTIONS = {
   veg: ['paneer', 'tofu', 'soya_chunks', 'chana_dal', 'moong_dal', 'rajma', 'chickpeas', 'greek_yogurt', 'oats', 'brown_rice', 'quinoa', 'almonds', 'peanut_butter'],
@@ -67,7 +69,19 @@ export default function OnboardingPage() {
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
 
+  const stepStartTime = useRef(Date.now())
+  const sessionId = useRef(`onb-${Date.now()}`)
+
   const set = (k, v) => setData(d => ({ ...d, [k]: v }))
+
+  useEffect(() => {
+    stepStartTime.current = Date.now()
+    mixpanel.track('onboarding_step_viewed', {
+      step_number: step + 1,
+      step_name: STEP_NAMES[step],
+      onboarding_session_id: sessionId.current
+    })
+  }, [step])
 
   const validateStep = () => {
     if (step === 0) {
@@ -76,7 +90,7 @@ export default function OnboardingPage() {
     }
     if (step === 1) {
       if (!data.height || data.height < 100 || data.height > 250) return 'Enter height in cm (100–250).'
-      if (!data.weight || data.weight < 30 || data.weight > 250)  return 'Enter weight in kg (30–250).'
+      if (!data.weight || data.weight < 30 || data.weight > 250) return 'Enter weight in kg (30–250).'
     }
     if (step === 2) {
       if (!data.dietaryPreference) return 'Please select a dietary preference.'
@@ -87,6 +101,14 @@ export default function OnboardingPage() {
   const next = () => {
     const err = validateStep()
     if (err) return setError(err)
+
+    mixpanel.track('onboarding_step_completed', {
+      step_number: step + 1,
+      step_name: STEP_NAMES[step],
+      duration_seconds: Math.floor((Date.now() - stepStartTime.current) / 1000),
+      onboarding_session_id: sessionId.current
+    })
+
     setError('')
     setStep(s => s + 1)
   }
@@ -98,6 +120,14 @@ export default function OnboardingPage() {
     if (err) return setError(err)
     setSaving(true)
     await updateProfile({ ...data, completedOnboarding: true })
+
+    mixpanel.track('onboarding_completed', {
+      selected_goal: data.goal,
+      dietary_preference: data.dietaryPreference,
+      workout_schedule_preference: data.workOnSunday ? '7_days' : '6_days',
+      onboarding_session_id: sessionId.current
+    })
+
     setSaving(false)
     navigate('/dashboard')
   }
