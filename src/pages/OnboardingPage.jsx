@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { ChevronRight, ChevronLeft, Check } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { FOODS } from '../data/foods'
-
+import { useEffect } from 'react'
 
 const TOTAL_STEPS = 4
 
