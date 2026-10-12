@@ -5,6 +5,20 @@ import { useTracking } from '../contexts/TrackingContext'
 import { calcNutrition, bmiCategory, pct } from '../utils/calculations'
 import { getWeeklyOverview } from '../data/exercises'
 
+
+import mixpanel from 'mixpanel-browser'
+
+// When progress page loads (weekly summary)
+useEffect(() => {
+  mixpanel.track('weekly_adherence_report_generated', {
+    workouts_completed_count: weeklyWorkouts,
+    workout_adherence_rate: weeklyWorkouts / scheduledWorkouts,
+    daily_nutrition_logging_rate: daysLogged / 7,
+    selected_goal: userGoal,
+    week_start_date: weekStartDate
+  })
+}, [])
+
 const DAYS_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
 
 function StatCard({ icon: Icon, label, value, sub, color = 'text-white' }) {
