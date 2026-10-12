@@ -35,16 +35,6 @@ const handleFinish = () => {
 }
 
 
-
-const handleNext = () => {
-  mixpanel.track('onboarding_step_completed', {
-    step_number: currentStep,
-    step_name: 'personal_info',
-    duration_seconds: timeSpentOnStep
-  })
-  // your existing next-step logic...
-}
-
 const TOTAL_STEPS = 4
 
 const FOOD_PREF_OPTIONS = {
