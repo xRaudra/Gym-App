@@ -7,17 +7,11 @@ import Logo from '../components/Logo'
 
 import mixpanel from 'mixpanel-browser'
 
-const handleSignup = async () => {
-  // your existing signup logic...
-  await createUser()
-
-  // 👇 add this after signup succeeds
-  mixpanel.track('signup_completed', {
-    signup_method: 'email_otp',
-    country: 'India',
-    ui_theme: 'dark'
-  })
-}
+// After login succeeds
+mixpanel.identify(userId) // ties all events to this user
+mixpanel.track('login_completed', {
+  login_method: 'email_otp'
+})
 
 export default function LoginPage() {
   const { login } = useAuth()
