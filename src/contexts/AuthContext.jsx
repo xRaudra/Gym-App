@@ -5,8 +5,6 @@ import {
 } from '../utils/storage'
 import { validatePassword } from '../utils/calculations'
 
-import mixpanel from 'mixpanel-browser'
-
 
 const AuthContext = createContext(null)
 
