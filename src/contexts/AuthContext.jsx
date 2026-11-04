@@ -7,12 +7,15 @@ import { validatePassword } from '../utils/calculations'
 
 import mixpanel from 'mixpanel-browser'
 
-// Where you restore/set the logged-in user
-mixpanel.identify(user.uid) // or user.id
-mixpanel.people.set({
-  $name: user.displayName,
-  $email: user.email
-})
+useEffect(() => {
+  if (!user) return
+
+  mixpanel.identify(user.id)
+  mixpanel.people.set({
+    $name: user.name,
+    $email: user.email
+  })
+}, [user])
 
 
 const AuthContext = createContext(null)
