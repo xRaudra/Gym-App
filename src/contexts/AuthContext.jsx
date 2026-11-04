@@ -7,16 +7,6 @@ import { validatePassword } from '../utils/calculations'
 
 import mixpanel from 'mixpanel-browser'
 
-useEffect(() => {
-  if (!user) return
-
-  mixpanel.identify(user.id)
-  mixpanel.people.set({
-    $name: user.name,
-    $email: user.email
-  })
-}, [user])
-
 
 const AuthContext = createContext(null)
 
