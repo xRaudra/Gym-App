@@ -23,16 +23,6 @@ function setCachedUser(u) {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => getCachedUser())  // instant load from cache
   const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-    if (!user) return
-
-    mixpanel.identify(user.id)
-    mixpanel.people.set({
-      $name: user.name,
-      $email: user.email
-    })
-  }, [user])
   
   useEffect(() => {
     async function init() {
