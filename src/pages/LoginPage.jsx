@@ -5,13 +5,6 @@ import { useAuth } from '../contexts/AuthContext'
 import AuthLayout from '../components/AuthLayout'
 import Logo from '../components/Logo'
 
-import mixpanel from 'mixpanel-browser'
-
-// After login succeeds
-mixpanel.identify(userId) // ties all events to this user
-mixpanel.track('login_completed', {
-  login_method: 'email_otp'
-})
 
 export default function LoginPage() {
   const { login } = useAuth()
