@@ -5,17 +5,6 @@ import { useTracking } from '../contexts/TrackingContext'
 import { calcNutrition, pct } from '../utils/calculations'
 import { generateDietPlan, planTotals } from '../data/foods'
 
-import mixpanel from 'mixpanel-browser'
-
-// When user logs a meal
-const handleLogMeal = () => {
-  // your existing logic...
-  mixpanel.track('daily_nutrition_logged', {
-    entries_count: mealsLoggedToday,
-    dietary_preference: userDietPref,
-    log_date: new Date().toISOString()
-  })
-}
 
 
 
